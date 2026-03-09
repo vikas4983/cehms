@@ -5,11 +5,17 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StudentCreateRequest;
 use App\Models\User;
 use App\traits\UploadTrait;
+use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
     use UploadTrait;
+
+    public static function middleware(): array
+    {
+        return [new Middleware('permission:view user', only: ['index', 'show']), new Middleware('permission:create user', only: ['create', 'store']), new Middleware('permission:edit user', only: ['edit', 'update']), new Middleware('permission:delete user', only: ['destroy']), new Middleware('permission:change student status', only: ['studentStatus'])];
+    }
 
     /**
      * Display a listing of the resource.
@@ -76,6 +82,18 @@ class StudentController extends Controller
             }
             $validatedData['image'] = $this->upload($request->file('image'));
         }
+        if ($request->hasFile('10th_marksheet')) {
+            if ($user && $user->{'10th_marksheet'}) {
+                $this->imageExist($user->{'10th_marksheet'});
+            }
+            $validatedData['10th_marksheet'] = $request->file('10th_marksheet')->store('marksheets/tenth', 'public');
+        }
+        if ($request->hasFile('12th_marksheet')) {
+            if ($user && $user->{'12th_marksheet'}) {
+                $this->imageExist($user->{'12th_marksheet'});
+            }
+            $validatedData['12th_marksheet'] = $request->file('12th_marksheet')->store('marksheets/twelfth', 'public');
+        }
         $user->update($validatedData);
         return redirect()->route('students.index')->with('success', 'Student has been updated successfully');
     }
@@ -111,24 +129,25 @@ class StudentController extends Controller
             'image' => ['required', 'mimes:jpeg,jpeg,gif', 'size:2048'],
             'student_id' => ['required', 'numeric'],
         ]);
-       
+
         $student = User::findOrFail($validatedData['student_id']);
-          
+
         if ($request->hasFile('image')) {
             if ($student && $student->image) {
                 $this->imageExist($student->image);
             }
             $validatedData['image'] = $this->upload($request->file('image'));
         }
-     
+
         $student->update([
             'image' => $validatedData['image'],
         ]);
         return redirect()->back()->with('success', 'Student image has been changed');
     }
 
-    public function inactiveStudent(){
-       $students = User::inactive()->get();
-       return view('students.inactive',compact('students'));
+    public function inactiveStudent()
+    {
+        $students = User::inactive()->get();
+        return view('students.inactive', compact('students'));
     }
 }

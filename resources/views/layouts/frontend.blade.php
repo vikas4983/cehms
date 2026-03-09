@@ -132,7 +132,7 @@
         <!-- Start Header Middle -->
         <div class="container header-middle">
             <div class="row"> <span class="col-xs-6 col-sm-3"><a href="{{ route('/') }}"><img
-                            src="{{ asset('storage/' . $setting->logo ?? '') }}" class="img-responsive" alt=""
+                            src="{{ asset('storage/' . $setting?->logo ?? '') }}" class="img-responsive" alt=""
                             width="200px" style="width: 7rem"></a></span>
                 <div class="col-xs-6 col-sm-3"></div>
                 <div class="col-xs-6 col-sm-9">

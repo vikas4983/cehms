@@ -12,6 +12,10 @@ class Permission extends SpatiePermission
     {
         return $query->where('status', 1);
     }
+    public function scopeAllPermissions($query)
+    {
+        return $query;
+    }
 
     protected function name(): Attribute
     {

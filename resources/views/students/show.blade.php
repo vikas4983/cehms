@@ -2,7 +2,6 @@
 @section('title', 'Student - Add')
 @section('content')
     <div class="dashboard-main-body">
-
         <div class="breadcrumb d-flex flex-wrap align-items-center justify-content-between gap-3 mb-24">
             <div class="">
                 <h1 class="fw-semibold mb-4 h6 text-primary-light">Student Details</h1>
@@ -13,13 +12,6 @@
                     <span class="text-secondary-light">/ Student Details</span>
                 </div>
             </div>
-            {{-- <button type="button"
-                class="my-sidebar-btn btn btn-primary-600 d-flex align-items-center gap-6 bg-base text-primary-light bg-hover-primary-600">
-                <span class="d-flex text-md">
-                    <i class="ri-lock-2-line"></i>
-                </span>
-                Login Details
-            </button> --}}
         </div>
         @include('alerts.alert')
         <div class="mt-24">
@@ -29,59 +21,50 @@
                         <div class="max-w-300-px w-100 text-center">
                             <figure
                                 class="mb-24 w-120-px h-120-px mx-auto rounded-circle overflow-hidden position-relative">
-
                                 <!-- Image -->
                                 <img src="{{ asset('storage/' . $student->image) }}" alt="Student Image"
                                     class="w-100 h-100 object-fit-cover">
-
                                 <!-- Hidden File Input -->
                                 <input type="file" id="imageUpload" name="image" class="d-none">
                                 <input type="hidden" id="studentId" value="{{ $student->id }}">
                                 <!-- Bottom Center Icon -->
-                                {{-- <label for="imageUpload"
-                                    class="position-absolute start-50 translate-middle-x 
-               bg-dark bg-opacity-75 text-white 
-               d-flex align-items-center justify-content-center rounded-circle"
-                                    style="bottom: 8px; width:32px; height:32px; cursor:pointer;">
-
-                                    <iconify-icon icon="fluent:edit-24-filled"></iconify-icon>
-
-                                </label> --}}
-
                             </figure>
 
-                            <h2 class="h6 text-primary-light mb-16 fw-semibold">Seth Hallam</h2>
+                            <h2 class="h6 text-primary-light mb-16 fw-semibold">{{ $student->name ?? '' }}</h2>
                             {{-- <p class="mb-0">Admission No: <span class="text-primary-600 fw-semibold">AD1256589</span>
                             </p>
                             <p class="mb-0">Admission No: <span class="text-primary-light fw-semibold">10</span> </p> --}}
                             <div class="mt-32 d-flex gap-16 w-100">
-                                @if ($student->status == 1)
-                                    <button type="button"
-                                        class="btn border fw-medium border-danger-600 bg-hover-danger-200 text-danger-600 text-md d-flex justify-content-center align-items-center gap-8 flex-grow-1 px-12 py-8 radius-8"
-                                        data-bs-toggle="modal" data-bs-target="#confirm-{{ $student->id }}">
+                                @can('change student status')
+                                    @if ($student->status == 1)
+                                        <button type="button"
+                                            class="btn border fw-medium border-danger-600 bg-hover-danger-200 text-danger-600 text-md d-flex justify-content-center align-items-center gap-8 flex-grow-1 px-12 py-8 radius-8"
+                                            data-bs-toggle="modal" data-bs-target="#confirm-{{ $student->id }}">
+                                            <span class="d-flex text-lg">
+                                                <i class="ri-close-circle-line text-danger"></i>
+                                            </span>
+                                            Inactive
+                                        </button>
+                                    @else
+                                        <button type="button"
+                                            class="btn border fw-medium border-success-600 bg-hover-success-200 text-success-600 text-md d-flex justify-content-center align-items-center gap-8 flex-grow-1 px-12 py-8 radius-8"
+                                            data-bs-toggle="modal" data-bs-target="#confirm-{{ $student->id }}">
+                                            <span class="d-flex text-lg">
+                                                <i class="ri-checkbox-circle-line text-success"></i>
+                                            </span>
+                                            Active
+                                        </button>
+                                    @endif
+                                @endcan
+                                @can('edit user')
+                                    <a href="{{ auth()->user()->hasRole('admin') ? route('students.edit', $student->id) : route('profile.edit') }}"
+                                        class="btn btn-primary-600 border fw-medium border-primary-600 text-md d-flex justify-content-center align-items-center gap-8 flex-grow-1 px-12 py-8 radius-8">
                                         <span class="d-flex text-lg">
-                                            <i class="ri-close-circle-line text-danger"></i>
+                                            <i class="ri-edit-line"></i>
                                         </span>
-                                        Inactive
-                                    </button>
-                                @else
-                                    <button type="button"
-                                        class="btn border fw-medium border-success-600 bg-hover-success-200 text-success-600 text-md d-flex justify-content-center align-items-center gap-8 flex-grow-1 px-12 py-8 radius-8"
-                                        data-bs-toggle="modal" data-bs-target="#confirm-{{ $student->id }}">
-                                        <span class="d-flex text-lg">
-                                            <i class="ri-checkbox-circle-line text-success"></i>
-                                        </span>
-                                        Active
-                                    </button>
-                                @endif
-
-                                <a href="{{ route('students.edit', $student->id) }}"
-                                    class="btn btn-primary-600 border fw-medium border-primary-600 text-md d-flex justify-content-center align-items-center gap-8 flex-grow-1 px-12 py-8 radius-8">
-                                    <span class="d-flex text-lg">
-                                        <i class="ri-edit-line"></i>
-                                    </span>
-                                    Edit
-                                </a>
+                                        Edit
+                                    </a>
+                                @endcan
                             </div>
                         </div>
                         <div class="">
@@ -90,13 +73,7 @@
                         <div class="flex-grow-1">
                             <div class="pb-16 border-bottom d-flex align-items-center justify-content-between gap-20">
                                 <h3 class="h6 text-primary-light text-lg mb-0 fw-semibold">Personal Info</h3>
-                                @if ($student?->status ?? '' == '1')
-                                    <span
-                                        class="bg-success-100 text-success-600 px-24 py-4 radius-4 fw-medium text-sm">Active</span>
-                                @else
-                                    <span
-                                        class="bg-danger-100 text-danger-600 px-24 py-4 radius-4 fw-medium text-sm">Inactive</span>
-                                @endif
+
                             </div>
                             <div class="mt-16 d-flex flex-column gap-8">
                                 <div class="d-flex gap-4">
@@ -148,6 +125,43 @@
                                 </div>
 
                             </div>
+                        </div>
+                        <div class="flex-grow-1">
+                            <div class="pb-16 border-bottom d-flex align-items-center justify-content-between gap-20">
+                                <h3 class="h6 text-primary-light text-lg mb-0 fw-semibold">Uploaded Documents</h3>
+                                @if ($student?->status ?? '' == '1')
+                                    <span
+                                        class="bg-success-100 text-success-600 px-24 py-4 radius-4 fw-medium text-sm">Active</span>
+                                @else
+                                    <span
+                                        class="bg-danger-100 text-danger-600 px-24 py-4 radius-4 fw-medium text-sm">Inactive</span>
+                                @endif
+                            </div>
+                            @can('view document')
+                            <div class="mt-16 d-flex flex-column gap-8">
+                                @if (!empty($student->{'10th_marksheet'}))
+                                    <div class="d-flex gap-4">
+                                        <span class="fw-semibold text-sm text-primary-light w-110-px">10th Marksheet</span>
+                                        <span class="fw-normal text-sm text-secondary-light">:
+                                            <a href="{{ route('view.document', ['path' => $student->{'10th_marksheet'}]) }}"
+                                                target="_blank">
+
+                                                View
+                                            </a></span>
+                                    </div>
+                                @endif
+                                @if (!empty($student->{'12th_marksheet'}))
+                                    <div class="d-flex gap-4">
+                                        <span class="fw-semibold text-sm text-primary-light w-110-px">12th Marksheet</span>
+                                        <span class="fw-normal text-sm text-secondary-light">:
+                                            <a href="{{ route('view.document', ['path' => $student->{'12th_marksheet'}]) }}"
+                                                target="_blank">
+                                                View
+                                            </a></span>
+                                    </div>
+                                @endif
+                            </div>
+                            @endcan
                         </div>
                     </div>
                 </div>
@@ -2845,219 +2859,6 @@
         </div>
     </div>
 
-
-
-    <!-- Login Details sidebar start -->
-    {{-- <div
-        class="my-sidebar bg-white position-fixed end-0 top-0 h-100vh overflow-y-auto z-99 max-w-700-px w-100 translate-x-full duration-300 active-translate-0">
-        <div class="px-20 py-12 border-bottom d-flex align-items-center justify-content-between gap-20">
-            <h5 class="text-lg mb-0">Login Details</h5>
-            <button type="button" class="close-my-sidebar text-danger-600 text-lg d-flex">
-                <i class="ri-close-large-line"></i>
-            </button>
-        </div>
-        <form action="#" class="d-flex flex-column">
-            <div class="p-20">
-                <div class="d-flex align-items-center gap-20">
-                    <figure class="w-72-px h-72-px rounded-circle overflow-hidden mb-0">
-                        <img src="assets/images/thumbs/student-details-img.png" alt="Student Image"
-                            class="w-100 h-100 object-fit-cover">
-                    </figure>
-                    <div class="flex-grow-1">
-                        <h2 class="text-xl text-primary-light mb-4">Seth Hallam</h2>
-                        <p class="mb-0">Roll No: <span class="text-primary-light fw-semibold">10</span> </p>
-                    </div>
-                </div>
-            </div>
-            <div class="table-bottom-info-none">
-                <table class="table bordered-table mb-0 table-heading-dark-mode w-100 data-table" id="loginDetailsTable"
-                    data-page-length='10'>
-                    <thead>
-                        <tr>
-                            <th scope="col" class="text-start">User Type</th>
-                            <th scope="col" class="text-start">Email</th>
-                            <th scope="col" class="text-start">Password</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="text-start">Student</td>
-                            <td class="text-start">student@example.com</td>
-                            <td class="text-start">15445@#AC</td>
-                        </tr>
-                        <tr>
-                            <td class="text-start">Parent</td>
-                            <td class="text-start">parent@example.com</td>
-                            <td class="text-start">52445@#AC</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </form>
-    </div> --}}
-    <!-- Login Details sidebar end -->
-
-    <!-- Apply Leave sidebar start -->
-    {{-- <div
-        class="apply-leave bg-white position-fixed end-0 top-0 h-100vh overflow-y-auto z-99 max-w-700-px w-100 translate-x-full duration-300 active-translate-0">
-        <div class="px-20 py-12 border-bottom d-flex align-items-center justify-content-between gap-20">
-            <h5 class="text-lg mb-0">Apply Leave</h5>
-            <button type="button" class="close-apply-leave text-danger-600 text-lg d-flex">
-                <i class="ri-close-large-line"></i>
-            </button>
-        </div>
-        <form action="#" class="d-flex flex-column p-20">
-            <div class="row g-3">
-                <div class="col-sm-6">
-                    <div class="">
-                        <label for="leaveType" class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Leave
-                            Type
-                        </label>
-                        <select id="leaveType" class="form-control form-select">
-                            <option value="Select a leave type" selected disabled>Select a leave type</option>
-                            <option value="Sickness">Sickness</option>
-                            <option value="Accident">Accident</option>
-                            <option value="Travel">Travel</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="">
-                        <label for="fromDate" class="text-sm fw-semibold text-primary-light d-inline-block mb-8">From
-                            Date
-                        </label>
-                        <input type="date" class="form-control" id="fromDate">
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="">
-                        <label for="toDate" class="text-sm fw-semibold text-primary-light d-inline-block mb-8">To Date
-                        </label>
-                        <input type="date" class="form-control" id="toDate">
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="">
-                        <label for="leaveDays" class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Leave
-                            Days</label>
-                        <select id="leaveDays" class="form-control form-select">
-                            <option value="Ex: Full day,  first half, second half">Ex: Full day, first half, second half
-                            </option>
-                            <option value="Ex: Full day,  first half, second half">Ex: Full day, first half, second half
-                            </option>
-                            <option value="Ex: Full day,  first half, second half">Ex: Full day, first half, second half
-                            </option>
-                            <option value="Ex: Full day,  first half, second half">Ex: Full day, first half, second half
-                            </option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-sm-12">
-                    <div class="">
-                        <label for="ReasonForLeave"
-                            class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Reason for Leave
-                        </label>
-                        <textarea id="ReasonForLeave" class="form-control" placeholder="Enter reason for leave..."></textarea>
-                    </div>
-                </div>
-                <div class="col-12">
-                    <div class="d-flex align-items-center justify-content-center gap-3 mt-8">
-                        <button type="reset"
-                            class="border border-danger-600 bg-hover-danger-200 text-danger-600 text-md px-50 py-11 radius-8">
-                            Cancel
-                        </button>
-                        <button type="submit"
-                            class="btn btn-primary-600 border border-primary-600 text-md px-28 py-12 radius-8">
-                            Send Request
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div> --}}
-    <!-- Apply Leave sidebar end -->
-
-    <!-- Collect Fees sidebar start -->
-    {{-- <div
-        class="collect-fees bg-white position-fixed end-0 top-0 h-100vh overflow-y-auto z-99 max-w-700-px w-100 translate-x-full duration-300 active-translate-0">
-        <div class="px-20 py-12 border-bottom d-flex align-items-center justify-content-between gap-20">
-            <h5 class="text-lg mb-0">Collect Fees</h5>
-            <button type="button" class="close-collect-fees text-danger-600 text-lg d-flex">
-                <i class="ri-close-large-line"></i>
-            </button>
-        </div>
-        <form action="#" class="d-flex flex-column p-20">
-            <div class="row g-3">
-                <div class="col-sm-6">
-                    <div class="">
-                        <label for="feesType" class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Leave
-                            Type
-                        </label>
-                        <select id="feesType" class="form-control form-select">
-                            <option value="Select a fees type" selected disabled>Select a fees type</option>
-                            <option value="May month fees">May month fees</option>
-                            <option value="June month fees">June month fees</option>
-                            <option value="July month fees">July month fees</option>
-                            <option value="August month fees">August month fees</option>
-                            <option value="September month fees">September month fees</option>
-                            <option value="October month fees">October month fees</option>
-                            <option value="November month fees">November month fees</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="">
-                        <label for="feesDate" class="text-sm fw-semibold text-primary-light d-inline-block mb-8">From
-                            Date
-                        </label>
-                        <input type="date" class="form-control" id="feesDate">
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="">
-                        <label for="feesAmount"
-                            class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Amount
-                        </label>
-                        <input type="text" class="form-control" id="feesAmount" value="$700.50"
-                            placeholder="$700.50" disabled>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="">
-                        <label for="feesPaymentType"
-                            class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Payment Type</label>
-                        <select id="feesPaymentType" class="form-control form-select">
-                            <option value="Bank">Bank</option>
-                            <option value="bKash">bKash</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-sm-12">
-                    <div class="">
-                        <label for="feesNote" class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Reason
-                            for
-                            Leave
-                        </label>
-                        <textarea id="feesNote" class="form-control" placeholder="Enter note..."></textarea>
-                    </div>
-                </div>
-                <div class="col-12">
-                    <div class="d-flex align-items-center justify-content-center gap-3 mt-8">
-                        <button type="reset"
-                            class="border border-danger-600 bg-hover-danger-200 text-danger-600 text-md px-50 py-11 radius-8">
-                            Cancel
-                        </button>
-                        <button type="submit"
-                            class="btn btn-primary-600 border border-primary-600 text-md px-28 py-12 radius-8">
-                            Pay
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div> --}}
-    <!-- Collect Fees sidebar end -->
-
     <!-- Modal Delete Event start -->
     <div class="modal fade" id="confirm-{{ $student->id }}" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-sm modal-dialog modal-dialog-centered max-w-340-px">
@@ -3105,112 +2906,7 @@
             </div>
         </div>
     </div>
-    <!-- Modal Delete Event end -->
 
-
-    {{-- <script>
-        // Data Table start
-        let table = new DataTable('#dataTable');
-        let tableTwo = new DataTable('#dataTableTwo');
-        let tableThree = new DataTable('#dataTableThree');
-        let tableFour = new DataTable('#dataTableFour');
-        let firstSemesterTable = new DataTable('#firstSemesterTable');
-        let monthlyTestJun = new DataTable('#monthlyTestJun');
-        let weeklyTestJun = new DataTable('#weeklyTestJun');
-        let weeklyTestMay = new DataTable('#weeklyTestMay');
-        let monthlyTestMay = new DataTable('#monthlyTestMay');
-        let dataTableLibrary = new DataTable('#dataTableLibrary');
-        let loginDetailsTable = new DataTable('#loginDetailsTable');
-
-        // ✅ Data Table start
-        $('.data-table').each(function() {
-            const $table = $(this);
-            const tableInstance = new DataTable(this);
-
-            // Handle search input (inside same wrapper)
-            $table.closest('.dataTable-wrapper').find('.dt-search .dt-input').on('keyup', function() {
-                tableInstance.search(this.value).draw();
-            });
-
-            // Handle page length change (inside same wrapper)
-            $table.closest('.dataTable-wrapper').find('.dt-length .dt-input').on('change', function() {
-                const value = $(this).val();
-                tableInstance.page.len(value).draw();
-            });
-        });
-        // ✅ Data Table end
-
-        // Dynamic Class added to the (absent/present/late/holiday)
-        $(document).ready(function() {
-            $('.attendance').each(function() {
-                let value = $(this).text().trim().toUpperCase();
-
-                if (value === 'P') {
-                    $(this).addClass('text-success-600')
-                } else if (value === 'A') {
-                    $(this).addClass('text-danger-600')
-                } else if (value === 'H') {
-                    $(this).addClass('text-warning-600')
-                } else if (value === 'F') {
-                    $(this).addClass('text-purple-600')
-                } else if (value === 'L') {
-                    $(this).addClass('text-info-600')
-                }
-            });
-        });
-        // Dynamic Class added to the (absent/present/late/holiday)
-
-
-        // Custom accordion js start
-        $(document).on('click', '.custom-accordion-btn', function() {
-            $('.custom-accordion-btn').not(this).removeClass('active').siblings('.custom-accordion-content')
-                .slideUp();
-
-            // Toggle current one
-            $(this).toggleClass('active');
-            $(this).siblings('.custom-accordion-content').slideToggle();
-        });
-
-        // Keep first accordion open by default
-        $(document).ready(function() {
-            const firstAccordion = $('.custom-accordion-btn').first();
-            firstAccordion.addClass('active');
-            firstAccordion.siblings('.custom-accordion-content').show();
-        });
-        // Custom accordion js end
-
-
-        // Sidebar js start
-        $('.my-sidebar-btn').on('click', function() {
-            $('.my-sidebar').addClass('active');
-            $('.overlay').addClass('active');
-        });
-        $('.close-my-sidebar, .overlay').on('click', function() {
-            $('.my-sidebar').removeClass('active');
-            $('.overlay').removeClass('active');
-        });
-
-
-        $('.apply-leave-btn').on('click', function() {
-            $('.apply-leave').addClass('active');
-            $('.overlay').addClass('active');
-        });
-        $('.close-apply-leave, .overlay').on('click', function() {
-            $('.apply-leave').removeClass('active');
-            $('.overlay').removeClass('active');
-        });
-        // Sidebar js end
-
-        $('.collect-fees-btn').on('click', function() {
-            $('.collect-fees').addClass('active');
-            $('.overlay').addClass('active');
-        });
-        $('.close-collect-fees, .overlay').on('click', function() {
-            $('.collect-fees').removeClass('active');
-            $('.overlay').removeClass('active');
-        });
-        // Sidebar js end
-    </script> --}}
 
 
 @endsection

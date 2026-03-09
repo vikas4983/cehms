@@ -15,7 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Title -->
     <title>@yield('title', 'Edudash - School, College & LMS Admin Dashboard Template | Bootstrap 5')</title>
-    <link rel="icon" type="image/png" href="{{ asset('assets/images/favicon.png') }}" sizes="16x16">
+    <link rel="icon" type="image/png" href="{{ asset('storage/' . $setting?->favicon ?? '') }}" sizes="16x16">
     <!-- remix icon font css  -->
     <link rel="stylesheet" href="{{ asset('assets/css/remixicon.css') }}">
     <!-- BootStrap css -->
@@ -158,8 +158,9 @@
         </button>
         <div class="">
             <div class="sidebar-logo d-flex align-items-center justify-content-between">
-                <a href="index.html" class="">
-                    <img src="{{ asset('assets/images/logo.png') }}" alt="site logo" class="light-logo">
+                <a href="{{ route('dashboard') }}" class="">
+                    <img src="{{ $setting->logo ? asset('storage/' . $setting->logo) : asset('assets/images/default-logo.png') }}"
+                        alt="site logo" class="light-logo">
                     <img src="{{ asset('assets/images/logo-light.png') }}" alt="site logo" class="dark-logo">
                     <img src="{{ asset('assets/images/logo-icon.png') }}" alt="site logo" class="logo-icon">
                 </a>
@@ -176,20 +177,22 @@
                     class="profile-dropdown__button d-flex align-items-center justify-content-between p-10 w-100 overflow-hidden bg-neutral-50 radius-12 "
                     data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
                     <span class="d-flex align-items-start gap-10">
-                        <img src="{{ asset('assets/images/leave-request-img2.png') }}" alt="Thumbnail"
-                            class="w-40-px h-40-px rounded-circle object-fit-cover flex-shrink-0">
+                        <img src="{{ auth()->user()->image ? asset('storage/' . auth()->user()->image) : (auth()->user()->gender == 'female' ? asset(assets / images / female - avtar . png) : asset('assets/images/male-avtar.png')) }}"
+                            alt="Thumbnail" class="w-40-px h-40-px rounded-circle object-fit-cover flex-shrink-0">
                         <span class="profile-dropdown__contents">
-                            <span class="h6 mb-0 text-md d-block text-primary-light">Jone Copper</span>
-                            <span class="text-secondary-light text-sm mb-0 d-block">Admin</span>
+                            <span class="h6 mb-0 text-md d-block text-primary-light">{{ auth()->user()->name }}</span>
+                            <span
+                                class="text-secondary-light text-sm mb-0 d-block">{{ ucfirst(auth()->user()->getRoleNames()->first()) }}</span>
                         </span>
                     </span>
                     <span class="profile-dropdown__icon pe-8 text-xl d-flex line-height-1">
                         <i class="ri-arrow-right-s-line"></i>
                     </span>
                 </button>
-                <ul class="dropdown-menu dropdown-menu-lg-end border p-12">
+                 @role('admin')
+                  <ul class="dropdown-menu dropdown-menu-lg-end border p-12">
                     <li>
-                        <a href="student-details.html"
+                        <a href="#"
                             class="dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6">
                             <i class="ri-user-3-line"></i>
                             My Profile
@@ -210,541 +213,584 @@
                         </a>
                     </li>
                 </ul>
+                 @endrole
+                 @role('user')
+                  <ul class="dropdown-menu dropdown-menu-lg-end border p-12">
+                    <li>
+                        <a href="{{route('my.profile')}}"
+                            class="dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6">
+                            <i class="ri-user-3-line"></i>
+                            My Profile
+                        </a>
+                    </li>
+                   <li>
+                        <a id="logOut" style="cursor: pointer"
+                            class="dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6">
+                            <i class="ri-shut-down-line"></i>
+                            Log Out
+                        </a>
+                    </li>
+                </ul>
+                 @endrole
             </div>
         </div>
         <!-- User Info end -->
+
         <div class="sidebar-menu-area">
             <ul class="sidebar-menu" id="sidebar-menu">
-                <li class="dropdown">
-                    <a href="{{ route('dashboard') }}">
-                        <i class="ri-home-4-line"></i>
-                        <span>Dashboard </span>
-                    </a>
-                    <ul class="sidebar-submenu">
-                        <li>
-                            <a href="index.html">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                School
+                @role('user')
+                    <li class="dropdown">
+                        @can('view user')
+                            <a href="#">
+                                <i class="ri-home-4-line"></i>
+                                <span>Dashboard </span>
                             </a>
-                        </li>
-                        <li>
-                            <a href="index-2.html">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Student
-                            </a>
-                        </li>
-                        <li>
-                            <a href="index-3.html">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Teacher
-                            </a>
-                        </li>
-                        <li>
-                            <a href="index-4.html">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Parent
-                            </a>
-                        </li>
-                        <li>
-                            <a href="index-5.html">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                LMS
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="{{ route('roles.index') }}">
-                        <i class="ri-user-follow-line"></i>
-                        <span>Roles</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('permissions.index') }}">
-                        <i class="ri-macbook-line"></i>
-                        <span>Permissions</span>
-                    </a>
-                </li>
-                <li class="dropdown">
-                    <a href="javascript:void(0)">
-                        <i class="ri-user-settings-line"></i>
-                        <span>Settings</span>
-                    </a>
-                    <ul class="sidebar-submenu">
-                        <li>
-                            <a href="{{ route('siteSettings.index') }}">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                General
-                            </a>
-                        </li>
+                        @endcan
+                        <ul class="sidebar-submenu">
+                            @can('view user')
+                                <li>
+                                    <a href="{{route('dashboard')}}">
+                                        <i class="ri-circle-fill circle-icon w-auto"></i>
+                                        Student
+                                    </a>
+                                </li>
+                            @endcan
+                        </ul>
+                    </li>
+                @endrole
+                @role('admin')
+                    <li class="dropdown">
+                        <a href="{{ route('dashboard') }}">
+                            <i class="ri-home-4-line"></i>
+                            <span>Dashboard </span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li>
+                                <a href="index.html">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    School
+                                </a>
+                            </li>
+                            <li>
+                                <a href="index-2.html">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Student
+                                </a>
+                            </li>
+                            <li>
+                                <a href="index-3.html">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Teacher
+                                </a>
+                            </li>
+                            <li>
+                                <a href="index-4.html">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Parent
+                                </a>
+                            </li>
+                            <li>
+                                <a href="index-5.html">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    LMS
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
 
-                        <li>
-                            <a href="{{ route('banners.index') }}">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Banners
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="{{ route('menus.index') }}">
-                        <i class="ri-menu-line"></i>
-                        <span>Menus</span>
-                    </a>
-                </li>
-                <li class="dropdown">
-                    <a href="javascript:void(0)">
-                        <i class="ri-graduation-cap-line"></i>
-                        <span>Students</span>
-                    </a>
-                    <ul class="sidebar-submenu">
-                        <li>
-                            <a href="{{ route('students.create') }}">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Add New Student
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('students.index') }}">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Student List
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('inactive.students') }}">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Suspend Student
-                            </a>
-                        </li>
 
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="javascript:void(0)">
-                        <i class="ri-book-line"></i>
-                        <span>Books</span>
-                    </a>
-                    <ul class="sidebar-submenu">
-                        <li>
-                            <a href="{{ route('books.create') }}">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Add New Book
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('books.index') }}">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Book List
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('book.status') }}">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Unpublish Book
-                            </a>
-                        </li>
+                    <li>
+                        <a href="{{ route('roles.index') }}">
+                            <i class="ri-user-follow-line"></i>
+                            <span>Roles</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('permissions.index') }}">
+                            <i class="ri-macbook-line"></i>
+                            <span>Permissions</span>
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)">
+                            <i class="ri-user-settings-line"></i>
+                            <span>Settings</span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li>
+                                <a href="{{ route('siteSettings.index') }}">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    General
+                                </a>
+                            </li>
 
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="javascript:void(0)">
-                        <i class="ri-newspaper-line"></i>
-                        <span>News</span>
-                    </a>
-                    <ul class="sidebar-submenu">
-                        <li>
-                            <a href="{{ route('news.create') }}">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Add New News
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('news.index') }}">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                News List
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="javascript:void(0)">
-                        <i class="ri-user-follow-line"></i>
-                        <span>Teachers</span>
-                    </a>
-                    <ul class="sidebar-submenu">
-                        <li>
-                            <a href="add-new-teacher.html">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Add New Teacher
-                            </a>
-                        </li>
-                        <li>
-                            <a href="teacher-list.html">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Teacher List
-                            </a>
-                        </li>
-                        <li>
-                            <a href="edit-teacher.html">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Edit Teacher
-                            </a>
-                        </li>
-                        <li>
-                            <a href="teacher-details.html">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Teacher Details
-                            </a>
-                        </li>
-                        <li>
-                            <a href="teacher-timetable.html">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Teacher Timetable
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="javascript:void(0)">
-                        <i class="ri-account-circle-line"></i>
-                        <span>Guardian</span>
-                    </a>
-                    <ul class="sidebar-submenu">
-                        <li>
-                            <a href="add-new-guardian.html">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Add New Guardians
-                            </a>
-                        </li>
-                        <li>
-                            <a href="guardian-list.html">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Guardians List
-                            </a>
-                        </li>
-                        <li>
-                            <a href="edit-guardian.html">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Edit Guardian
-                            </a>
-                        </li>
-                        <li>
-                            <a href="guardian-details.html">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Guardian Details
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="javascript:void(0)">
-                        <i class="ri-list-view"></i>
-                        <span>Classes</span>
-                    </a>
-                    <ul class="sidebar-submenu">
-                        <li>
-                            <a href="section-list.html">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Section
-                            </a>
-                        </li>
-                        <li>
-                            <a href="subject-list.html">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Subjects
-                            </a>
-                        </li>
-                        <li>
-                            <a href="class-list.html">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Class List
-                            </a>
-                        </li>
-                        <li>
-                            <a href="class-room-list.html">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Class Room
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="javascript:void(0)">
-                        <i class="ri-file-edit-line"></i>
-                        <span>Examinations</span>
-                    </a>
-                    <ul class="sidebar-submenu">
-                        <li>
-                            <a href="exam.html">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Exam
-                            </a>
-                        </li>
-                        <li>
-                            <a href="exam-schedule.html">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Exam Schedule
-                            </a>
-                        </li>
-                        <li>
-                            <a href="exam-result.html">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Exam Result
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="javascript:void(0)">
-                        <i class="ri-money-dollar-circle-line"></i>
-                        <span>Fees Collection</span>
-                    </a>
-                    <ul class="sidebar-submenu">
-                        <li>
-                            <a href="fees-collect.html">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Fees Collect
-                            </a>
-                        </li>
-                        <li>
-                            <a href="fees-type.html">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Fees Type
-                            </a>
-                        </li>
-                        <li>
-                            <a href="fees-group.html">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Fees Group
-                            </a>
-                        </li>
-                        <li>
-                            <a href="fees-discount.html">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Fees Discount
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="javascript:void(0)">
-                        <i class="ri-calendar-check-line"></i>
-                        <span>Attendance</span>
-                    </a>
-                    <ul class="sidebar-submenu">
-                        <li>
-                            <a href="student-attendance.html">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Student Attendance
-                            </a>
-                        </li>
-                        <li>
-                            <a href="teacher-attendance.html">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Teacher Attendance
-                            </a>
-                        </li>
-                        <li>
-                            <a href="employee-attendance.html">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Employee Attendance
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="javascript:void(0)">
-                        <i class="ri-time-line"></i>
-                        <span>Leaves</span>
-                    </a>
-                    <ul class="sidebar-submenu">
-                        <li>
-                            <a href="leave-types.html">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Leave Types
-                            </a>
-                        </li>
-                        <li>
-                            <a href="leave-request.html">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Leave Request
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="certificate.html">
-                        <i class="ri-home-4-line"></i>
-                        <span>Certificate </span>
-                    </a>
-                </li>
-                <li class="dropdown">
-                    <a href="javascript:void(0)">
-                        <i class="ri-book-2-line"></i>
-                        <span>Library</span>
-                    </a>
-                    <ul class="sidebar-submenu">
-                        <li>
-                            <a href="books-list.html">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Books List
-                            </a>
-                        </li>
-                        <li>
-                            <a href="members-list.html">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Members List
-                            </a>
-                        </li>
-                        <li>
-                            <a href="member-details.html">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Members Details
-                            </a>
-                        </li>
-                        <li>
-                            <a href="issue-return.html">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Issue Return
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="javascript:void(0)">
-                        <i class="ri-money-dollar-circle-line"></i>
-                        <span>Accounts</span>
-                    </a>
-                    <ul class="sidebar-submenu">
-                        <li>
-                            <a href="income-head.html">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Income Head
-                            </a>
-                        </li>
-                        <li>
-                            <a href="income-list.html">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Income List
-                            </a>
-                        </li>
-                        <li>
-                            <a href="expense-head.html">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Expense Head
-                            </a>
-                        </li>
-                        <li>
-                            <a href="expense-list.html">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Expense List
-                            </a>
-                        </li>
-                        <li>
-                            <a href="transaction.html">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Transaction
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="javascript:void(0)">
-                        <i class="ri-user-settings-line"></i>
-                        <span>HRM</span>
-                    </a>
-                    <ul class="sidebar-submenu">
-                        <li>
-                            <a href="employee-list.html">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Employee List
-                            </a>
-                        </li>
-                        <li>
-                            <a href="employee-details.html">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Employee Details
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ asset('') }}add-new-employee.html">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Add New Employee
-                            </a>
-                        </li>
-                        <li>
-                            <a href="payroll.html">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Payroll
-                            </a>
-                        </li>
-                        <li>
-                            <a href="designation.html">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Designation
-                            </a>
-                        </li>
-                        <li>
-                            <a href="department.html">
-                                <i class="ri-circle-fill circle-icon w-auto"></i>
-                                Department
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="notice-board.html">
-                        <i class="ri-booklet-line"></i>
-                        <span>Notice Board </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="event.html">
-                        <i class="ri-calendar-event-line"></i>
-                        <span>Event </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="message.html">
-                        <i class="ri-message-2-line"></i>
-                        <span>Message </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="subscription-plan.html">
-                        <i class="ri-price-tag-3-line"></i>
-                        <span>Subscription Plan </span>
-                    </a>
-                </li>
-                {{-- <li>
+                            <li>
+                                <a href="{{ route('banners.index') }}">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Banners
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="{{ route('menus.index') }}">
+                            <i class="ri-menu-line"></i>
+                            <span>Menus</span>
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)">
+                            <i class="ri-graduation-cap-line"></i>
+                            <span>Students</span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li>
+                                <a href="{{ route('students.create') }}">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Add New Student
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('students.index') }}">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Student List
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('inactive.students') }}">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Suspend Student
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)">
+                            <i class="ri-book-line"></i>
+                            <span>Books</span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li>
+                                <a href="{{ route('books.create') }}">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Add New Book
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('books.index') }}">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Book List
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('book.status') }}">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Unpublish Book
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)">
+                            <i class="ri-newspaper-line"></i>
+                            <span>News</span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li>
+                                <a href="{{ route('news.create') }}">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Add New News
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('news.index') }}">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    News List
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)">
+                            <i class="ri-user-follow-line"></i>
+                            <span>Teachers</span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li>
+                                <a href="add-new-teacher.html">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Add New Teacher
+                                </a>
+                            </li>
+                            <li>
+                                <a href="teacher-list.html">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Teacher List
+                                </a>
+                            </li>
+                            <li>
+                                <a href="edit-teacher.html">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Edit Teacher
+                                </a>
+                            </li>
+                            <li>
+                                <a href="teacher-details.html">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Teacher Details
+                                </a>
+                            </li>
+                            <li>
+                                <a href="teacher-timetable.html">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Teacher Timetable
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)">
+                            <i class="ri-account-circle-line"></i>
+                            <span>Guardian</span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li>
+                                <a href="add-new-guardian.html">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Add New Guardians
+                                </a>
+                            </li>
+                            <li>
+                                <a href="guardian-list.html">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Guardians List
+                                </a>
+                            </li>
+                            <li>
+                                <a href="edit-guardian.html">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Edit Guardian
+                                </a>
+                            </li>
+                            <li>
+                                <a href="guardian-details.html">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Guardian Details
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)">
+                            <i class="ri-list-view"></i>
+                            <span>Classes</span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li>
+                                <a href="section-list.html">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Section
+                                </a>
+                            </li>
+                            <li>
+                                <a href="subject-list.html">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Subjects
+                                </a>
+                            </li>
+                            <li>
+                                <a href="class-list.html">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Class List
+                                </a>
+                            </li>
+                            <li>
+                                <a href="class-room-list.html">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Class Room
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)">
+                            <i class="ri-file-edit-line"></i>
+                            <span>Examinations</span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li>
+                                <a href="exam.html">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Exam
+                                </a>
+                            </li>
+                            <li>
+                                <a href="exam-schedule.html">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Exam Schedule
+                                </a>
+                            </li>
+                            <li>
+                                <a href="exam-result.html">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Exam Result
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)">
+                            <i class="ri-money-dollar-circle-line"></i>
+                            <span>Fees Collection</span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li>
+                                <a href="fees-collect.html">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Fees Collect
+                                </a>
+                            </li>
+                            <li>
+                                <a href="fees-type.html">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Fees Type
+                                </a>
+                            </li>
+                            <li>
+                                <a href="fees-group.html">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Fees Group
+                                </a>
+                            </li>
+                            <li>
+                                <a href="fees-discount.html">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Fees Discount
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)">
+                            <i class="ri-calendar-check-line"></i>
+                            <span>Attendance</span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li>
+                                <a href="student-attendance.html">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Student Attendance
+                                </a>
+                            </li>
+                            <li>
+                                <a href="teacher-attendance.html">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Teacher Attendance
+                                </a>
+                            </li>
+                            <li>
+                                <a href="employee-attendance.html">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Employee Attendance
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)">
+                            <i class="ri-time-line"></i>
+                            <span>Leaves</span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li>
+                                <a href="leave-types.html">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Leave Types
+                                </a>
+                            </li>
+                            <li>
+                                <a href="leave-request.html">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Leave Request
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="certificate.html">
+                            <i class="ri-home-4-line"></i>
+                            <span>Certificate </span>
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)">
+                            <i class="ri-book-2-line"></i>
+                            <span>Library</span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li>
+                                <a href="books-list.html">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Books List
+                                </a>
+                            </li>
+                            <li>
+                                <a href="members-list.html">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Members List
+                                </a>
+                            </li>
+                            <li>
+                                <a href="member-details.html">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Members Details
+                                </a>
+                            </li>
+                            <li>
+                                <a href="issue-return.html">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Issue Return
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)">
+                            <i class="ri-money-dollar-circle-line"></i>
+                            <span>Accounts</span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li>
+                                <a href="income-head.html">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Income Head
+                                </a>
+                            </li>
+                            <li>
+                                <a href="income-list.html">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Income List
+                                </a>
+                            </li>
+                            <li>
+                                <a href="expense-head.html">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Expense Head
+                                </a>
+                            </li>
+                            <li>
+                                <a href="expense-list.html">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Expense List
+                                </a>
+                            </li>
+                            <li>
+                                <a href="transaction.html">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Transaction
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)">
+                            <i class="ri-user-settings-line"></i>
+                            <span>HRM</span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li>
+                                <a href="employee-list.html">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Employee List
+                                </a>
+                            </li>
+                            <li>
+                                <a href="employee-details.html">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Employee Details
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ asset('') }}add-new-employee.html">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Add New Employee
+                                </a>
+                            </li>
+                            <li>
+                                <a href="payroll.html">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Payroll
+                                </a>
+                            </li>
+                            <li>
+                                <a href="designation.html">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Designation
+                                </a>
+                            </li>
+                            <li>
+                                <a href="department.html">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Department
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="notice-board.html">
+                            <i class="ri-booklet-line"></i>
+                            <span>Notice Board </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="event.html">
+                            <i class="ri-calendar-event-line"></i>
+                            <span>Event </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="message.html">
+                            <i class="ri-message-2-line"></i>
+                            <span>Message </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="subscription-plan.html">
+                            <i class="ri-price-tag-3-line"></i>
+                            <span>Subscription Plan </span>
+                        </a>
+                    </li>
+                    {{-- <li>
                     <a href="{{ route('roles.index') }}">
                         <i class="ri-macbook-line"></i>
                         <span>Role & Access</span>
                     </a>
                 </li> --}}
-                <li class="dropdown">
-                    <a href="javascript:void(0)">
-                        <i class="ri-shield-check-line"></i>
-                        <span>Authentication</span>
-                    </a>
-                    <ul class="sidebar-submenu">
-                        <li>
-                            <a href="login.html"><i class="ri-circle-fill circle-icon text-primary-600 w-auto"></i>
-                                Login</a>
-                        </li>
-                        <li>
-                            <a href="register.html"><i
-                                    class="ri-circle-fill circle-icon text-warning-main w-auto"></i> Register</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="ri-user-follow-line"></i>
-                        <span>Assign Role</span>
-                    </a>
-                </li>
-
+                    <li class="dropdown">
+                        <a href="javascript:void(0)">
+                            <i class="ri-shield-check-line"></i>
+                            <span>Authentication</span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li>
+                                <a href="login.html"><i class="ri-circle-fill circle-icon text-primary-600 w-auto"></i>
+                                    Login</a>
+                            </li>
+                            <li>
+                                <a href="register.html"><i
+                                        class="ri-circle-fill circle-icon text-warning-main w-auto"></i> Register</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="ri-user-follow-line"></i>
+                            <span>Assign Role</span>
+                        </a>
+                    </li>
+                @endrole('admin')
             </ul>
         </div>
     </aside>
@@ -1053,6 +1099,8 @@
     <script src="{{ asset('assets/js/jquery-ui.min.js') }}"></script>
     <!-- main js -->
     <script src="{{ asset('assets/js/app.js') }}"></script>
+    {{-- <script src="{{ asset('assets/js/apexcharts.min.js') }}"></script> --}}
+   
     <!-- Custom js -->
     <script src="{{ asset('assets/js/custom-js/data-table-assign-role.js') }}"></script>
     <script src="{{ asset('assets/js/custom-js/action-button.js') }}"></script>

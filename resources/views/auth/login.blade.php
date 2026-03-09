@@ -15,7 +15,7 @@
 
     <!-- Title -->
     <title>Edudash - Login</title>
-    <link rel="icon" type="image/png" href="{{ asset('assets/images/favicon.png') }}" sizes="16x16">
+    <link rel="icon" type="image/png" href="{{ asset('storage/'.$setting?->favicon ?? '') }}" sizes="16x16">
     <!-- remix icon font css  -->
     <link rel="stylesheet" href="{{ asset('assets/css/remixicon.css') }}">
     <!-- BootStrap css -->
@@ -161,9 +161,11 @@
         </div>
         <div class="lg-w-50 px-24 py-32 d-flex justify-content-center align-items-center">
             <div class="max-w-540-px mx-auto">
-                <a href="index.html" class="">
-                    <img src="{{ asset('assets/images/logo.png') }}" alt="Logo">
+               <div class="text-center">
+                 <a href="index.html" class="" style="width:7rem">
+                    <img src="{{ asset('storage/' . $setting?->logo ?? '') }}" alt="Logo">
                 </a>
+               </div>
                 <div class="mt-32 mb-32">
                     <h1 class="h6 fw-bold text-primary-light mb-8">
                         Welcome Back 👋
@@ -208,25 +210,110 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-between gap-2">
-                      <a href="{{ route('forgot.password') }}"
+                        <a href="{{ route('forgot.password') }}"
                             class="text-primary-600 fw-medium text-decoration-underline">Forgot
                             Password?</a>
                     </div>
                     <div class="">
-                        <button type="submit"
+                        <button type="submit" 
                             class="loginBtn btn btn-primary-600 text-sm btn-sm px-12 py-16 w-100 radius-8"> Log In
                         </button>
                     </div>
                 </form>
                 <div class="mt-32 text-center text-sm">
                     Don't have an account?
-                    <a href="register.html" class="text-primary-600 fw-semibold text-decoration-underline">
+                    <a href="{{route('student.register')}}" class="text-primary-600 fw-semibold text-decoration-underline">
                         Create an account
                     </a>
                 </div>
             </div>
         </div>
     </div>
+<x-register-component/>
+ <script>
+     document.addEventListener('DOMContentLoaded', function() {
+         const statusModal = document.getElementById('changeStatusModal');
+         const changeStatusForm = document.getElementById('changeStatusForm');
+         const bannerId = document.getElementById('bannerId');
+         changeStatusModal.addEventListener('show.bs.modal', function(event) {
+             const button = event.relatedTarget;
+             const actionUrl = button.getAttribute('data-url');
+             const id = button.getAttribute('data-id');
+             changeStatusForm.action = actionUrl;
+             changeStatusForm.bannerId.value = id;
+
+         });
+
+
+
+     });
+ </script>
+ {{-- <script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+         const statusModal = document.getElementById('changeStatusModal');
+         const changeStatusForm = document.getElementById('changeStatusForm');
+         const bannerId = document.getElementById('bannerId');
+
+         let actionUrl = '';
+
+         statusModal.addEventListener('show.bs.modal', function(event) {
+
+             const button = event.relatedTarget;
+
+             actionUrl = button.getAttribute('data-url');
+             const id = button.getAttribute('data-id');
+
+             bannerId.value = id;
+
+         });
+
+         changeStatusForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            fetch(actionUrl, {
+                     method: 'POST',
+                     headers: {
+                         'Content-Type': 'application/json',
+                         'Accept': 'application/json',
+                         'X-CSRF-TOKEN': document
+                             .querySelector('meta[name="csrf-token"]')
+                             .getAttribute('content')
+                     },
+                     body: JSON.stringify({
+                         bannerId: bannerId.value
+                     })
+                 })
+                 .then(response => response.json())
+                 .then(data => {
+                     console.log(data);
+                     location.reload();
+                 })
+                 .catch(error => console.error(error));
+
+         });
+
+     });
+ </script> --}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <!-- jQuery library js -->
     <script src="{{ asset('assets/js/jquery-3.7.1.min.js') }}"></script>

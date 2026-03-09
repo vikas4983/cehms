@@ -20,10 +20,12 @@
             </a>
         </div>
         @include('alerts.alert')
-        <form action="{{ route('students.update', $student->id) }}" method="POST" class="mt-24"
+        <form action="{{ auth()->user()->hasRole('admin') ? route('students.update', $student->id) : route('profile.update') }}" method="POST" class="mt-24"
             enctype="multipart/form-data">
             @csrf
-            @method('PATCH')
+           @if(auth()->user()->hasRole('admin'))
+                @method('PATCH')
+           @endif
             <div class="row gy-3">
                 <div class="col-lg-12">
                     <div class="shadow-1 radius-12 bg-base h-100 overflow-hidden">
@@ -51,8 +53,8 @@
                                 <div class="col-xxl-3 col-xl-4 col-sm-6">
                                     <div class="">
                                         <label for="gender"
-                                            class="text-sm fw-semibold text-primary-light d-inline-block mb-8"> <span
-                                                class="text-danger-600">*</span>Gender</label>
+                                            class="text-sm fw-semibold text-primary-light d-inline-block mb-8"> Gender <span
+                                                class="text-danger-600">*</span></label>
                                         <select id="gender" name="gender"
                                             class="form-control form-select @error('gender') is-invalid @enderror "
                                             min-length="10" max-length="12">
@@ -76,7 +78,8 @@
                                     <div class="">
                                         <label for="dob"
                                             class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Date Of
-                                            Birth </label>
+                                            Birth </label> <span
+                                                class="text-danger-600">*</span>
                                         <input type="date" name="dob"
                                             value="{{ old('dob', \Carbon\Carbon::parse($student->getRawOriginal('dob'))->format('Y-m-d')) }}"
                                             class="form-control @error('dob') is-invalid @enderror" id="dateOfBirth">
@@ -118,23 +121,8 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-xxl-3 col-xl-4 col-sm-6">
-                                    <div class="">
-                                        <label for="qualification"
-                                            class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Qualification
-                                        </label>
-                                        <input type="text" name="qualification"
-                                            value="{{ $student?->qualification ?? '' }}"
-                                            class="form-control @error('qualification') is-invalid @enderror"
-                                            id="qualification" placeholder="Enter your qualification">
-                                        @error('qualification')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-xxl-3 col-xl-4 col-sm-6">
+                                @role('admin')
+                                 <div class="col-xxl-3 col-xl-4 col-sm-6">
                                     <div class="">
                                         <label for="practitioner_registration"
                                             class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Practitioner
@@ -152,7 +140,41 @@
                                         @enderror
                                     </div>
                                 </div>
+                                 <div class="col-sm-3">
+                                    <div class="">
+                                        <label for="others"
+                                            class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Other
+                                            Information
+                                        </label>
+                                        <input type="text" name="others" value="{{ $student?->others ?? '' }}"
+                                            class="form-control @error('others') is-invalid @enderror" id="other"
+                                            placeholder="Enter your others informations">
+                                        @error('others')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                
                                 <div class="col-xxl-3 col-xl-4 col-sm-6">
+                                    <div class="">
+                                        <label for="qualification"
+                                            class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Qualification
+                                        </label>
+                                        <input type="text" name="qualification"
+                                            value="{{ $student?->qualification ?? '' }}"
+                                            class="form-control @error('qualification') is-invalid @enderror"
+                                            id="qualification" placeholder="Enter your qualification">
+                                        @error('qualification')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                               @endrole
+                                <div class="col-xxl-3 col-xl-4 col-sm-4">
                                     <div class="">
                                         <label class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Student
                                             Photo
@@ -168,11 +190,43 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-xxl-3 col-xl-4 col-sm-4">
+                                    <div class="">
+                                        <label class="text-sm fw-semibold text-primary-light d-inline-block mb-8">10th Marksheet
+                                            
+                                        </label>
+                                        <div>
+                                            <input type="file" name="10th_marksheet"
+                                                class="@error('10th_marksheet') is-invalid @enderror ">
+                                            @error('10th_marksheet')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xxl-3 col-xl-4 col-sm-4">
+                                    <div class="">
+                                        <label class="text-sm fw-semibold text-primary-light d-inline-block mb-8">12th Marksheet
+                                        </label>
+                                        <div>
+                                            <input type="file" name="12th_marksheet"
+                                                class="@error('12th_marksheet') is-invalid @enderror ">
+                                            @error('12th_marksheet')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                              @can('change student status')
+                                <div class="col-sm-3">
                                     <div class="">
                                         <label for="status"
-                                            class="text-sm fw-semibold text-primary-light d-inline-block mb-8"><span
-                                                class="text-danger-600">*</span>Status</label>
+                                            class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Status <span
+                                                class="text-danger-600">*</span></label>
                                         <select id="status" name="status"
                                             class="form-control form-select @error('status') is-invalid @enderror">
                                             <option value="Select section" disabled>Select Status</option>
@@ -190,22 +244,8 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-sm-8">
-                                    <div class="">
-                                        <label for="others"
-                                            class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Other
-                                            Information
-                                        </label>
-                                        <input type="text" name="others" value="{{ $student?->others ?? '' }}"
-                                            class="form-control @error('others') is-invalid @enderror" id="other"
-                                            placeholder="Enter your others informations">
-                                        @error('others')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                </div>
+                              @endcan
+                               
                             </div>
                         </div>
                     </div>

@@ -19,7 +19,8 @@ return new class extends Migration {
             $table->string('qualification')->nullable();
             $table->string('practitioner_registration')->nullable();
             $table->string('image')->nullable();
-            $table->string('others')->nullable();
+            $table->string('10th_marksheet')->nullable();
+            $table->string('12th_marksheet')->nullable();
             $table->tinyInteger('status')->default(1);
         });
     }
@@ -30,7 +31,7 @@ return new class extends Migration {
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn(['father_name', 'dob', 'status', 'image', 'gender', 'mobile', 'address', 'qualification', 'practitioner_registration', 'others']);
+            $table->dropColumn(['father_name', 'dob', 'status', 'image', 'gender', 'mobile', 'address', 'qualification', 'practitioner_registration','10th_marksheet','12th_marksheet' ,'others']);
         });
     }
 };

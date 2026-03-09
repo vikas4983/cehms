@@ -38,7 +38,8 @@ class StudentCreateRequest extends FormRequest
             'address' => ['nullable', 'string'],
             'qualification' => ['nullable', 'string'],
             'practitioner_registration' => ['nullable', 'string'],
-            'others' => ['nullable', 'string']
+             '10th_marksheet' => ['nullable', 'file', 'mimes:pdf', 'max:4096'],
+            '12th_marksheet' => ['nullable', 'file', 'mimes:pdf', 'max:4096'],
         ];
     }
     protected function failedValidation(Validator $validator)
