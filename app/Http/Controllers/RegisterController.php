@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterStudentRequest;
 use App\Models\User;
-use App\Traits\AssignRoleOrPermission;
+use App\traits\AssignRoleOrPermission;
 use App\traits\UploadTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
