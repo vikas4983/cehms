@@ -14,8 +14,8 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
 
     <!-- Title -->
-    <title>Edudash - Forgot password</title>
-    <link rel="icon" type="image/png" href="{{ asset('assets/images/favicon.png') }}" sizes="16x16">
+    <title>CEHMS - Forgot password</title>
+    <link rel="icon" type="image/png" href="{{ $setting->favicon ? asset('storage/' . $setting->favicon) : asset('assets/images/favicon.png') }}" sizes="16x16">
     <!-- remix icon font css  -->
     <link rel="stylesheet" href="{{ asset('assets/css/remixicon.css') }}">
     <!-- BootStrap css -->
@@ -156,14 +156,16 @@
 
     <div class="d-lg-flex bg-white">
         <div class="w-50 d-lg-flex d-none overflow-hidden">
-            <img src="{{ asset('assets/images/login-img.png') }}" alt="Login Image"
+            <img src="{{ asset('assets/images/login-img1.png') }}" alt="Login Image"
                 class="w-100 h-100 object-fit-cover">
         </div>
         <div class="lg-w-50 px-24 py-32 d-flex justify-content-center align-items-center">
             <div class="max-w-540-px mx-auto">
-                <a href="index.html" class="">
-                    <img src="{{ asset('assets/images/logo.png') }}" alt="Logo">
+                 <div class="text-center">
+                <a href="{{route('/')}}" class="" style="width:7rem">
+                    <img src="{{ $setting->logo ? asset('storage/' . $setting->logo) : asset('assets/images/logo.png') }}" alt="Logo">
                 </a>
+            </div>
                 <div class="mt-32 mb-32">
                     <h1 class="h6 fw-bold text-primary-light mb-8">
                         Welcome Back 👋
@@ -209,7 +211,7 @@
                 </form>
                 <div class="mt-32 text-center text-sm">
                     Don't have an account?
-                    <a href="register.html" class="text-primary-600 fw-semibold text-decoration-underline">
+                    <a href="{{route('student.register')}}" class="text-primary-600 fw-semibold text-decoration-underline">
                         Create an account
                     </a>
                 </div>

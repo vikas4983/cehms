@@ -6,8 +6,10 @@
             <div class="">
                 <h1 class="fw-semibold mb-4 h6 text-primary-light">Edit Student</h1>
                 <div class="">
-                    <a href="index.html" class="text-secondary-light hover-text-primary hover-underline">Dashboard </a>
-                    <a href="student-list.html" class="text-secondary-light hover-text-primary hover-underline "> /
+                    <a href="{{ route('dashboard') }}"
+                        class="text-secondary-light hover-text-primary hover-underline">Dashboard </a>
+                    <a href="{{ auth()->user()->hasRole('admin') ? route('students.index') : route('dashboard') }}"
+                        class="text-secondary-light hover-text-primary hover-underline "> /
                         Student</a>
                     <span class="text-secondary-light">/ Edit Student</span>
                 </div>
@@ -20,12 +22,13 @@
             </a>
         </div>
         @include('alerts.alert')
-        <form action="{{ auth()->user()->hasRole('admin') ? route('students.update', $student->id) : route('profile.update') }}" method="POST" class="mt-24"
-            enctype="multipart/form-data">
+        <form
+            action="{{ auth()->user()->hasRole('admin') ? route('students.update', $student->id) : route('profile.update') }}"
+            method="POST" class="mt-24" enctype="multipart/form-data">
             @csrf
-           @if(auth()->user()->hasRole('admin'))
+            @if (auth()->user()->hasRole('admin'))
                 @method('PATCH')
-           @endif
+            @endif
             <div class="row gy-3">
                 <div class="col-lg-12">
                     <div class="shadow-1 radius-12 bg-base h-100 overflow-hidden">
@@ -78,8 +81,7 @@
                                     <div class="">
                                         <label for="dob"
                                             class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Date Of
-                                            Birth </label> <span
-                                                class="text-danger-600">*</span>
+                                            Birth </label> <span class="text-danger-600">*</span>
                                         <input type="date" name="dob"
                                             value="{{ old('dob', \Carbon\Carbon::parse($student->getRawOriginal('dob'))->format('Y-m-d')) }}"
                                             class="form-control @error('dob') is-invalid @enderror" id="dateOfBirth">
@@ -122,58 +124,58 @@
                                     </div>
                                 </div>
                                 @role('admin')
-                                 <div class="col-xxl-3 col-xl-4 col-sm-6">
-                                    <div class="">
-                                        <label for="practitioner_registration"
-                                            class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Practitioner
-                                            Registration No.
-                                        </label>
-                                        <input type="text" name="practitioner_registration"
-                                            value="{{ $student?->practitioner_registration ?? '' }}"
-                                            class="form-control @error('practitioner_registration') is-invalid @enderror"
-                                            id="practitioner_registration"
-                                            placeholder="Enter your practitioner registration no.">
-                                        @error('practitioner_registration')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
+                                    <div class="col-xxl-3 col-xl-4 col-sm-6">
+                                        <div class="">
+                                            <label for="practitioner_registration"
+                                                class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Practitioner
+                                                Registration No.
+                                            </label>
+                                            <input type="text" name="practitioner_registration"
+                                                value="{{ $student?->practitioner_registration ?? '' }}"
+                                                class="form-control @error('practitioner_registration') is-invalid @enderror"
+                                                id="practitioner_registration"
+                                                placeholder="Enter your practitioner registration no.">
+                                            @error('practitioner_registration')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
                                     </div>
-                                </div>
-                                 <div class="col-sm-3">
-                                    <div class="">
-                                        <label for="others"
-                                            class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Other
-                                            Information
-                                        </label>
-                                        <input type="text" name="others" value="{{ $student?->others ?? '' }}"
-                                            class="form-control @error('others') is-invalid @enderror" id="other"
-                                            placeholder="Enter your others informations">
-                                        @error('others')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
+                                    <div class="col-sm-3">
+                                        <div class="">
+                                            <label for="others"
+                                                class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Other
+                                                Information
+                                            </label>
+                                            <input type="text" name="others" value="{{ $student?->others ?? '' }}"
+                                                class="form-control @error('others') is-invalid @enderror" id="other"
+                                                placeholder="Enter your others informations">
+                                            @error('others')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
                                     </div>
-                                </div>
-                                
-                                <div class="col-xxl-3 col-xl-4 col-sm-6">
-                                    <div class="">
-                                        <label for="qualification"
-                                            class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Qualification
-                                        </label>
-                                        <input type="text" name="qualification"
-                                            value="{{ $student?->qualification ?? '' }}"
-                                            class="form-control @error('qualification') is-invalid @enderror"
-                                            id="qualification" placeholder="Enter your qualification">
-                                        @error('qualification')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
+
+                                    <div class="col-xxl-3 col-xl-4 col-sm-6">
+                                        <div class="">
+                                            <label for="qualification"
+                                                class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Qualification
+                                            </label>
+                                            <input type="text" name="qualification"
+                                                value="{{ $student?->qualification ?? '' }}"
+                                                class="form-control @error('qualification') is-invalid @enderror"
+                                                id="qualification" placeholder="Enter your qualification">
+                                            @error('qualification')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
                                     </div>
-                                </div>
-                               @endrole
+                                @endrole
                                 <div class="col-xxl-3 col-xl-4 col-sm-4">
                                     <div class="">
                                         <label class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Student
@@ -192,8 +194,9 @@
                                 </div>
                                 <div class="col-xxl-3 col-xl-4 col-sm-4">
                                     <div class="">
-                                        <label class="text-sm fw-semibold text-primary-light d-inline-block mb-8">10th Marksheet
-                                            
+                                        <label class="text-sm fw-semibold text-primary-light d-inline-block mb-8">10th
+                                            Marksheet
+
                                         </label>
                                         <div>
                                             <input type="file" name="10th_marksheet"
@@ -208,7 +211,8 @@
                                 </div>
                                 <div class="col-xxl-3 col-xl-4 col-sm-4">
                                     <div class="">
-                                        <label class="text-sm fw-semibold text-primary-light d-inline-block mb-8">12th Marksheet
+                                        <label class="text-sm fw-semibold text-primary-light d-inline-block mb-8">12th
+                                            Marksheet
                                         </label>
                                         <div>
                                             <input type="file" name="12th_marksheet"
@@ -221,31 +225,31 @@
                                         </div>
                                     </div>
                                 </div>
-                              @can('change student status')
-                                <div class="col-sm-3">
-                                    <div class="">
-                                        <label for="status"
-                                            class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Status <span
-                                                class="text-danger-600">*</span></label>
-                                        <select id="status" name="status"
-                                            class="form-control form-select @error('status') is-invalid @enderror">
-                                            <option value="Select section" disabled>Select Status</option>
-                                            <option value="1"
-                                                {{ old('status', $student->status ?? '') == '1' ? 'selected' : '' }}>Active
-                                            </option>
-                                            <option value="0"
-                                                {{ old('status', $student->status ?? '') == '0' ? 'selected' : '' }}>
-                                                Inactive</option>
-                                        </select>
-                                        @error('status')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
+                                @can('change student status')
+                                    <div class="col-sm-3">
+                                        <div class="">
+                                            <label for="status"
+                                                class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Status <span
+                                                    class="text-danger-600">*</span></label>
+                                            <select id="status" name="status"
+                                                class="form-control form-select @error('status') is-invalid @enderror">
+                                                <option value="Select section" disabled>Select Status</option>
+                                                <option value="1"
+                                                    {{ old('status', $student->status ?? '') == '1' ? 'selected' : '' }}>Active
+                                                </option>
+                                                <option value="0"
+                                                    {{ old('status', $student->status ?? '') == '0' ? 'selected' : '' }}>
+                                                    Inactive</option>
+                                            </select>
+                                            @error('status')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
                                     </div>
-                                </div>
-                              @endcan
-                               
+                                @endcan
+
                             </div>
                         </div>
                     </div>

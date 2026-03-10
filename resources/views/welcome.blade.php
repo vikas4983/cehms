@@ -24,18 +24,21 @@
                                     <span class="mb-12">
                                         <img src="{{ $user->image
                                             ? asset('storage/' . $user->image)
-                                            : asset($user->gender == 'female' ? 'assets/images/female-avtar.png' : 'assets/images/male-avtar.png') }}"
+                                            : ($user->gender == 'female'
+                                                ? asset('assets/images/female-avtar.png')
+                                                : asset('assets/images/male-avtar.png')) }}"
                                             alt="User Image" class="rounded-circle object-fit-cover">
                                     </span>
-                                    <h6 class="text-white">Devon Lane</h6>
-                                    <span class="text-white text-lg d-block">{{ucfirst($user->getRoleNames()->first()) ?? ''}}</span>
-                                    
+                                    <h6 class="text-white">{{ auth()->user()->name ?? '' }}</h6>
+                                    <span
+                                        class="text-white text-lg d-block">{{ ucfirst($user->getRoleNames()->first()) ?? '' }}</span>
+
                                     @can('edit user')
-                                    <div class="mt-12">
-                                        <a href="{{route('profile.edit')}}"
-                                            class="px-20 py-8 text-white bg-white bg-opacity-10 radius-6 fw-medium text-lg">Edit
-                                            Profile</a>
-                                    </div>
+                                        <div class="mt-12">
+                                            <a href="{{ route('profile.edit') }}"
+                                                class="px-20 py-8 text-white bg-white bg-opacity-10 radius-6 fw-medium text-lg">Edit
+                                                Profile</a>
+                                        </div>
                                     @endcan
                                 </div>
                             </div>
@@ -82,186 +85,7 @@
                 </div>
                 <!-- Dashboard widgets end -->
 
-                <!-- User activity Start -->
-                <div class="col-xxl-4 col-lg-6">
-                    <div class="card radius-12 border-0 h-100">
-                        <div
-                            class="d-flex align-items-center flex-wrap gap-2 justify-content-between py-12 px-20 border-bottom border-neutral-200">
-                            <h6 class="mb-2 fw-bold text-lg">Attendance</h6>
-                            <select class="form-select bg-base form-select-sm w-auto radius-8">
-                                <option>Yearly</option>
-                                <option>Monthly</option>
-                                <option>Weekly</option>
-                                <option>Today</option>
-                            </select>
-                        </div>
-                        <div class="card-body py-24">
-                            <div class=" gap-20">
-                                <div class="text-center">
-                                    <div id="userOverviewDonutChart" class="apexcharts-tooltip-z-none"></div>
-                                </div>
-                                <div class="d-flex gap-12 justify-content-around mt-24">
-                                    <div class="d-flex align-items-start gap-8">
-                                        <span class="w-6-px h-16-px bg-success-500 rounded-pill position-relative mt-8">
-                                        </span>
-                                        <div class="">
-                                            <h6 class="mb-0">200</h6>
-                                            <p class="text-secondary-light text-sm mb-0">Present</p>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex align-items-start gap-8">
-                                        <span class="w-6-px h-16-px bg-info rounded-pill position-relative mt-8">
-                                        </span>
-                                        <div class="">
-                                            <h6 class="mb-0">300</h6>
-                                            <p class="text-secondary-light text-sm mb-0">Half Day </p>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex align-items-start gap-8">
-                                        <span class="w-6-px h-16-px bg-purple rounded-pill position-relative mt-8"></span>
-                                        <div class="">
-                                            <h6 class="mb-0">172</h6>
-                                            <p class="text-secondary-light text-sm mb-0">Late</p>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex align-items-start gap-8">
-                                        <span class="w-6-px h-16-px bg-warning rounded-pill position-relative mt-8"></span>
-                                        <div class="">
-                                            <h6 class="mb-0">500</h6>
-                                            <p class="text-secondary-light text-sm mb-0">Absent</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- User activity End -->
 
-                <div class="col-xxl-4 col-lg-6">
-                    <div class="card radius-12 border-0 h-100">
-                        <div
-                            class="d-flex align-items-center flex-wrap gap-2 justify-content-between py-12 px-20 border-bottom border-neutral-200">
-                            <h6 class="mb-2 fw-bold text-lg">Today's Class</h6>
-                        </div>
-                        <div class="card-body pe-0 py-8">
-                            <div class="d-flex flex-column max-h-390-px overflow-y-auto scroll-sm pe-20">
-                                <div class="d-flex align-items-center justify-content-between gap-3 py-10 border-bottom">
-                                    <div class="flex-grow-1">
-                                        <h6 class="text-lg mb-4 fw-medium">English</h6>
-                                        <div class="d-flex align-items-center gap-8">
-                                            <span class="d-flex">
-                                                <i class="ri-graduation-cap-line"></i>
-                                            </span>
-                                            <span class="text-sm text-secondary-light fw-medium">09:300 - 09:45
-                                                AM</span>
-                                        </div>
-                                    </div>
-                                    <div class="">
-                                        <span
-                                            class="bg-success-100 text-success-600 px-24 py-4 radius-4 fw-medium text-sm">Completed</span>
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-center justify-content-between gap-3 py-10 border-bottom">
-                                    <div class="flex-grow-1">
-                                        <h6 class="text-lg mb-4 fw-medium">Physics</h6>
-                                        <div class="d-flex align-items-center gap-8">
-                                            <span class="d-flex">
-                                                <i class="ri-graduation-cap-line"></i>
-                                            </span>
-                                            <span class="text-sm text-secondary-light fw-medium">09:50 - 10:35
-                                                AM</span>
-                                        </div>
-                                    </div>
-                                    <div class="">
-                                        <span
-                                            class="bg-warning-100 text-warning-600 px-24 py-4 radius-4 fw-medium text-sm">Inprogress</span>
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-center justify-content-between gap-3 py-10 border-bottom">
-                                    <div class="flex-grow-1">
-                                        <h6 class="text-lg mb-4 fw-medium">Bangla</h6>
-                                        <div class="d-flex align-items-center gap-8">
-                                            <span class="d-flex">
-                                                <i class="ri-graduation-cap-line"></i>
-                                            </span>
-                                            <span class="text-sm text-secondary-light fw-medium">09:300 - 09:45
-                                                AM</span>
-                                        </div>
-                                    </div>
-                                    <div class="">
-                                        <span
-                                            class="bg-warning-100 text-warning-600 px-24 py-4 radius-4 fw-medium text-sm">Inprogress</span>
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-center justify-content-between gap-3 py-10 border-bottom">
-                                    <div class="flex-grow-1">
-                                        <h6 class="text-lg mb-4 fw-medium">Chemistry</h6>
-                                        <div class="d-flex align-items-center gap-8">
-                                            <span class="d-flex">
-                                                <i class="ri-graduation-cap-line"></i>
-                                            </span>
-                                            <span class="text-sm text-secondary-light fw-medium">09:300 - 09:45
-                                                AM</span>
-                                        </div>
-                                    </div>
-                                    <div class="">
-                                        <span
-                                            class="bg-warning-100 text-warning-600 px-24 py-4 radius-4 fw-medium text-sm">Inprogress</span>
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-center justify-content-between gap-3 py-10 border-bottom">
-                                    <div class="flex-grow-1">
-                                        <h6 class="text-lg mb-4 fw-medium">Accounting</h6>
-                                        <div class="d-flex align-items-center gap-8">
-                                            <span class="d-flex">
-                                                <i class="ri-graduation-cap-line"></i>
-                                            </span>
-                                            <span class="text-sm text-secondary-light fw-medium">09:300 - 09:45
-                                                AM</span>
-                                        </div>
-                                    </div>
-                                    <div class="">
-                                        <span
-                                            class="bg-warning-100 text-warning-600 px-24 py-4 radius-4 fw-medium text-sm">Inprogress</span>
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-center justify-content-between gap-3 py-10 border-bottom">
-                                    <div class="flex-grow-1">
-                                        <h6 class="text-lg mb-4 fw-medium">English</h6>
-                                        <div class="d-flex align-items-center gap-8">
-                                            <span class="d-flex">
-                                                <i class="ri-graduation-cap-line"></i>
-                                            </span>
-                                            <span class="text-sm text-secondary-light fw-medium">09:300 - 09:45
-                                                AM</span>
-                                        </div>
-                                    </div>
-                                    <div class="">
-                                        <span
-                                            class="bg-success-100 text-success-600 px-24 py-4 radius-4 fw-medium text-sm">Completed</span>
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-center justify-content-between gap-3 py-10 border-bottom">
-                                    <div class="flex-grow-1">
-                                        <h6 class="text-lg mb-4 fw-medium">English</h6>
-                                        <div class="d-flex align-items-center gap-8">
-                                            <span class="d-flex">
-                                                <i class="ri-graduation-cap-line"></i>
-                                            </span>
-                                            <span class="text-sm text-secondary-light fw-medium">09:300 - 09:45
-                                                AM</span>
-                                        </div>
-                                    </div>
-                                    <div class="">
-                                        <span
-                                            class="bg-success-100 text-success-600 px-24 py-4 radius-4 fw-medium text-sm">Completed</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
 
 
