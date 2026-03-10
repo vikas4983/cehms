@@ -177,7 +177,11 @@
                     class="profile-dropdown__button d-flex align-items-center justify-content-between p-10 w-100 overflow-hidden bg-neutral-50 radius-12 "
                     data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
                     <span class="d-flex align-items-start gap-10">
-                        <img src="{{ auth()->user()->image ? asset('storage/' . auth()->user()->image) : (auth()->user()->gender == 'female' ? asset(assets / images / female - avtar . png) : asset('assets/images/male-avtar.png')) }}"
+                        <img src="{{ auth()->user()->image
+                            ? asset('storage/' . auth()->user()->image)
+                            : (auth()->user()->gender == 'female'
+                                ? asset('assets/images/female-avtar.png')
+                                : asset('assets/images/male-avtar.png')) }}"
                             alt="Thumbnail" class="w-40-px h-40-px rounded-circle object-fit-cover flex-shrink-0">
                         <span class="profile-dropdown__contents">
                             <span class="h6 mb-0 text-md d-block text-primary-light">{{ auth()->user()->name }}</span>
@@ -189,49 +193,49 @@
                         <i class="ri-arrow-right-s-line"></i>
                     </span>
                 </button>
-                 @role('admin')
-                  <ul class="dropdown-menu dropdown-menu-lg-end border p-12">
-                    <li>
-                        <a href="#"
-                            class="dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6">
-                            <i class="ri-user-3-line"></i>
-                            My Profile
-                        </a>
-                    </li>
-                    <li>
-                        <a href="general.html"
-                            class="dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6">
-                            <i class="ri-settings-3-line"></i>
-                            Setting
-                        </a>
-                    </li>
-                    <li>
-                        <a id="logOut" style="cursor: pointer"
-                            class="dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6">
-                            <i class="ri-shut-down-line"></i>
-                            Log Out
-                        </a>
-                    </li>
-                </ul>
-                 @endrole
-                 @role('user')
-                  <ul class="dropdown-menu dropdown-menu-lg-end border p-12">
-                    <li>
-                        <a href="{{route('my.profile')}}"
-                            class="dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6">
-                            <i class="ri-user-3-line"></i>
-                            My Profile
-                        </a>
-                    </li>
-                   <li>
-                        <a id="logOut" style="cursor: pointer"
-                            class="dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6">
-                            <i class="ri-shut-down-line"></i>
-                            Log Out
-                        </a>
-                    </li>
-                </ul>
-                 @endrole
+                @role('admin')
+                    <ul class="dropdown-menu dropdown-menu-lg-end border p-12">
+                        <li>
+                            <a href="#"
+                                class="dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6">
+                                <i class="ri-user-3-line"></i>
+                                My Profile
+                            </a>
+                        </li>
+                        <li>
+                            <a href="general.html"
+                                class="dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6">
+                                <i class="ri-settings-3-line"></i>
+                                Setting
+                            </a>
+                        </li>
+                        <li>
+                            <a id="logOut" style="cursor: pointer"
+                                class="dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6">
+                                <i class="ri-shut-down-line"></i>
+                                Log Out
+                            </a>
+                        </li>
+                    </ul>
+                @endrole
+                @role('user')
+                    <ul class="dropdown-menu dropdown-menu-lg-end border p-12">
+                        <li>
+                            <a href="{{ route('my.profile') }}"
+                                class="dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6">
+                                <i class="ri-user-3-line"></i>
+                                My Profile
+                            </a>
+                        </li>
+                        <li>
+                            <a id="logOut" style="cursor: pointer"
+                                class="dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6">
+                                <i class="ri-shut-down-line"></i>
+                                Log Out
+                            </a>
+                        </li>
+                    </ul>
+                @endrole
             </div>
         </div>
         <!-- User Info end -->
@@ -249,7 +253,7 @@
                         <ul class="sidebar-submenu">
                             @can('view user')
                                 <li>
-                                    <a href="{{route('dashboard')}}">
+                                    <a href="{{ route('dashboard') }}">
                                         <i class="ri-circle-fill circle-icon w-auto"></i>
                                         Student
                                     </a>
@@ -1100,7 +1104,7 @@
     <!-- main js -->
     <script src="{{ asset('assets/js/app.js') }}"></script>
     {{-- <script src="{{ asset('assets/js/apexcharts.min.js') }}"></script> --}}
-   
+
     <!-- Custom js -->
     <script src="{{ asset('assets/js/custom-js/data-table-assign-role.js') }}"></script>
     <script src="{{ asset('assets/js/custom-js/action-button.js') }}"></script>
