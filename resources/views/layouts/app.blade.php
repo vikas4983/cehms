@@ -1,7 +1,6 @@
 <!-- meta tags and other links -->
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
-
 <head>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
     <meta charset="UTF-8">
@@ -156,18 +155,26 @@
         <button type="button" class="sidebar-close-btn">
             <iconify-icon icon="radix-icons:cross-2"></iconify-icon>
         </button>
-        <div class="">
-            <div class="sidebar-logo d-flex align-items-center justify-content-between">
-                <a href="{{ route('dashboard') }}" class="">
+        <div>
+            <div class="sidebar-logo d-flex flex-column align-items-center position-relative">
+
+                <a href="{{ route('dashboard') }}" class="text-center">
                     <img src="{{ $setting->logo ? asset('storage/' . $setting->logo) : asset('assets/images/default-logo.png') }}"
-                        alt="site logo" class="light-logo">
-                    <img src="{{ asset('assets/images/logo-light.png') }}" alt="site logo" class="dark-logo">
-                    <img src="{{ asset('assets/images/logo-icon.png') }}" alt="site logo" class="logo-icon">
+                        alt="site logo" class="light-logo img-fluid">
+
+                    <img src="{{ $setting->logo ? asset('storage/' . $setting->logo) : asset('assets/images/default-logo.png') }}" alt="site logo"
+                        class="dark-logo img-fluid">
+
+                    <img src="{{ $setting->logo ? asset('storage/' . $setting->logo) : asset('assets/images/default-logo.png') }}" alt="site logo"
+                        class="logo-icon img-fluid">
                 </a>
-                <button type="button" class="text-xxl d-xl-flex d-none line-height-1 sidebar-toggle text-neutral-500"
+
+                <button type="button"
+                    class="text-xxl d-xl-flex d-none line-height-1 sidebar-toggle text-neutral-500 position-absolute end-0 top-50 translate-middle-y"
                     aria-label="Collapse Sidebar">
                     <i class="ri-contract-left-line"></i>
                 </button>
+
             </div>
         </div>
         <!-- User Info start -->
@@ -958,7 +965,7 @@
                             </div>
                         </div><!-- Language dropdown end -->
 
-                        <div class="dropdown">
+                        {{-- <div class="dropdown">
                             <button
                                 class="has-indicator w-40-px h-40-px bg-neutral-200 rounded-circle d-flex justify-content-center align-items-center position-relative"
                                 type="button" data-bs-toggle="dropdown" aria-label="Notification Button">
@@ -1072,7 +1079,7 @@
                                 </div>
 
                             </div>
-                        </div><!-- Notification dropdown end -->
+                        </div><!-- Notification dropdown end --> --}}
 
                     </div>
                 </div>

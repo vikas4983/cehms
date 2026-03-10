@@ -6,8 +6,9 @@
             <div class="">
                 <h1 class="fw-semibold mb-4 h6 text-primary-light">Student Details</h1>
                 <div class="">
-                    <a href="index.html" class="text-secondary-light hover-text-primary hover-underline">Dashboard </a>
-                    <a href="student-list.html" class="text-secondary-light hover-text-primary hover-underline"> /
+                    <a href="{{ route('dashboard') }}"
+                        class="text-secondary-light hover-text-primary hover-underline">Dashboard </a>
+                    <a href="{{ route('dashboard') }}" class="text-secondary-light hover-text-primary hover-underline"> /
                         Student</a>
                     <span class="text-secondary-light">/ Student Details</span>
                 </div>
@@ -22,8 +23,12 @@
                             <figure
                                 class="mb-24 w-120-px h-120-px mx-auto rounded-circle overflow-hidden position-relative">
                                 <!-- Image -->
-                                <img src="{{ asset('storage/' . $student->image) }}" alt="Student Image"
-                                    class="w-100 h-100 object-fit-cover">
+                                <img src="{{ $student->image
+                                    ? asset('storage/' . $student->image)
+                                    : ($student->gender == 'female'
+                                        ? asset('assets/images/female-avtar.png')
+                                        : asset('assets/images/male-avtar.png')) }}"
+                                    alt="Student Image" class="w-100 h-100 object-fit-cover">
                                 <!-- Hidden File Input -->
                                 <input type="file" id="imageUpload" name="image" class="d-none">
                                 <input type="hidden" id="studentId" value="{{ $student->id }}">
@@ -88,7 +93,8 @@
                                 </div>
                                 <div class="d-flex gap-4">
                                     <span class="fw-semibold text-sm text-primary-light w-110-px">Date Of Birth</span>
-                                    <span class="fw-normal text-sm text-secondary-light">: {{ $student?->dob ?? '' }}</span>
+                                    <span class="fw-normal text-sm text-secondary-light">:
+                                        {{ $student?->dob ?? '' }}</span>
                                 </div>
                                 <div class="d-flex gap-4">
                                     <span class="fw-semibold text-sm text-primary-light w-110-px">Email</span>
@@ -138,29 +144,29 @@
                                 @endif
                             </div>
                             @can('view document')
-                            <div class="mt-16 d-flex flex-column gap-8">
-                                @if (!empty($student->{'10th_marksheet'}))
-                                    <div class="d-flex gap-4">
-                                        <span class="fw-semibold text-sm text-primary-light w-110-px">10th Marksheet</span>
-                                        <span class="fw-normal text-sm text-secondary-light">:
-                                            <a href="{{ route('view.document', ['path' => $student->{'10th_marksheet'}]) }}"
-                                                target="_blank">
+                                <div class="mt-16 d-flex flex-column gap-8">
+                                    @if (!empty($student->{'10th_marksheet'}))
+                                        <div class="d-flex gap-4">
+                                            <span class="fw-semibold text-sm text-primary-light w-110-px">10th Marksheet</span>
+                                            <span class="fw-normal text-sm text-secondary-light">:
+                                                <a href="{{ route('view.document', ['path' => $student->{'10th_marksheet'}]) }}"
+                                                    target="_blank">
 
-                                                View
-                                            </a></span>
-                                    </div>
-                                @endif
-                                @if (!empty($student->{'12th_marksheet'}))
-                                    <div class="d-flex gap-4">
-                                        <span class="fw-semibold text-sm text-primary-light w-110-px">12th Marksheet</span>
-                                        <span class="fw-normal text-sm text-secondary-light">:
-                                            <a href="{{ route('view.document', ['path' => $student->{'12th_marksheet'}]) }}"
-                                                target="_blank">
-                                                View
-                                            </a></span>
-                                    </div>
-                                @endif
-                            </div>
+                                                    View
+                                                </a></span>
+                                        </div>
+                                    @endif
+                                    @if (!empty($student->{'12th_marksheet'}))
+                                        <div class="d-flex gap-4">
+                                            <span class="fw-semibold text-sm text-primary-light w-110-px">12th Marksheet</span>
+                                            <span class="fw-normal text-sm text-secondary-light">:
+                                                <a href="{{ route('view.document', ['path' => $student->{'12th_marksheet'}]) }}"
+                                                    target="_blank">
+                                                    View
+                                                </a></span>
+                                        </div>
+                                    @endif
+                                </div>
                             @endcan
                         </div>
                     </div>

@@ -157,7 +157,7 @@
 
         <!-- Left Image -->
         <div class="w-50 d-none d-lg-block overflow-hidden">
-            <img src="{{ asset('assets/images/login-img.png') }}" alt="Register Image"
+            <img src="{{ asset('assets/images/login-img1.png') }}" alt="Register Image"
                 class="w-100 h-100 object-fit-cover">
         </div>
 
