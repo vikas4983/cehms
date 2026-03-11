@@ -1,8 +1,15 @@
 @extends('layouts.app')
-@section('title', 'Student - Add')
+@section('title', 'Students')
 @section('content')
+    <style>
+        .dataTables_paginate,
+        .dataTables_info,
+        .dataTables_length,
+        .dataTables_filter {
+            display: none !important;
+        }
+    </style>
     <div class="dashboard-main-body">
-
         <div class="breadcrumb d-flex flex-wrap align-items-center justify-content-between gap-3 mb-24">
             <div class="">
                 <h1 class="fw-semibold mb-4 h6 text-primary-light">Student List</h1>
@@ -166,11 +173,9 @@
                                     </th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Email</th>
-                                    <th scope="col">Gender</th>
+                                    <th scope="col">Practitioner Registration</th>
                                     <th scope="col">Date of Birth</th>
                                     <th scope="col">Mobile Number</th>
-                                    <th scope="col">Qualification</th>
-                                    <th scope="col">Registration Number</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Action</th>
                                 </tr>
@@ -186,15 +191,14 @@
                                                 </label>
                                             </div>
                                         </td>
-                                        <td><a href="{{ route('students.show', $student?->id ?? '') }}"
+                                        <td>
+                                            <a href="{{ route('students.show', $student?->id ?? '') }}"
                                                 style="color:rgb(9, 146, 112)">{{ $student?->name ?? '' }}</a>
                                         </td>
                                         <td>{{ $student?->email ?? '' }}</td>
-                                        <td>{{ $student?->gender ?? '' }}</td>
+                                        <td>{{ $student?->practitioner_registration ?? '' }}</td>
                                         <td>{{ $student->dob }}</td>
                                         <td>{{ $student?->mobile ?? '' }}</td>
-                                        <td>{{ $student?->qualification ?? '' }}</td>
-                                        <td>{{ $student?->practitioner_registration ?? '' }}</td>
                                         <td>
                                             @if ($student?->status ?? '' == '1')
                                                 <span
@@ -227,12 +231,17 @@
                                     </tr>
                                 @endforeach
                             </tbody>
+
                         </table>
+                        <div class="row text-right">
+                            {{ $students->links() }}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
     <!-- Modal Delete Event start -->
     <x-button.confirm-delete-component />
 

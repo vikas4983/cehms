@@ -1,6 +1,7 @@
 <!-- meta tags and other links -->
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
+
 <head>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
     <meta charset="UTF-8">
@@ -162,11 +163,11 @@
                     <img src="{{ $setting->logo ? asset('storage/' . $setting->logo) : asset('assets/images/default-logo.png') }}"
                         alt="site logo" class="light-logo img-fluid">
 
-                    <img src="{{ $setting->logo ? asset('storage/' . $setting->logo) : asset('assets/images/default-logo.png') }}" alt="site logo"
-                        class="dark-logo img-fluid">
+                    <img src="{{ $setting->logo ? asset('storage/' . $setting->logo) : asset('assets/images/default-logo.png') }}"
+                        alt="site logo" class="dark-logo img-fluid">
 
-                    <img src="{{ $setting->logo ? asset('storage/' . $setting->logo) : asset('assets/images/default-logo.png') }}" alt="site logo"
-                        class="logo-icon img-fluid">
+                    <img src="{{ $setting->logo ? asset('storage/' . $setting->logo) : asset('assets/images/default-logo.png') }}"
+                        alt="site logo" class="logo-icon img-fluid">
                 </a>
 
                 <button type="button"
@@ -371,6 +372,11 @@
                                 <a href="{{ route('inactive.students') }}">
                                     <i class="ri-circle-fill circle-icon w-auto"></i>
                                     Suspend Student
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('trash.students') }}">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i> Trash Student
                                 </a>
                             </li>
 
@@ -1497,8 +1503,25 @@
 
         });
     </script>
+{{-- Disable Data Table --}}
+  <script>
+        document.addEventListener('DOMContentLoaded', function() {
 
+            if ($.fn.DataTable.isDataTable('#dataTable')) {
+                $('#dataTable').DataTable().destroy();
+            }
 
+            $('#dataTable').DataTable({
+                paging: false,
+                searching: true,
+                info: false,
+                lengthChange: false,
+                ordering: true,
+                dom: 't'
+            });
+
+        });
+    </script>
 </body>
 
 </html>

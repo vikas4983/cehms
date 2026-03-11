@@ -166,11 +166,9 @@
                                     </th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Email</th>
-                                    <th scope="col">Gender</th>
+                                    <th scope="col">Practitioner Registration</th>
                                     <th scope="col">Date of Birth</th>
                                     <th scope="col">Mobile Number</th>
-                                    <th scope="col">Qualification</th>
-                                    <th scope="col">Registration Number</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Action</th>
                                 </tr>
@@ -186,15 +184,18 @@
                                                 </label>
                                             </div>
                                         </td>
-                                        <td><a
-                                                href="{{ route('students.show', $student?->id ?? '') }}">{{ $student?->name ?? '' }}</a>
-                                        </td>
+                                        <td>
+                                            @if ($student->trashed())
+                                                <a href="{{ route('untrash.students', $student?->id ?? '') }}"
+                                                    style="color:rgb(9, 146, 112)" data-url ="{{route('untrash.students',$student->id)}}" title="Undo Record" data-bs-toggle="modal"
+                                                    data-bs-target="#deleteModal"><i
+                                                        class="ri-arrow-go-back-line"></i></a>
+                                            @endif
+                                           {{ $student?->name ?? '' }}
                                         <td>{{ $student?->email ?? '' }}</td>
-                                        <td>{{ $student?->gender ?? '' }}</td>
+                                        <td>{{ $student?->practitioner_registration ?? '' }}</td>
                                         <td>{{ $student->dob }}</td>
                                         <td>{{ $student?->mobile ?? '' }}</td>
-                                        <td>{{ $student?->qualification ?? '' }}</td>
-                                        <td>{{ $student?->practitioner_registration ?? '' }}</td>
                                         <td>
                                             @if ($student?->status ?? '' == '1')
                                                 <span
