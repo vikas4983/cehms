@@ -15,7 +15,9 @@
 
     <!-- Title -->
     <title>CEHMS - Login</title>
-    <link rel="icon" type="image/png" href="{{ $setting->favicon ? asset('storage/' . $setting->favicon) : asset('assets/images/favicon.png') }}" sizes="16x16">
+    <link rel="icon" type="image/png"
+        href="{{ $setting->favicon ? asset('storage/' . $setting->favicon) : asset('assets/images/favicon.png') }}"
+        sizes="16x16">
     <!-- remix icon font css  -->
     <link rel="stylesheet" href="{{ asset('assets/css/remixicon.css') }}">
     <!-- BootStrap css -->
@@ -162,7 +164,7 @@
         <div class="lg-w-50 px-24 py-32 d-flex justify-content-center align-items-center">
             <div class="max-w-540-px mx-auto">
                 <div class="text-center">
-                    <a href="{{route('/')}}" class="" style="width:7rem">
+                    <a href="{{ route('/') }}" class="" style="width:7rem">
                         <img src="{{ $setting->logo ? asset('storage/' . $setting->logo) : asset('assets/images/logo.png') }}"
                             alt="Logo">
                     </a>
@@ -219,6 +221,11 @@
                         <button type="submit"
                             class="loginBtn btn btn-primary-600 text-sm btn-sm px-12 py-16 w-100 radius-8"> Log In
                         </button>
+                    </div>
+                    <div class="">
+                        <a href="{{ route('/') }}"
+                            class="loginBtn btn btn-primary-600 text-sm btn-sm px-12 py-16 w-100 radius-8"> Home
+                        </a>
                     </div>
                 </form>
                 <div class="mt-32 text-center text-sm">

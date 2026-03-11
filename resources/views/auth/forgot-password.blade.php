@@ -207,6 +207,11 @@
                             class="loginBtn btn btn-primary-600 text-sm btn-sm px-12 py-16 w-100 radius-8"> Login
                         </a>
                     </div>
+                    <div class="">
+                        <a href="{{ route('/') }}"
+                            class="loginBtn btn btn-primary-600 text-sm btn-sm px-12 py-16 w-100 radius-8"> Home
+                        </a>
+                    </div>
 
                 </form>
                 <div class="mt-32 text-center text-sm">

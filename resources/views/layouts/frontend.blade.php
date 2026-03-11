@@ -12,6 +12,7 @@
     <title>@yield('title', 'CEHSM')</title>
 
     <!-- CSS -->
+    <link href="{{ asset('assets-frontend/css/datepicker.css') }}">
     <link href="{{ asset('assets-frontend/css/reset.css') }}" rel="stylesheet">
     <link href="{{ asset('assets-frontend/css/fonts.css') }}" rel="stylesheet">
     <link href="{{ asset('assets-frontend/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -419,6 +420,7 @@
     <script src="{{ asset('assets-frontend/js/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('assets-frontend/js/modernizr.custom.js') }}"></script>
     <script src="{{ asset('assets-frontend/js/custom.js') }}"></script>
+    <script src="{{ asset('assets-frontend/js/datepicker.js') }}"></script>
 </body>
 
 </html>
