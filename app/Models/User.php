@@ -25,6 +25,7 @@ class User extends Authenticatable
     use Notifiable;
     use TwoFactorAuthenticatable;
     use HasRoles;
+    use SoftDeletes;
     // use SoftDeletes;
 
     /**
@@ -32,7 +33,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = ['name', 'email', 'password', 'image', 'status', 'father_name', 'dob', 'gender', 'mobile', 'address', '10th_marksheet','12th_marksheet', 'qualification', 'practitioner_registration', 'others'];
+    protected $fillable = ['name', 'email', 'password', 'image', 'status', 'father_name', 'dob', 'gender', 'mobile', 'address', '10th_marksheet', '12th_marksheet', 'qualification', 'practitioner_registration', 'others'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -64,11 +65,10 @@ class User extends Authenticatable
     protected function scopeIsAdmin($query)
     {
         $userId = auth()->user()->id;
-        return $query->whereNot('id', $userId);
+        return $query->select('id', 'name', 'email', 'gender', 'dob', 'mobile', 'status','practitioner_registration')->where('id', '!=', $userId)->orderByDesc('updated_at')->orderByDesc('status')->latest();
     }
     protected function scopeInactive($query)
     {
-       
         return $query->where('status', 0);
     }
 

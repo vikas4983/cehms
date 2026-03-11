@@ -7,6 +7,7 @@ use App\Models\User;
 use App\traits\UploadTrait;
 use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
+use Symfony\Component\Console\Cursor;
 
 class StudentController extends Controller
 {
@@ -22,7 +23,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = User::isAdmin()->latest()->get();
+        $students = User::isAdmin()->paginate(20);
         return view('students.index', compact('students'));
     }
 
@@ -107,6 +108,12 @@ class StudentController extends Controller
         if ($user->exists() && $user->image) {
             $this->imageExist($user->image);
         }
+        if ($user->exists() && $user->{'10th_marksheet'}) {
+            $this->imageExist($user->{'10th_marksheet'});
+        }
+        if ($user->exists() && $user->{'12th_marksheet'}) {
+            $this->imageExist($user->{'12th_marksheet'});
+        }
         $user->delete();
         return redirect()->back()->with('error', 'Student has been deleted successfully');
     }
@@ -147,7 +154,24 @@ class StudentController extends Controller
 
     public function inactiveStudent()
     {
-        $students = User::inactive()->get();
+        $students = User::inactive()->paginate(20);
         return view('students.inactive', compact('students'));
+    }
+    public function trashStudent()
+    {
+        $students = User::onlyTrashed()->paginate(20);
+        return view('students.inactive', compact('students'));
+    }
+    public function untrashStudent($id)
+    {
+        if (!$id) {
+            return redirect()->back()->with('error', 'Something went wrong');
+        }
+        $student = User::withTrashed()->find($id);
+        if (!$student) {
+            return redirect()->back()->with('error', 'Something went wrong');
+        }
+        $student->restore($id);
+        return redirect()->route('students.index')->with('success', 'Student has been restore successfully');
     }
 }

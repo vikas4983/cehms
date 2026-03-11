@@ -36,6 +36,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('students', StudentController::class);
     Route::post('student-status', [StudentController::class, 'studentStatus'])->name('student.status');
     Route::get('inactive-student', [StudentController::class, 'inactiveStudent'])->name('inactive.students');
+    Route::get('trash-student', [StudentController::class, 'trashStudent'])->name('trash.students');
+    Route::delete('untrash-student/{id}', [StudentController::class, 'untrashStudent'])->name('untrash.students');
     Route::post('upload-image', [StudentController::class, 'uploadImage'])->name('upload.image');
     Route::resource('books', BookController::class);
     Route::get('book-status', [BookController::class, 'bookStatus'])->name('book.status');
