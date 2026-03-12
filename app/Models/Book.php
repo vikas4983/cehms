@@ -28,6 +28,6 @@ class Book extends Model
     }
     public function scopeAllBook($query)
     {
-        return $query;
+        return $query->orderbyDesc('status')->latest();
     }
 }

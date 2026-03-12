@@ -11,7 +11,8 @@
             <div class="">
                 <h1 class="fw-semibold mb-4 h6 text-primary-light">Unpublish Book List</h1>
                 <div class="">
-                    <a href="index.html" class="text-secondary-light hover-text-primary hover-underline">Dashboard </a>
+                    <a href="{{ route('dashboard') }}"
+                        class="text-secondary-light hover-text-primary hover-underline">Dashboard </a>
                     <a href="javascript:void(0)" class="text-secondary-light hover-text-primary hover-underline d-none"> /
                         Book</a>
                     <span class="text-secondary-light">/ Unpublish Book List</span>
@@ -30,7 +31,7 @@
         <div class="mt-24">
             <div class="card h-100">
                 <div class="card-body p-0 dataTable-wrapper">
-
+                    {{-- 
                     <div
                         class="d-flex align-items-center justify-content-between flex-wrap gap-16 px-20 py-12 border-bottom border-neutral-200">
                         <div class="d-flex flex-wrap align-items-center gap-16">
@@ -70,7 +71,7 @@
                                     name="search" placeholder="Search...">
                                 <iconify-icon icon="ion:search-outline" class="icon"></iconify-icon>
                             </form>
-                            {{-- <div class="dropdown">
+                            <div class="dropdown">
                                 <button type="button"
                                     class="px-12 py-5-px border border-neutral-300 radius-8 d-flex align-items-center gap-20"
                                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -139,9 +140,9 @@
                                         </div>
                                     </form>
                                 </div>
-                            </div> --}}
+                            </div>
                         </div>
-                        {{-- <div class="d-flex align-items-center gap-8 text-secondary-light">
+                        <div class="d-flex align-items-center gap-8 text-secondary-light">
                             <span class="">
                                 Rows per page:
                             </span>
@@ -155,8 +156,8 @@
                                     <option value="100">100</option>
                                 </select>
                             </div>
-                        </div> --}}
-                    </div>
+                        </div>
+                    </div> --}}
                     @include('alerts.alert')
                     <div class="p-0">
                         <table class="table bordered-table mb-0 data-table" id="dataTable" data-page-length='10'>
