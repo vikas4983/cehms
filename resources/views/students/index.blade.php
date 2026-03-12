@@ -8,6 +8,18 @@
         .dataTables_filter {
             display: none !important;
         }
+
+        .dropdown-submenu .excel-submenu {
+            display: none;
+            position: absolute;
+            left: 100%;
+            top: 0;
+            cursor: pointer;
+        }
+
+        .dropdown-submenu:hover .excel-submenu {
+            display: block;
+        }
     </style>
     <div class="dashboard-main-body">
         <div class="breadcrumb d-flex flex-wrap align-items-center justify-content-between gap-3 mb-24">
@@ -48,22 +60,57 @@
                                     </span>
                                 </button>
                                 <ul class="dropdown-menu p-12 border bg-base shadow">
-                                    <li>
-                                        <button type="button"
-                                            class="dropdown-item px-16 py-8 rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-10"
-                                            data-bs-toggle="modal" data-bs-target="#exampleModalView">
-                                            <i class="ri-file-3-line"></i>
-                                            PDF
-                                        </button>
+
+                                    <!-- Excel Parent -->
+                                    <li class="dropdown-submenu position-relative">
+                                        <a href="#"
+                                            class="dropdown-item px-16 py-8 rounded d-flex align-items-center justify-content-between">
+                                            <span class="d-flex align-items-center gap-10">
+                                                <i class="ri-file-excel-line text-success"></i> Excel
+                                            </span>
+                                            <i class="ri-arrow-right-s-line"></i>
+                                        </a>
+
+                                        <!-- Excel Submenu -->
+                                        <ul class="dropdown-menu excel-submenu">
+                                            <li>
+                                                <a data-bs-toggle="modal" data-bs-target="#confirmDownloadModal"
+                                                    data-url="{{ route('inactive.students.export') }}"
+                                                    class="dropdown-item">Inactive Students</a>
+                                            </li>
+
+                                            <li>
+                                                <a data-bs-toggle="modal" data-bs-target="#confirmDownloadModal"
+                                                    data-url="{{ route('active.students.export') }}"
+                                                    class="dropdown-item">Active Students</a>
+                                            </li>
+
+                                            <li>
+                                                <a data-bs-toggle="modal" data-bs-target="#confirmDownloadModal"
+                                                    data-url="{{ route('today.students.export') }}"
+                                                    class="dropdown-item">Daily Students</a>
+                                            </li>
+
+                                            <li>
+                                                <a data-bs-toggle="modal" data-bs-target="#confirmDownloadModal"
+                                                    data-url="{{ route('weekly.students.export') }}"
+                                                    class="dropdown-item">Weekly Students</a>
+                                            </li>
+
+                                            <li>
+                                                <a data-bs-toggle="modal" data-bs-target="#confirmDownloadModal"
+                                                    data-url="{{ route('monthly.students.export') }}"
+                                                    class="dropdown-item">Monthly Students</a>
+                                            </li>
+
+                                            <li>
+                                                <a data-bs-toggle="modal" data-bs-target="#confirmDownloadModal"
+                                                    data-url="{{ route('yearly.students.export') }}"
+                                                    class="dropdown-item">Yearly Students</a>
+                                            </li>
+                                        </ul>
                                     </li>
-                                    <li>
-                                        <button type="button"
-                                            class="dropdown-item px-16 py-8 rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-10"
-                                            data-bs-toggle="modal" data-bs-target="#exampleModalEdit">
-                                            <i class="ri-file-excel-line"></i>
-                                            Excel
-                                        </button>
-                                    </li>
+
                                 </ul>
                             </div>
                             <form class="navbar-search dt-search m-0">
@@ -71,7 +118,7 @@
                                     name="search" placeholder="Search...">
                                 <iconify-icon icon="ion:search-outline" class="icon"></iconify-icon>
                             </form>
-                            <div class="dropdown">
+                            {{-- <div class="dropdown">
                                 <button type="button"
                                     class="px-12 py-5-px border border-neutral-300 radius-8 d-flex align-items-center gap-20"
                                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -140,9 +187,9 @@
                                         </div>
                                     </form>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
-                        <div class="d-flex align-items-center gap-8 text-secondary-light">
+                        {{-- <div class="d-flex align-items-center gap-8 text-secondary-light">
                             <span class="">
                                 Rows per page:
                             </span>
@@ -156,7 +203,7 @@
                                     <option value="100">100</option>
                                 </select>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                     @include('alerts.alert')
                     <div class="p-0">
@@ -244,5 +291,6 @@
 
     <!-- Modal Delete Event start -->
     <x-button.confirm-delete-component />
+    <x-confirm-download-component />
 
 @endsection

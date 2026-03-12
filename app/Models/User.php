@@ -65,15 +65,54 @@ class User extends Authenticatable
     protected function scopeIsAdmin($query)
     {
         $userId = auth()->user()->id;
-        return $query->select('id', 'name', 'email', 'gender', 'dob', 'mobile', 'status','practitioner_registration')->where('id', '!=', $userId)->orderByDesc('updated_at')->orderByDesc('status')->latest();
-    }
-    protected function scopeInactive($query)
-    {
-        return $query->where('status', 0);
+        return $query->select('id', 'name', 'email', 'gender', 'dob', 'mobile', 'status', 'practitioner_registration')->where('id', '!=', $userId)->orderByDesc('updated_at')->orderByDesc('status')->latest();
     }
 
     public function dob(): Attribute
     {
         return Attribute::make(get: fn($value) => Carbon::parse($value)->format('d M Y'));
+    }
+
+    protected function scopeInactive($query)
+    {
+        return $query->where('status', 0);
+    }
+    protected function scopeActiveStudents($query)
+    {
+        return $query->where('status', 1)->latest();
+    }
+    protected function scopeExportActiveStudents($query)
+    {
+        return $query->select('name', 'email', 'dob', 'practitioner_registration', 'mobile', 'gender', 'qualification')->where('status', 1)->latest();
+    }
+
+    public function scopeTodayStudents($query)
+    {
+        return $query
+            ->select('name', 'email', 'dob', 'practitioner_registration', 'mobile', 'gender', 'qualification')
+
+            ->where('status', 1)
+            ->whereDate('created_at', today())
+            ->latest();
+    }
+    public function scopeWeeklyStudents($query)
+    {
+        return $query
+            ->select('name', 'email', 'dob', 'practitioner_registration', 'mobile', 'gender', 'qualification')
+            ->where('status', 1)
+            ->where('created_at', '>=', now()->subDays(7))
+            ->latest();
+    }
+    public function scopeMonthlyStudents($query)
+    {
+        return $query
+            ->select('name', 'email', 'dob', 'practitioner_registration', 'mobile', 'gender', 'qualification')
+            ->where('status', 1)
+            ->where('created_at', '>=', now()->subDays(30))
+            ->latest();
+    }
+    public function scopeYearlyStudents($query)
+    {
+        return $query->select('name', 'email', 'dob', 'practitioner_registration', 'mobile', 'gender', 'qualification')->where('status', 1)->whereYear('created_at', now()->year)->latest();
     }
 }

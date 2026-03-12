@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\StudentExport;
 use App\Http\Requests\StudentCreateRequest;
 use App\Models\User;
 use App\traits\UploadTrait;
 use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\Console\Cursor;
 
 class StudentController extends Controller
@@ -173,5 +175,55 @@ class StudentController extends Controller
         }
         $student->restore($id);
         return redirect()->route('students.index')->with('success', 'Student has been restore successfully');
+    }
+
+    public function exportActiveStudents()
+    {
+        $students = User::exportActiveStudents()->get();
+        if (!$students) {
+            return redirect()->route('students.index')->with('error', 'Something went wrong');
+        }
+        return Excel::download(new StudentExport($students), 'active-students.xlsx');
+    }
+    public function exportInactiveStudents()
+    {
+        $students = User::inactive()->latest()->get();
+        if (!$students) {
+            return redirect()->route('students.index')->with('error', 'Something went wrong');
+        }
+        return Excel::download(new StudentExport($students), 'inactive-students.xlsx');
+    }
+
+    public function exportTodayStudents()
+    {
+        $students = User::todayStudents()->get();
+        if (!$students) {
+            return redirect()->route('students.index')->with('error', 'Something went wrong');
+        }
+        return Excel::download(new StudentExport($students), 'today-students.xlsx');
+    }
+    public function exportWeeklyStudents()
+    {
+        $students = User::weeklyStudents()->get();
+        if (!$students) {
+            return redirect()->route('students.index')->with('error', 'Something went wrong');
+        }
+        return Excel::download(new StudentExport($students), 'weekly-students.xlsx');
+    }
+    public function exportMonthlyStudents()
+    {
+        $students = User::monthlyStudents()->get();
+        if (!$students) {
+            return redirect()->route('students.index')->with('error', 'Something went wrong');
+        }
+        return Excel::download(new StudentExport($students), 'monthly-students.xlsx');
+    }
+    public function exportYearlyStudents()
+    {
+        $students = User::yearlyStudents()->get();
+        if (!$students) {
+            return redirect()->route('students.index')->with('error', 'Something went wrong');
+        }
+        return Excel::download(new StudentExport($students), 'yearly-students.xlsx');
     }
 }

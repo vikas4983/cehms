@@ -39,6 +39,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('trash-student', [StudentController::class, 'trashStudent'])->name('trash.students');
     Route::delete('untrash-student/{id}', [StudentController::class, 'untrashStudent'])->name('untrash.students');
     Route::post('upload-image', [StudentController::class, 'uploadImage'])->name('upload.image');
+    Route::post('active-students-export', [StudentController::class, 'exportActiveStudents'])->name('active.students.export');
+    Route::post('inactive-students-export', [StudentController::class, 'exportInactiveStudents'])->name('inactive.students.export');
+    Route::post('today-students-export', [StudentController::class, 'exportTodayStudents'])->name('today.students.export');
+    Route::post('weekly-students-export', [StudentController::class, 'exportWeeklyStudents'])->name('weekly.students.export');
+    Route::post('monthly-students-export', [StudentController::class, 'exportMonthlyStudents'])->name('monthly.students.export');
+    Route::post('yearly-students-export', [StudentController::class, 'exportYearlyStudents'])->name('yearly.students.export');
     Route::resource('books', BookController::class);
     Route::get('book-status', [BookController::class, 'bookStatus'])->name('book.status');
     Route::post('banner-status', [BannerController::class, 'bannerStatus'])->name('banner.status');
