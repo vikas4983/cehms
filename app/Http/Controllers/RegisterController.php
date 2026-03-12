@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class RegisterController extends Controller
 {
@@ -54,5 +55,14 @@ class RegisterController extends Controller
         }
 
         return redirect()->route('dashboard');
+    }
+
+    public function admissionForm($path)
+    {
+        if (Storage::disk('public')->exists($path)) {
+            return response()->file(storage_path('app/public/' . $path));
+        }
+
+        return redirect()->back()->with('error', 'Something went wrong');
     }
 }

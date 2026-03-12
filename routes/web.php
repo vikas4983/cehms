@@ -68,7 +68,10 @@ Route::post('update-profile', [ProfileController::class, 'updateProfile'])->name
 Route::get('view-document/{path}', [DocumentController::class, 'view'])
     ->where('path', '.*')
     ->name('view.document');
-
+// Adminssion Form
+Route::get('admission-form/{path}', [RegisterController::class, 'admissionForm'])
+    ->where('path', '.*')
+    ->name('form.admission');
 Route::get('books-list', [FrontendController::class, 'books'])->name('books.list');
 Route::get('about-us', [FrontendController::class, 'aboutUs'])->name('about.us');
 Route::get('medicine', [FrontendController::class, 'medicine'])->name('medicine');

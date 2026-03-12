@@ -40,6 +40,12 @@ class SiteSettingController extends Controller
             }
             $data['logo'] = $this->upload($request->file('logo'));
         }
+        if ($request->hasFile('admission_form')) {
+            if ($setting->admission_form) {
+                $this->imageExist($setting->admission_form);
+            }
+            $data['admission_form'] = $request->file('admission_form')->store('admissionForms', 'public');
+        }
         if ($request->hasFile('favicon')) {
             if ($setting && $setting->favicon) {
                 $this->imageExist($setting->favicon);

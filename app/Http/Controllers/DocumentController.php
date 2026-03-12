@@ -20,6 +20,6 @@ class DocumentController extends Controller
             return response()->file(storage_path('app/public/' . $path));
         }
 
-        return redirect()->back()->with('error','Something went wrong');
+        return redirect()->back()->with('error', 'Something went wrong');
     }
 }

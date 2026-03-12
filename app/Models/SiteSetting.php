@@ -14,6 +14,7 @@ class SiteSetting extends Model
         'city',
         'favicon',
         'logo',
+        'admission_form',
         'status',
         'landline',
         'primary_number',

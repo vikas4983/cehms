@@ -1,6 +1,17 @@
 @extends('layouts.app')
 @section('title', 'Setting - General')
 @section('content')
+    <style>
+        .hover-zoom img {
+            transition: transform 0.3s ease;
+        }
+
+        .hover-zoom img:hover {
+            transform: scale(4);
+            /* image becomes 2x bigger */
+            z-index: 10;
+        }
+    </style>
     <div class="dashboard-main-body">
         <div class="breadcrumb d-flex flex-wrap align-items-center justify-content-between gap-3 mb-24">
             <div class="">
@@ -198,7 +209,7 @@
                                     class="form-control radius-8" id="map" placeholder="Enter google map address">
                             </div>
                         </div>
-                        <div class="col-sm-12">
+                        <div class="col-sm-9">
                             <div class="mb-20">
                                 <label for="address" class="form-label fw-semibold text-primary-light text-sm mb-8">
                                     Address <span class="text-danger-600">*</span></label>
@@ -212,29 +223,67 @@
                                 @enderror
                             </div>
                         </div>
+                        <div class="col-md-3">
+                            <label for="admission_form"
+                                class="form-label fw-semibold text-secondary-light text-md mb-8">Admission Form <span
+                                    class="text-secondary-light fw-normal @error('admission_form') is-invalid @enderror">(Only
+                                    Pdf)</span>
+                                @if (!empty($setting->admission_form))
+                                    <a href="{{ route('form.admission', ['path' => $setting->admission_form]) }}"
+                                        target="_blanck">View Form</a>
+                                @endif
+                            </label>
+                            <input type="file" name="admission_form" class="form-control radius-8"
+                                id="admission_form">
+                            @error('admission_form')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
 
                         <div class="row gy-4">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
+                                <div class="d-flex justify-content-center">
+                                    <div class="hover-zoom">
+                                        <img src="{{ asset('storage/' . $setting->favicon) }}"
+                                            style="width:50px; height:50px;" alt="">
+                                    </div>
+                                </div>
                                 <label for="imageUpload"
                                     class="form-label fw-semibold text-secondary-light text-md mb-8">Favicon <span
-                                        class="text-secondary-light fw-normal">(140px X 140px)</span></label>
+                                        class="text-secondary-light fw-normal @error('favicon') is-invalid @enderror ">(140px
+                                        X 140px)</span></label>
                                 <input type="file" name="favicon" class="form-control radius-8" id="imageUpload">
-
+                                @error('favicon')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
+                                <div class="d-flex justify-content-center">
+                                    <div class="hover-zoom">
+                                        <img src="{{ asset('storage/' . $setting->logo) }}"
+                                            style="width:50px; height:50px;" alt="">
+                                    </div>
+                                </div>
                                 <label for="imageUploadTwo"
                                     class="form-label fw-semibold text-secondary-light text-md mb-8">Logo <span
-                                        class="text-secondary-light fw-normal">(140px X 140px)</span></label>
+                                        class="text-secondary-light fw-normal @error('logo') is-invalid @enderror">(2000px
+                                        X 590px)</span></label>
                                 <input type="file" name="logo" class="form-control radius-8" id="imageUploadTwo">
+                                @error('logo')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
+
                         </div>
 
 
                         <div class="d-flex align-items-center justify-content-center gap-3 mt-24">
-                            <button type="reset"
-                                class="border border-danger-600 bg-hover-danger-200 text-danger-600 text-md px-40 py-11 radius-8">
-                                Reset
-                            </button>
                             <button type="submit"
                                 class="btn btn-primary-600 border border-primary-600 text-md px-24 py-12 radius-8">
                                 Save Change
