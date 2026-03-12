@@ -246,8 +246,10 @@
                             <div class="col-md-4">
                                 <div class="d-flex justify-content-center">
                                     <div class="hover-zoom">
-                                        <img src="{{ asset('storage/' . $setting->favicon) }}"
+                                        @if (!empty($setting->favicon))
+                                            <img src="{{ asset('storage/' . $setting->favicon) }}"
                                             style="width:50px; height:50px;" alt="">
+                                        @endif
                                     </div>
                                 </div>
                                 <label for="imageUpload"
@@ -264,8 +266,10 @@
                             <div class="col-md-4">
                                 <div class="d-flex justify-content-center">
                                     <div class="hover-zoom">
-                                        <img src="{{ asset('storage/' . $setting->logo) }}"
+                                        @if (!empty($setting->logo))
+                                            <img src="{{ asset('storage/' . $setting->logo) }}"
                                             style="width:50px; height:50px;" alt="">
+                                        @endif
                                     </div>
                                 </div>
                                 <label for="imageUploadTwo"
