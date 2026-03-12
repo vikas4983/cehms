@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\BookCreateRequest;
 use App\Models\Book;
 use App\traits\UploadTrait;
+use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -16,6 +17,10 @@ class BookController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public static function middleware(): array
+    {
+        return [new Middleware('permission:view book', only: ['index', 'show']), new Middleware('permission:create book', only: ['create', 'store']), new Middleware('permission:edit book', only: ['edit', 'update']), new Middleware('permission:delete book', only: ['destroy']), new Middleware('permission:view pdf', only: ['viewBook'])];
+    }
     public function index()
     {
         $books = Book::allBook()->paginate(20);

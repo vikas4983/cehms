@@ -222,7 +222,7 @@
                                                             <x-button.edit-button-component :route="route('books.edit', $book->id)" />
                                                         </li>
                                                     @endcan
-                                                    @can('Delete book')
+                                                    @can('delete book')
                                                         <li>
                                                             <x-button.delete-button-component :route="route('books.destroy', $book?->id ?? '')"
                                                                 :id="$book->id" />
