@@ -8,7 +8,7 @@
                 <div class="">
                     <a href="{{ route('dashboard') }}"
                         class="text-secondary-light hover-text-primary hover-underline">Dashboard </a>
-                    <a href="student-list.html" class="text-secondary-light hover-text-primary hover-underline "> /
+                    <a href="{{ route('books.index') }}" class="text-secondary-light hover-text-primary hover-underline "> /
                         Book</a>
                     <span class="text-secondary-light">/ Edit Book</span>
                 </div>
@@ -33,7 +33,7 @@
                         </div>
                         <div class="card-body p-20">
                             <div class="row gy-3">
-                                <div class=" col-sm-12">
+                                <div class=" col-sm-9">
                                     <div class="">
                                         <label for="name"
                                             class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Book Name
@@ -48,7 +48,21 @@
                                         @enderror
                                     </div>
                                 </div>
-
+                                <div class=" col-sm-3">
+                                    <div class="">
+                                        <label for="pdf"
+                                            class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Upload Pdf
+                                            Book
+                                            <span class="text-danger-600">*</span> </label>
+                                        <input type="file" name="pdf"
+                                            class="form-control @error('pdf') is-invalid @enderror" id="pdf" >
+                                        @error('pdf')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
                                 <div class=" col-sm-6">
                                     <div class="">
                                         <label for="publisher"

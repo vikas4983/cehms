@@ -7,7 +7,7 @@
         }
     </style>
     <div class="dashboard-main-body">
- <div class="breadcrumb d-flex flex-wrap align-items-center justify-content-between gap-3 mb-24">
+        <div class="breadcrumb d-flex flex-wrap align-items-center justify-content-between gap-3 mb-24">
             <div class="">
                 <h1 class="fw-semibold mb-4 h6 text-primary-light">Unpublish Book List</h1>
                 <div class="">
@@ -17,12 +17,14 @@
                     <span class="text-secondary-light">/ Unpublish Book List</span>
                 </div>
             </div>
-            <a href="{{ route('books.create') }}" class="btn btn-primary-600 d-flex align-items-center gap-6 ">
-                <span class="d-flex text-md">
-                    <i class="ri-add-large-line"></i>
-                </span>
-                Add Book
-            </a>
+            @can('create book')
+                <a href="{{ route('books.create') }}" class="btn btn-primary-600 d-flex align-items-center gap-6 ">
+                    <span class="d-flex text-md">
+                        <i class="ri-add-large-line"></i>
+                    </span>
+                    Add Book
+                </a>
+            @endcan
         </div>
 
         <div class="mt-24">
@@ -68,7 +70,7 @@
                                     name="search" placeholder="Search...">
                                 <iconify-icon icon="ion:search-outline" class="icon"></iconify-icon>
                             </form>
-                            <div class="dropdown">
+                            {{-- <div class="dropdown">
                                 <button type="button"
                                     class="px-12 py-5-px border border-neutral-300 radius-8 d-flex align-items-center gap-20"
                                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -137,9 +139,9 @@
                                         </div>
                                     </form>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
-                        <div class="d-flex align-items-center gap-8 text-secondary-light">
+                        {{-- <div class="d-flex align-items-center gap-8 text-secondary-light">
                             <span class="">
                                 Rows per page:
                             </span>
@@ -153,7 +155,7 @@
                                     <option value="100">100</option>
                                 </select>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                     @include('alerts.alert')
                     <div class="p-0">
@@ -170,6 +172,7 @@
                                     </th>
                                     <th scope="col">Book Name</th>
                                     <th scope="col">Publisher</th>
+                                    <th scope="col">View Book</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Action</th>
                                 </tr>
@@ -188,6 +191,15 @@
                                         <td>{{ $book?->name ?? '' }}</td>
                                         <td>{{ $book?->publisher ?? '' }}</td>
                                         <td>
+                                            @can('view pdf')
+                                                @if (!empty($book->pdf))
+                                                    <a href="{{ route('book.view', ['path' => $book->pdf]) }}"
+                                                        target="_blank">View
+                                                        Book</a>
+                                                @endif
+                                            @endcan
+                                        </td>
+                                        <td>
                                             @if ($book?->status ?? '' == '1')
                                                 <span
                                                     class="bg-success-100 text-success-600 px-24 py-4 radius-4 fw-medium text-sm">Active</span>
@@ -205,14 +217,17 @@
                                                 </button>
 
                                                 <ul class="dropdown-menu dropdown-menu-lg-end border p-12">
-                                                    <li>
-                                                        <x-button.edit-button-component :route="route('books.edit', $book->id)" />
-                                                    </li>
-                                                    <li>
-                                                        <x-button.delete-button-component :route="route('books.destroy', $book?->id ?? '')"
-                                                            :id="$book->id" />
-                                                    </li>
-
+                                                    @can('edit book')
+                                                        <li>
+                                                            <x-button.edit-button-component :route="route('books.edit', $book->id)" />
+                                                        </li>
+                                                    @endcan
+                                                    @can('Delete book')
+                                                        <li>
+                                                            <x-button.delete-button-component :route="route('books.destroy', $book?->id ?? '')"
+                                                                :id="$book->id" />
+                                                        </li>
+                                                    @endcan
                                                 </ul>
                                             </div>
                                         </td>

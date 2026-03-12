@@ -47,6 +47,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('yearly-students-export', [StudentController::class, 'exportYearlyStudents'])->name('yearly.students.export');
     Route::resource('books', BookController::class);
     Route::get('book-status', [BookController::class, 'bookStatus'])->name('book.status');
+    Route::get('view-book/{path}', [BookController::class, 'viewBook'])
+        ->where('path', '.*')
+        ->name('book.view');
     Route::post('banner-status', [BannerController::class, 'bannerStatus'])->name('banner.status');
     Route::resource('news', NewsController::class);
     Route::resource('banners', BannerController::class);

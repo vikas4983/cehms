@@ -4,16 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\BookCreateRequest;
 use App\Models\Book;
+use App\traits\UploadTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
 {
+    use UploadTrait;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $books = Book::allBook()->latest()->get();
+        $books = Book::allBook()->latest()->paginate(20);
         return view('books.index', compact('books'));
     }
 
@@ -31,8 +36,24 @@ class BookController extends Controller
     public function store(BookCreateRequest $request)
     {
         $validatedData = $request->validated();
-        Book::firstOrCreate(['name' => $validatedData['name']], $validatedData);
-        return redirect()->back()->with('success', 'Book has been added successfully');
+
+        DB::beginTransaction();
+        try {
+            if ($request->hasFile('pdf')) {
+                $validatedData['pdf'] = $request->file('pdf')->store('books', 'public');
+            }
+            Book::firstOrCreate(['name' => $validatedData['name']], $validatedData);
+            DB::commit();
+            return redirect()->back()->with('success', 'Book has been added successfully');
+        } catch (\Throwable $e) {
+            Log::error('Book creation failed', [
+                'error' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+            ]);
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Something went wrong');
+        }
     }
 
     /**
@@ -57,6 +78,26 @@ class BookController extends Controller
     public function update(BookCreateRequest $request, Book $book)
     {
         $validatedData = $request->validated();
+        DB::beginTransaction();
+        try {
+            if ($request->hasFile('pdf')) {
+                if ($book && $book->pdf) {
+                    $this->imageExist($book->pdf);
+                }
+                $validatedData['pdf'] = $request->file('pdf')->store('books', 'public');
+            }
+            $book->update($validatedData);
+            DB::commit();
+            return redirect()->back()->with('success', 'Book has been added successfully');
+        } catch (\Throwable $e) {
+            Log::error('Book creation failed', [
+                'error' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+            ]);
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Something went wrong');
+        }
         $book->update($validatedData);
         return redirect()->route('books.index')->with('success', 'Book has been updated successfully');
     }
@@ -66,12 +107,23 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
+        if ($book->pdf) {
+            $this->imageExist($book->pdf);
+        }
         $book->delete();
-        return redirect()->back()->with('success', 'Book has been updated successfully');
+        return redirect()->back()->with('error', 'Book has been deleted successfully');
     }
     public function bookStatus(Request $request)
     {
-        $books = Book::inactive()->latest()->get();
+        $books = Book::inactive()->latest()->paginate(20);
         return view('books.inactive', compact('books'));
+    }
+    public function viewBook($path)
+    {
+        if (Storage::disk('public')->exists($path)) {
+            return response()->file(storage_path('app/public/' . $path));
+        }
+
+        return redirect()->back()->with('error', 'Something went wrong');
     }
 }
