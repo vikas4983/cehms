@@ -115,4 +115,9 @@ class User extends Authenticatable
     {
         return $query->select('name', 'email', 'dob', 'practitioner_registration', 'mobile', 'gender', 'qualification')->where('status', 1)->whereYear('created_at', now()->year)->latest();
     }
+    public function name(): Attribute
+    {
+        return Attribute::make(set: fn($value) => strtolower($value));
+    }
+
 }

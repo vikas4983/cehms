@@ -6,6 +6,7 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\ErrorController;
+use App\Http\Controllers\FilterController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\NewsController;
@@ -30,7 +31,7 @@ Route::get('dashboard', [DashboardController::class, 'dashboard'])
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('admin-dashboard', [DashboardController::class, 'adminDashboard'])->name('admin.dashboard');
     Route::resource('roles', RoleController::class);
-    Route::resource('permissions', PermissionController::class);
+    Route::resource('permissions', PermissionController::class); 
     Route::resource('siteSettings', SiteSettingController::class);
     Route::resource('menus', MenuController::class);
     Route::resource('students', StudentController::class);
@@ -54,6 +55,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('news', NewsController::class);
     Route::resource('banners', BannerController::class);
     Route::view('recursive', 'recursive');
+
+    // Filter
+    Route::get('filter-input/input',[FilterController::class,'filter'])->name('input.filter');
 });
 Route::view('frontends.home', 'frontends.home');
 Route::view('adminDashboard', 'adminDashboard');

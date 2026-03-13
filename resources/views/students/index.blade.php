@@ -113,10 +113,13 @@
 
                                 </ul>
                             </div>
-                            <form class="navbar-search dt-search m-0">
-                                <input type="text" class="dt-input bg-transparent radius-4" aria-controls="dataTable"
-                                    name="search" placeholder="Search...">
+                            <form id="inputForm" data-url={{ route('input.filter') }} class="navbar-search dt-search m-0"
+                                action="POST">
+                                @csrf
+                                <input id="input" type="text" class="dt-input bg-transparent radius-4"
+                                    aria-controls="dataTable" name="input" placeholder="Enter Id | Name | Email">
                                 <iconify-icon icon="ion:search-outline" class="icon"></iconify-icon>
+                                <button class="btn btn-primary-600 filterBtn">Search</button>
                             </form>
                             {{-- <div class="dropdown">
                                 <button type="button"
@@ -206,8 +209,12 @@
                         </div> --}}
                     </div>
                     @include('alerts.alert')
-                    <div class="p-0">
-                        <table class="table bordered-table mb-0 data-table" id="dataTable" data-page-length='10'>
+                    <span class="successMessage  alert alert-success" style="width: 100%; display:none;">
+                    </span>
+                    <span class="errorMessage  alert alert-danger" style="width: 100%; display:none;">
+                    </span>
+                    <div class="p-0 result">
+                        <table class="table bordered-table mb-0 " id="dataTable" data-page-length='10'>
                             <thead>
                                 <tr>
                                     <th scope="col">
@@ -291,6 +298,5 @@
 
     <!-- Modal Delete Event start -->
     <x-button.confirm-delete-component />
-    <x-confirm-download-component />
 
 @endsection
