@@ -298,5 +298,56 @@
 
     <!-- Modal Delete Event start -->
     <x-button.confirm-delete-component />
+    <x-confirm-download-component />
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterBtn = document.querySelector('.filterBtn');
+            if (filterBtn) {
+                filterBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const input = document.querySelector('#input').value;
+                    if (!input) {
+                        alert('Enter input value');
+                        return;
+                    }
+                    const form = document.querySelector('#inputForm');
+                    const action = form.dataset.url;
+                    const params = new URLSearchParams(new FormData(form));
+                    submitUrl(action, params);
+                });
+            }
+
+            function submitUrl(action, params) {
+                fetch(`${action}?${params}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status) {
+                            document.querySelector('.result').innerHTML = data.data;
+                            const successMessage = document.querySelector('.successMessage');
+                            if (successMessage) {
+                                successMessage.style.display = 'block';
+                                successMessage.innerText = data.message;
+                                setTimeout(() => {
+                                    successMessage.style.display = 'none';
+                                }, 3000);
+                            }
+                        } else {
+                            const errorMessage = document.querySelector('.errorMessage');
+                            if (errorMessage) {
+                                errorMessage.style.display = 'block';
+                                errorMessage.innerText = data.message;
+                                setTimeout(() => {
+                                    errorMessage.style.display = 'none';
+                                }, 3000);
+                            }
+
+                        }
+                    })
+                    .catch(error => {
+                        alert(error);
+                    })
+            }
+        });
+    </script>
 
 @endsection

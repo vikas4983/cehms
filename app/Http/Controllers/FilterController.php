@@ -29,14 +29,14 @@ class FilterController extends Controller
             $result = view('students.result', compact('students'))->render();
             return response()->json([
                 'status' => true,
-                'message' => 'Record successfully retreived',
+                'message' => 'Record successfully retreived.',
                 'data' => $result,
             ]);
         } else {
             return response()->json(
                 [
                     'status' => false,
-                    'message' => 'Record not found',
+                    'message' => 'Record not found.',
                 ],
                 422,
             );
