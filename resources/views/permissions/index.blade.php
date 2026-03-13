@@ -6,10 +6,9 @@
             <div class="">
                 <h1 class="fw-semibold mb-4 h6 text-primary-light">Add permission </h1>
                 <div class="">
-                    <a href="index.html" class="text-secondary-light hover-text-primary hover-underline">Dashboard </a>
-                    <a href="employee-list.html" class="text-secondary-light hover-text-primary hover-underline "> /
-                        HRM</a>
-                    <span class="text-secondary-light">/ Add permission</span>
+                    <a href="{{ route('dashboard') }}"
+                        class="text-secondary-light hover-text-primary hover-underline">Dashboard </a>
+                    <span class="text-secondary-light">/ Permissions</span>
                 </div>
             </div>
             <button type="button" class="my-sidebar-btn btn btn-primary-600 d-flex align-items-center gap-6">
@@ -24,8 +23,7 @@
         <div class="mt-24">
             <div class="card h-100">
                 <div class="card-body p-0 dataTable-wrapper">
-
-                    <div
+                    {{-- <div
                         class="d-flex align-items-center justify-content-between flex-wrap gap-16 px-20 py-12 border-bottom border-neutral-200">
                         <div class="d-flex flex-wrap align-items-center gap-16">
                             <div class="dropdown">
@@ -80,7 +78,7 @@
                                 </select>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
                     <div class="p-0">
                         <table class="table bordered-table mb-0 data-table" id="dataTable" data-page-length='10'>
@@ -96,7 +94,7 @@
                                         </div>
                                     </th>
                                     <th scope="col">Date</th>
-                                    <th scope="col">permission Name</th>
+                                    <th scope="col">Permission</th>
                                     {{-- <th scope="col">Features</th> --}}
                                     <th scope="col">Status</th>
                                     <th scope="col">Action</th>
@@ -112,7 +110,11 @@
                                             </div>
                                         </td>
                                         <td>{{ $permission->created_at->format('d M Y') }}</td>
-                                        <td>{{ ucfirst($permission->name) }}</td>
+                                        <td>{{ ucfirst($permission->name) }}
+                                            |
+                                            {{ ucwords($permission->roles->pluck('name')->implode(' | ')) }}
+
+                                        </td>
                                         <td>{{ ucfirst($permission->status == 1 ? 'Active' : 'Inactive') }}</td>
 
                                         <td>
@@ -170,8 +172,7 @@
             <div class="row g-3">
                 <div class="col-sm-6">
                     <div class="">
-                        <label for="permissionName"
-                            class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Name
+                        <label for="permissionName" class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Name
                         </label>
                         <input type="text" name="name" class="form-control" id="permissionName"
                             placeholder="Enter permission Name">
