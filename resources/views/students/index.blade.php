@@ -121,6 +121,8 @@
                                 <iconify-icon icon="ion:search-outline" class="icon"></iconify-icon>
                                 <button class="btn btn-primary-600 filterBtn">Search</button>
                             </form>
+                            <a href="{{ route('students.index') }}" class="btn btn-primary-600 filterBtn" title="Reload"><i
+                                    class="ri-refresh-line"></i></a>
                             {{-- <div class="dropdown">
                                 <button type="button"
                                     class="px-12 py-5-px border border-neutral-300 radius-8 d-flex align-items-center gap-20"
@@ -349,5 +351,22 @@
             }
         });
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
 
+            if ($.fn.DataTable.isDataTable('#dataTable')) {
+                $('#dataTable').DataTable().destroy();
+            }
+
+            $('#dataTable').DataTable({
+                paging: false,
+                searching: false,
+                info: false,
+                lengthChange: false,
+                ordering: true,
+                dom: 't'
+            });
+
+        });
+    </script>
 @endsection

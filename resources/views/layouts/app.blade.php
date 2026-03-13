@@ -1501,24 +1501,7 @@
         });
     </script>
 {{-- Disable Data Table --}}
-  <script>
-        document.addEventListener('DOMContentLoaded', function() {
-
-            if ($.fn.DataTable.isDataTable('#dataTable')) {
-                $('#dataTable').DataTable().destroy();
-            }
-
-            $('#dataTable').DataTable({
-                paging: false,
-                searching: false,
-                info: false,
-                lengthChange: false,
-                ordering: true,
-                dom: 't'
-            });
-
-        });
-    </script>
+  
 </body>
 
 </html>
