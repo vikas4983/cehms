@@ -178,6 +178,7 @@
 
             </div>
         </div>
+
         <!-- User Info start -->
         <div class="mx-16 py-12">
             <div class="dropdown profile-dropdown">
@@ -821,7 +822,7 @@
                             aria-label="Sidebar Mobile Toggler Button">
                             <iconify-icon icon="heroicons:bars-3-solid" class="icon"></iconify-icon>
                         </button>
-                       
+
                     </div>
                 </div>
                 <div class="col-auto">
@@ -1500,8 +1501,8 @@
 
         });
     </script>
-{{-- Disable Data Table --}}
-  
+    {{-- Disable Data Table --}}
+
 </body>
 
 </html>

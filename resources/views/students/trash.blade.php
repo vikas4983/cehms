@@ -191,9 +191,6 @@
                                                     data-bs-target="#deleteModal"><i
                                                         class="ri-arrow-go-back-line"></i></a>
                                             @endif
-                                          <a href="{{ route('students.show', $student?->id ?? '') }}"
-                                                style="color:rgb(9, 146, 112)">
-                                                {{ $student?->name ?? '' }}</a>
                                         <td>{{ $student?->email ?? '' }}</td>
                                         <td>{{ $student?->practitioner_registration ?? '' }}</td>
                                         <td>{{ $student->dob }}</td>
@@ -216,28 +213,14 @@
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-lg-end border p-12">
                                                     <li>
-                                                        <x-button.edit-button-component :route="route('students.edit', $student->id)" />
-
-                                                    </li>
-                                                    <li>
                                                         <x-button.delete-button-component :route="route('students.destroy', $student->id)"
                                                             :id="$student->id" />
                                                     </li>
-                                                    <li>
-                                                       <button data-bs-toggle="modal" data-student="{{ $student }}"
-                                                            data-bs-target="#student{{ $student->id }}"
-                                                            class="dropdown-item rounded  text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6">
-                                                            <i class="ri-shield-keyhole-line"></i>
-                                                            Role & Permission
-                                                        </button>
-                                                    </li>
-
                                                 </ul>
                                             </div>
                                         </td>
                                     </tr>
                             </tbody>
-                            <x-assign-permission-component :groupedPermissions="$groupedPermissions" :student="$student" :roles="$roles" />
                             @endforeach
                         </table>
 

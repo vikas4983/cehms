@@ -43,19 +43,19 @@
                                 @can('change student status')
                                     @if ($student->status == 1)
                                         <button type="button"
-                                            class="btn border fw-medium border-danger-600 bg-hover-danger-200 text-danger-600 text-md d-flex justify-content-center align-items-center gap-8 flex-grow-1 px-12 py-8 radius-8"
+                                            class="btn btn-primary-600 btn border fw-medium   d-flex justify-content-center align-items-center gap-8 flex-grow-1 px-12 py-8 radius-8"
                                             data-bs-toggle="modal" data-bs-target="#confirm-{{ $student->id }}">
                                             <span class="d-flex text-lg">
-                                                <i class="ri-close-circle-line text-danger"></i>
+                                                <i class="ri-close-circle-line "></i>
                                             </span>
                                             Inactive
                                         </button>
                                     @else
                                         <button type="button"
-                                            class="btn border fw-medium border-success-600 bg-hover-success-200 text-success-600 text-md d-flex justify-content-center align-items-center gap-8 flex-grow-1 px-12 py-8 radius-8"
+                                            class="btn btn-primary-600 btn border fw-medium   d-flex justify-content-center align-items-center gap-8 flex-grow-1 px-12 py-8 radius-8"
                                             data-bs-toggle="modal" data-bs-target="#confirm-{{ $student->id }}">
                                             <span class="d-flex text-lg">
-                                                <i class="ri-checkbox-circle-line text-success"></i>
+                                                <i class="ri-checkbox-circle-line "></i>
                                             </span>
                                             Active
                                         </button>
@@ -70,8 +70,16 @@
                                         Edit
                                     </a>
                                 @endcan
+                                @can('delete user')
+                                    <button type="button"
+                                        class="btn btn-primary-600 btn btn-primary-600 border fw-medium border-primary-600 text-md d-flex justify-content-center align-items-center gap-8 flex-grow-1 px-12 py-8 radius-8  "
+                                        data-bs-toggle="modal" data-url="{{ route('students.destroy', $student->id) }}"
+                                        data-bs-target="#deleteModal" onclick="setDeleteId({{ $student->id }})"><i
+                                            class="ri-delete-bin-6-line "></i>Delete</button>
+                                @endcan
                             </div>
                         </div>
+                        <x-button.confirm-delete-component />
                         <div class="">
                             <span class="h-100 w-1-px bg-neutral-200"></span>
                         </div>

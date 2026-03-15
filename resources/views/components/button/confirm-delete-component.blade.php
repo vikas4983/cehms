@@ -5,8 +5,7 @@
                  <span class="mb-16 fs-1 line-height-1 text-danger">
                      <iconify-icon icon="fluent:delete-24-regular" class="menu-icon"></iconify-icon>
                  </span>
-                 <h6 class="text-lg fw-semibold text-primary-light mb-0">Are your sure you want to Suspend this
-                     teacher
+                 <h6 class="text-lg fw-semibold text-primary-light mb-0">Are your sure you want to delete
                  </h6>
                  <div class="d-flex align-items-center justify-content-center gap-3 mt-24">
                      <button type="reset"
@@ -19,7 +18,7 @@
                          @method('DELETE')
                          <button type="submit"
                              class="flex-grow-1 btn btn-primary-600 border border-primary-600 text-md px-16 py-12 radius-8">
-                             Yes, Suspend
+                             Yes, Delete
                          </button>
                      </form>
 
@@ -35,7 +34,7 @@
          deleteModal.addEventListener('show.bs.modal', function(event) {
              const button = event.relatedTarget;
              const url = button.getAttribute('data-url');
-             deleteForm.action = url;
+            deleteForm.action = url;
 
          });
      });

@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Permission;
+use App\traits\AssignRoleOrPermission;
 use Illuminate\Http\Request;
+
+use function PHPUnit\Framework\isEmpty;
 
 class PermissionController extends Controller
 {
+    use AssignRoleOrPermission;
     /**
      * Display a listing of the resource.
      */
@@ -63,7 +67,17 @@ class PermissionController extends Controller
      */
     public function destroy(Permission $permission)
     {
-       $permission->destroy($permission->id);
+        $permission->destroy($permission->id);
         return redirect()->back()->with('error', 'permission has been deleted successfully');
+    }
+
+    public function assignPermission(Request $request)
+    {  
+       
+        if (!$request->studentId || empty($request->permissions)) {
+            return redirect()->back()->with('error', 'Something went wrong');
+        }
+        $this->assignPermissionForUser($request->all());
+        return redirect()->route('students.index')->with('success', 'Permission has been assign successfully.');
     }
 }

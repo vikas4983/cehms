@@ -3,6 +3,8 @@
 namespace App\traits;
 
 use App\Models\Permission;
+use App\Models\Role;
+use App\Models\User;
 
 trait AssignRoleOrPermission
 {
@@ -11,10 +13,24 @@ trait AssignRoleOrPermission
         return $user->assignRole('user');
     }
     public function assignPermissionForRole() {}
-    public function assignPermissionForUser($user)
+
+    public function assignPermissionForUser($data)
     {
-        $requiredPermissions = ['create user', 'edit user', 'view user'];
+        if (is_object($data)) {
+            // Default permission for student
+            $user = $data;
+            $requiredPermissions = ['create user', 'edit user', 'view user'];
+            $requiredRoles = ['user'];
+        } else {
+            $requiredPermissions = $data['permissions'];
+            $requiredRoles = $data['roles'];
+            $user = User::findOrFail($data['studentId']);
+        }
+
         $permissions = Permission::active()->whereIn('name', $requiredPermissions)->pluck('name')->toArray();
-        return $user->syncPermissions($permissions);
+        $roles = Role::active()->whereIn('name', $requiredRoles)->pluck('name')->toArray();
+        $user->assignRole($roles);
+        $user->syncPermissions($permissions);
+        return;
     }
 }

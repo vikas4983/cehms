@@ -237,7 +237,8 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($students as $count => $student)
+
+                                @forelse ($students as $count => $student)
                                     <tr>
                                         <td>
                                             <div class="form-check style-check d-flex align-items-center">
@@ -248,11 +249,44 @@
                                             </div>
                                         </td>
                                         <td>
+
                                             <a href="{{ route('students.show', $student?->id ?? '') }}"
-                                                style="color:rgb(9, 146, 112)">{{ $student?->name ?? '' }}</a>
+                                                style="color:rgb(9, 146, 112)">
+                                                {{ $student?->name ?? '' }}</a>
                                         </td>
-                                        <td>{{ $student?->email ?? '' }}</td>
-                                        <td>{{ $student?->practitioner_registration ?? '' }}</td>
+                                        <td>
+
+                                            {{ $student?->email ?? '' }}
+                                        </td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="text-primary-light text-xl"
+                                                    data-bs-toggle="dropdown" data-bs-display="static"
+                                                    aria-expanded="false">
+                                                    <iconify-icon icon="tabler:dots-vertical"></iconify-icon>
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-menu-lg-end border p-12">
+                                                    <li>
+                                                        <x-button.edit-button-component :route="route('students.edit', $student->id)" />
+
+                                                    </li>
+                                                    <li>
+                                                        <x-button.delete-button-component :route="route('students.destroy', $student->id)"
+                                                            :id="$student->id" />
+                                                    </li>
+                                                    <li>
+                                                        <button data-bs-toggle="modal" data-student="{{ $student }}"
+                                                            data-bs-target="#student{{ $student->id }}"
+                                                            class="dropdown-item rounded  text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6">
+                                                            <i class="ri-shield-keyhole-line"></i>
+                                                            Role & Permission
+                                                        </button>
+                                                    </li>
+                                               </ul>
+                                            </div>
+
+                                            {{ $student?->practitioner_registration ?? '' }}
+                                        </td>
                                         <td>{{ $student->dob }}</td>
                                         <td>{{ $student?->mobile ?? '' }}</td>
                                         <td>
@@ -280,12 +314,24 @@
                                                         <x-button.delete-button-component :route="route('students.destroy', $student->id)"
                                                             :id="$student->id" />
                                                     </li>
+                                                    <li>
+                                                        <button data-bs-toggle="modal" data-student="{{ $student }}"
+                                                            data-bs-target="#student{{ $student->id }}"
+                                                            class="dropdown-item rounded  text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6">
+                                                            <i class="ri-shield-keyhole-line"></i>
+                                                            Role & Permission
+                                                        </button>
+                                                    </li>
 
                                                 </ul>
                                             </div>
                                         </td>
                                     </tr>
-                                @endforeach
+
+                                    <x-assign-permission-component :groupedPermissions="$groupedPermissions" :student="$student" :roles="$roles" />
+                                    
+                                @empty
+                                @endforelse
                             </tbody>
 
                         </table>
@@ -301,6 +347,7 @@
     <!-- Modal Delete Event start -->
     <x-button.confirm-delete-component />
     <x-confirm-download-component />
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const filterBtn = document.querySelector('.filterBtn');
@@ -353,20 +400,19 @@
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-
             if ($.fn.DataTable.isDataTable('#dataTable')) {
                 $('#dataTable').DataTable().destroy();
             }
-
             $('#dataTable').DataTable({
                 paging: false,
                 searching: false,
                 info: false,
                 lengthChange: false,
-                ordering: true,
-                dom: 't'
+                ordering: false,
+                dom: 't',
+                scrollX: true
             });
-
         });
     </script>
+
 @endsection

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Exports\StudentExport;
 use App\Http\Requests\StudentCreateRequest;
+use App\Models\Permission;
+use App\Models\Role;
 use App\Models\User;
 use App\traits\AssignRoleOrPermission;
 use App\traits\UploadTrait;
@@ -30,7 +32,12 @@ class StudentController extends Controller
     public function index()
     {
         $students = User::isAdmin()->paginate(20);
-        return view('students.index', compact('students'));
+        $permissions = Permission::active()->get();
+        $roles = Role::active()->get();
+        $groupedPermissions = $permissions->groupBy(function ($permission) {
+            return explode(' ', $permission->name)[1];
+        });
+        return view('students.index', compact('students', 'groupedPermissions', 'roles'));
     }
 
     /**
@@ -140,7 +147,7 @@ class StudentController extends Controller
             $this->imageExist($user->{'12th_marksheet'});
         }
         $user->delete();
-        return redirect()->back()->with('error', 'Student has been deleted successfully');
+        return redirect()->route('students.index')->with('error', 'Student has been deleted successfully');
     }
 
     public function studentStatus(Request $request)
@@ -180,12 +187,17 @@ class StudentController extends Controller
     public function inactiveStudent()
     {
         $students = User::inactive()->paginate(20);
-        return view('students.inactive', compact('students'));
+        $permissions = Permission::active()->get();
+        $roles = Role::active()->get();
+        $groupedPermissions = $permissions->groupBy(function ($permission) {
+            return explode(' ', $permission->name)[1];
+        });
+        return view('students.index', compact('students', 'permissions', 'roles', 'groupedPermissions'));
     }
     public function trashStudent()
     {
         $students = User::onlyTrashed()->paginate(20);
-        return view('students.inactive', compact('students'));
+        return view('students.trash', compact('students'));
     }
     public function untrashStudent($id)
     {

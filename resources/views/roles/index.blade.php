@@ -96,9 +96,7 @@
                                     </th>
                                     <th scope="col">Date</th>
                                     <th scope="col">Role Name</th>
-                                    {{-- <th scope="col">Features</th> --}}
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Action</th>
+                                    <th scope="col">Permissions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -111,9 +109,6 @@
                                             </div>
                                         </td>
                                         <td>{{ $role->created_at->format('d M Y') }}</td>
-                                        <td>{{ ucfirst($role->name) }}</td>
-                                        <td>{{ ucfirst($role->status == 1 ? 'Active' : 'Inactive') }}</td>
-
                                         <td>
                                             <div class="btn-group">
                                                 <button type="button" class="text-primary-light text-xl"
@@ -127,6 +122,7 @@
                                                             class="editBtn edit-sidebar-btn dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6"
                                                             data-role-id="{{ $role->id }}"
                                                             data-role-name="{{ $role->name }}"
+                                                            data-role-permissions="{{ $role->permissions->pluck('name') }}"
                                                             data-role-status="{{ $role->status }}">
                                                             <i class="ri-edit-2-line"></i>Edit
                                                         </button>
@@ -141,18 +137,14 @@
                                                         </button>
                                                     </li>
                                                 </ul>
-                                            </div>
+                                            </div> {{ ucfirst($role->name) }}
                                         </td>
+                                        <td>{{ ucwords($role->permissions->pluck('name')->implode(' | ')) }}</td>
                                     </tr>
 
                                 @empty
-                                    <h3>No record found</h3>
                                 @endforelse
-
-
-
                             </tbody>
-
                         </table>
                     </div>
                 </div>
@@ -171,7 +163,7 @@
         <form id="addRole" action="{{ route('roles.store') }}" method="POST"class="d-flex flex-column p-20">
             @csrf
             <div class="row g-3">
-                <div class="col-sm-4">
+                <div class="col-sm-6">
                     <div class="">
                         <label for="roleName" class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Role Name
                         </label>
@@ -182,23 +174,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-6">
                     <div class="">
-                        <label for="featuresSelect"
-                            class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Features
-                        </label>
-                        <select id="featuresSelect" name="permission[]" class="form-control form-select">
-                            <option value="">None</option>
-                            <option value="all">All Permissions</option>
-                            @foreach ($permissions as $permission)
-                                <option value="{{ $permission->id }}">{{ $permission->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="">
-                        <label for="status" class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Features
+                        <label for="status" class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Status
                         </label>
                         <select id="status" name="status" class="form-control form-select">
                             <option value="Select a Class" disabled>Select One</option>
@@ -207,6 +185,43 @@
                         </select>
                     </div>
                 </div>
+                <div class="col-sm-12">
+                    <div>
+                        <label
+                            class=" d-flex justify-content-center text-sm fw-semibold text-primary-light d-inline-block mt-2">
+                            Permissions
+                        </label>
+
+                        <div class="form-check mb-2">
+                            <input class="form-check-input selectAllCb" name="permissions[]" type="checkbox"
+                                value="all" id="selectAllCb">
+                            <label class="form-check-label" for="selectAll">&nbsp;
+                                All Permissions
+                            </label>
+                        </div>
+                        <div class="d-flex flex-wrap gap-3 mt-2">
+                            @foreach ($groupedPermissions as $group => $permissions)
+                                <div class="col-12 mb-2">
+                                    <span class="fw-bold text-primary">{{ ucfirst($group) }} Permissions</span>
+                                    <div class="d-flex flex-wrap gap-3">
+                                        @foreach ($permissions as $permission)
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input permissionCheckbox mt-2"
+                                                    name="permissions[]" value="{{ $permission->name }}"> &nbsp;<label
+                                                    class="form-check-label" for="permission{{ $permission->id }}">
+                                                    {{ ucwords($permission->name) }}
+                                                </label>
+                                            </div>
+                                        @endforeach
+
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+
+                    </div>
+                </div>
+
                 <div class="col-12">
                     <div class="d-flex align-items-center justify-content-center gap-3 mt-8">
                         <button type="reset"
@@ -238,49 +253,79 @@
             @csrf
             @method('PATCH')
             <div class="row g-3">
-                <div class="col-sm-4">
-                    <div class="">
-                        <label for="editRoleForm" class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Role
-                            Name
-                        </label>
-                        <input type="text" id="editRoleName" name="name" class="form-control"
-                            placeholder="Enter Role Name">
-                        <div class="invalid-feedback">
-                            Role name is required
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="">
+                            <label for="editRoleForm"
+                                class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Role
+                                Name
+                            </label>
+                            <input type="text" id="editRoleName" name="name" class="form-control"
+                                placeholder="Enter Role Name">
+                            <div class="invalid-feedback">
+                                Role name is required
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="">
-                        <label for="featuresEditClass"
-                            class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Features
-                        </label>
-                        <select id="permission" name="permissions[]" class="form-control form-select">
-                            <option value="" >Select One</option>
-                            <option value="all">All Permissions</option>
-                            @foreach ($permissions as $permission)
-                                <option value="{{ $permission->name }}"
-                                    {{ in_array($permission->name, old('permissions', $role->permissions->pluck('name')->toArray()))
-                                        ? 'selected'
-                                        : '' }}>
-                                    {{ $permission->name }}
-                                </option>
-                            @endforeach
+                    <div class="col-sm-6">
+                        <div class="">
+                            <label for="status"
+                                class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Status
+                            </label>
+                            <select id="editRoleStatus" name="status" class="form-control form-select">
+                                <option value="Select a Class" disabled>Select One</option>
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
+                            </select>
+                        </div>
+                    </div>
 
-                        </select>
-                    </div>
                 </div>
-                <div class="col-sm-4">
-                    <div class="">
-                        <label for="status" class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Features
+
+                <div class="col-sm-12">
+                    <div>
+                        <label
+                            class=" d-flex justify-content-center text-sm fw-semibold text-primary-light d-inline-block mt-2">
+                            Permissions
                         </label>
-                        <select id="editRoleStatus" name="status" class="form-control form-select">
-                            <option value="Select a Class" disabled>Select One</option>
-                            <option value="1">Active</option>
-                            <option value="0">Inactive</option>
-                        </select>
+
+                        <div class="form-check mb-2">
+                            <input class="form-check-input selectAllCb" name="permissions[]" type="checkbox"
+                                value="all" id="selectAllCb">
+                            <label class="form-check-label" for="selectAll">&nbsp;
+                                All Permissions
+                            </label>
+                        </div>
+                        <div class="d-flex flex-wrap gap-3 mt-2">
+                            @foreach ($groupedPermissions as $group => $permissions)
+                                <div class="col-12 mb-2">
+                                    <span class="fw-bold text-primary">{{ ucfirst($group) }} Permissions</span>
+
+                                    <div class="d-flex flex-wrap gap-3">
+                                        @foreach ($permissions as $permission)
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input permissionCheckbox mt-2"
+                                                    id="permission{{ $permission->id }}" name="permissions[]"
+                                                    value="{{ $permission->name }}"
+                                                    {{ in_array($permission->name, old('permissions', $role->permissions->pluck('name')->toArray())) ? 'checked' : '' }}>
+
+                                                &nbsp;<label class="form-check-label"
+                                                    for="permission{{ $permission->id }}">
+                                                    {{ ucwords($permission->name) }}
+                                                </label>
+
+                                            </div>
+                                        @endforeach
+
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+
                     </div>
                 </div>
+
+
                 <div class="col-12">
                     <div class="d-flex align-items-center justify-content-center gap-3 mt-8">
                         {{-- <button type="reset"
@@ -308,7 +353,7 @@
                     <span class="mb-16 fs-1 line-height-1 text-danger">
                         <iconify-icon icon="fluent:delete-24-regular" class="menu-icon"></iconify-icon>
                     </span>
-                    <h6 class="text-lg fw-semibold text-primary-light mb-0">Are your sure you want to Suspend this teacher
+                    <h6 class="text-lg fw-semibold text-primary-light mb-0">Are your sure you want to delete
                     </h6>
                     <div class="d-flex align-items-center justify-content-center gap-3 mt-24">
                         <button type="reset"
@@ -322,7 +367,7 @@
                             {{-- @method('DELETE') --}}
                             <button type="submit"
                                 class="deleteBtn flex-grow-1 btn btn-primary-600 border border-primary-600 text-md px-16 py-12 radius-8">
-                                Yes, Suspend
+                                Yes, Delete
                             </button>
                         </form>
                     </div>
@@ -348,8 +393,20 @@
                 const id = editBtn.getAttribute('data-role-id');
                 const name = editBtn.getAttribute('data-role-name');
                 const status = editBtn.getAttribute('data-role-status');
+                let rolePermissions = editBtn.getAttribute('data-role-permissions');
+                let permissions = JSON.parse(rolePermissions);
 
+                document.querySelectorAll('.permissionCheckbox').forEach(function(checkbox) {
+
+                    checkbox.checked = false;
+
+                    if (permissions.includes(checkbox.value)) {
+                        checkbox.checked = true;
+                    }
+
+                });
                 const sidebar = document.querySelector('.edit-sidebar');
+
                 if (sidebar) {
                     sidebar.classList.add('active-translate-0');
                 }
@@ -358,6 +415,7 @@
                 const roleIdInput = document.getElementById('editRoleId');
                 const roleNameInput = document.getElementById('editRoleName');
                 const roleStatusInput = document.getElementById('editRoleStatus');
+
                 const form = document.getElementById('editRoleForm');
 
                 if (roleIdInput) roleIdInput.value = id;
@@ -429,4 +487,29 @@
 
         });
     </script>
+
+    <script>
+        const selectAll = document.querySelector('.selectAllCb')
+        const selectOne = document.querySelectorAll('.permissionCheckbox')
+        selectAll.addEventListener('change', function() {
+            if (selectAll.checked) {
+                selectOne.forEach(cb => {
+                    cb.checked = true;
+                });
+            } else {
+                selectOne.forEach(cb => {
+                    cb.checked = false;
+                });
+            }
+        });
+        selectOne.forEach(cb => {
+            cb.addEventListener('change', function() {
+                if (!this.checked) {
+                    selectAll.checked = false;
+                }
+
+            });
+        });
+    </script>
+
 @endsection

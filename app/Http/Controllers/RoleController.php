@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use PhpParser\Node\Stmt\TryCatch;
 
-
 class RoleController extends Controller
 {
     /**
@@ -20,7 +19,11 @@ class RoleController extends Controller
     {
         $roles = Role::active()->get();
         $permissions = Permission::active()->get();
-        return view('roles.index', compact('roles', 'permissions'));
+        $groupedPermissions = $permissions->groupBy(function ($permission) {
+            return explode(' ', $permission->name)[1];
+        });
+
+        return view('roles.index', compact('roles', 'groupedPermissions', 'permissions'));
     }
 
     /**
@@ -36,25 +39,19 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         DB::beginTransaction();
         try {
             $role = Role::create([
-                'name'       => $request->name,
+                'name' => $request->name,
                 'guard_name' => 'web',
-                'status'     => $request->status,
+                'status' => $request->status,
             ]);
-
-            $permissionInput = $request->permission ?? [];
-
+            $permissionInput = $request->permissions ?? [];
             if (!empty($permissionInput)) {
-
-
                 if (in_array('all', $permissionInput)) {
                     $permissions = Permission::where('guard_name', 'web')->get();
                 } else {
-
-                    $permissions = Permission::whereIn('id', $permissionInput)->get();
+                    $permissions = Permission::whereIn('name', $permissionInput)->get();
                 }
 
                 $role->syncPermissions($permissions);
@@ -63,11 +60,7 @@ class RoleController extends Controller
             return redirect()->back()->with('success', 'Role has been created successfully');
         } catch (\Throwable $th) {
             DB::rollBack();
-            Log::error('Role assign failed', [
-                $th->getMessage(),
-                $th->getFile(),
-                $th->getLine(),
-            ]);
+            Log::error('Role assign failed', [$th->getMessage(), $th->getFile(), $th->getLine()]);
             return redirect()->back()->with('error', 'Somethnig went wrong');
         }
     }
@@ -93,11 +86,11 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
+        dd($request->all());
         $permissions = array_filter((array) $request->permissions);
         if (empty($permissions)) {
             $role->update($request->all());
-            return redirect()->back()
-                ->with('success', 'Role name & status has been updated successfully');
+            return redirect()->back()->with('success', 'Role name & status has been updated successfully');
         } else {
             if (in_array('all', $permissions)) {
                 $role->syncPermissions(Permission::all());
@@ -107,8 +100,7 @@ class RoleController extends Controller
             $role->update($request->all());
         }
 
-        return redirect()->back()
-            ->with('success', 'Role has been updated successfully');
+        return redirect()->back()->with('success', 'Role has been updated successfully');
     }
 
     /**
