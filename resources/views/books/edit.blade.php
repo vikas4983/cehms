@@ -55,7 +55,7 @@
                                             Book
                                             <span class="text-danger-600">*</span> </label>
                                         <input type="file" name="pdf"
-                                            class="form-control @error('pdf') is-invalid @enderror" id="pdf" >
+                                            class="form-control @error('pdf') is-invalid @enderror" id="pdf">
                                         @error('pdf')
                                             <div class="invalid-feedback">
                                                 {{ $message }}

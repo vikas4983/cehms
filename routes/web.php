@@ -57,15 +57,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('news', NewsController::class);
     Route::resource('banners', BannerController::class);
     Route::view('recursive', 'recursive');
-
-    // Filter
-    Route::get('filter-input/input', [FilterController::class, 'filter'])->name('input.filter');
 });
-Route::view('frontends.home', 'frontends.home');
-Route::view('adminDashboard', 'adminDashboard');
-Route::get('forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot.password');
 
 // FRONTEND
+
 Route::get('register', [RegisterController::class, 'register'])->name('student.register');
 Route::post('student-store', [RegisterController::class, 'storeStudent'])->name('student.store');
 Route::get('my-profile', [ProfileController::class, 'myProfile'])->name('my.profile');
@@ -74,10 +69,7 @@ Route::post('update-profile', [ProfileController::class, 'updateProfile'])->name
 Route::get('view-document/{path}', [DocumentController::class, 'view'])
     ->where('path', '.*')
     ->name('view.document');
-// Adminssion Form
-Route::get('admission-form/{path}', [RegisterController::class, 'admissionForm'])
-    ->where('path', '.*')
-    ->name('form.admission');
+
 Route::get('books-list', [FrontendController::class, 'books'])->name('books.list');
 Route::get('about-us', [FrontendController::class, 'aboutUs'])->name('about.us');
 Route::get('medicine', [FrontendController::class, 'medicine'])->name('medicine');
@@ -85,3 +77,15 @@ Route::get('update', [FrontendController::class, 'update'])->name('update');
 Route::get('practitioner', [FrontendController::class, 'practitioner'])->name('practitioner');
 Route::get('contact', [FrontendController::class, 'contact'])->name('contact');
 Route::get('apply-for', [FrontendController::class, 'applyFor'])->name('apply.for');
+
+// Adminssion Form
+Route::get('admission-form/{path}', [RegisterController::class, 'admissionForm'])
+    ->where('path', '.*')
+    ->name('form.admission');
+
+// Filter
+Route::get('filter-input/input', [FilterController::class, 'filter'])->name('input.filter');
+
+Route::get('forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot.password');
+
+

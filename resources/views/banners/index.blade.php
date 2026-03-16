@@ -25,26 +25,37 @@
             @forelse ($banners as $banner)
                 <div class="col-lg-4">
                     <div class="card">
-                        <div class="card-body p-24 text-center">
+                        <div class="card-body p-24 text-center position-relative">
+
+                            <!-- Order Number -->
+                            <span class="position-absolute top-0 start-0 m-2 badge bg-primary">
+                                {{ $banner->order }}
+                            </span>
 
                             <figure class="mb-24 overflow-hidden rounded" style="height:120px;">
                                 <img src="{{ asset('storage/' . $banner->banner) }}" alt="Banner Image"
                                     class="w-100 h-100 object-fit-cover">
                             </figure>
 
-
                             <div class="d-flex justify-content-center gap-2">
-                                <a href="{{ route('banners.edit', $banner->id) }}" class="btn btn-primary"><i
-                                        class="ri-edit-line"></i></a>
+                                <a href="{{ route('banners.edit', $banner->id) }}" class="btn btn-primary">
+                                    <i class="ri-edit-line"></i>
+                                </a>
+
                                 @if ($banner->status == 0)
                                     <button class="btn btn-success" data-bs-toggle="modal"
                                         data-bs-target="#changeStatusModal" data-url="{{ route('banner.status') }}"
-                                        data-id="{{ $banner->id }}">Active</button>
+                                        data-id="{{ $banner->id }}">
+                                        Active
+                                    </button>
                                 @elseif($banner->status == 1)
                                     <a href="#" class="btn btn-warning" data-bs-toggle="modal"
                                         data-bs-target="#changeStatusModal" data-url="{{ route('banner.status') }}"
-                                        data-id="{{ $banner->id }}">Inactive</i></a>
+                                        data-id="{{ $banner->id }}">
+                                        Inactive
+                                    </a>
                                 @endif
+
                                 <a href="#" class="btn btn-danger" data-bs-toggle="modal"
                                     data-bs-target="#deleteModal" data-url="{{ route('banners.destroy', $banner->id) }}">
                                     <i class="ri-delete-bin-line"></i>

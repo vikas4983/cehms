@@ -6,10 +6,8 @@
             <div class="">
                 <h1 class="fw-semibold mb-4 h6 text-primary-light">Add Menu </h1>
                 <div class="">
-                    <a href="index.html" class="text-secondary-light hover-text-primary hover-underline">Dashboard </a>
-                    <a href="employee-list.html" class="text-secondary-light hover-text-primary hover-underline "> /
-                        HRM</a>
-                    <span class="text-secondary-light">/ Add Menu</span>
+                    <a href="{{route('dashboard')}}" class="text-secondary-light hover-text-primary hover-underline">Dashboard </a>
+                    <span class="text-secondary-light">/ Menus</span>
                 </div>
             </div>
             <button type="button" class="my-sidebar-btn btn btn-primary-600 d-flex align-items-center gap-6">
@@ -26,7 +24,7 @@
                     <div
                         class="d-flex align-items-center justify-content-between flex-wrap gap-16 px-20 py-12 border-bottom border-neutral-200">
                         <div class="d-flex flex-wrap align-items-center gap-16">
-                            <div class="dropdown">
+                            {{-- <div class="dropdown">
                                 <button type="button"
                                     class="px-12 py-5-px border border-neutral-300 radius-8 d-flex align-items-center gap-20 "
                                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -56,7 +54,7 @@
                                         </button>
                                     </li>
                                 </ul>
-                            </div>
+                            </div> --}}
                             <form class="navbar-search dt-search m-0">
                                 <input type="text" class="dt-input bg-transparent radius-4" aria-controls="dataTable"
                                     name="search" placeholder="Search...">

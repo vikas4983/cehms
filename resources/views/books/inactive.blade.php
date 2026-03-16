@@ -31,11 +31,11 @@
         <div class="mt-24">
             <div class="card h-100">
                 <div class="card-body p-0 dataTable-wrapper">
-                    {{-- 
+
                     <div
                         class="d-flex align-items-center justify-content-between flex-wrap gap-16 px-20 py-12 border-bottom border-neutral-200">
                         <div class="d-flex flex-wrap align-items-center gap-16">
-                            <div class="dropdown">
+                            {{-- <div class="dropdown">
                                 <button type="button"
                                     class="px-12 py-5-px border border-neutral-300 radius-8 d-flex align-items-center gap-20 "
                                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -65,13 +65,13 @@
                                         </button>
                                     </li>
                                 </ul>
-                            </div>
+                            </div> --}}
                             <form class="navbar-search dt-search m-0">
                                 <input type="text" class="dt-input bg-transparent radius-4" aria-controls="dataTable"
                                     name="search" placeholder="Search...">
                                 <iconify-icon icon="ion:search-outline" class="icon"></iconify-icon>
                             </form>
-                            <div class="dropdown">
+                            {{-- <div class="dropdown">
                                 <button type="button"
                                     class="px-12 py-5-px border border-neutral-300 radius-8 d-flex align-items-center gap-20"
                                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -140,7 +140,7 @@
                                         </div>
                                     </form>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="d-flex align-items-center gap-8 text-secondary-light">
                             <span class="">
@@ -157,7 +157,7 @@
                                 </select>
                             </div>
                         </div>
-                    </div> --}}
+                    </div>
                     @include('alerts.alert')
                     <div class="p-0">
                         <table class="table bordered-table mb-0 data-table" id="dataTable" data-page-length='10'>

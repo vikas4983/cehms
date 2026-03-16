@@ -6,10 +6,8 @@
             <div class="">
                 <h1 class="fw-semibold mb-4 h6 text-primary-light">Add Role </h1>
                 <div class="">
-                    <a href="index.html" class="text-secondary-light hover-text-primary hover-underline">Dashboard </a>
-                    <a href="employee-list.html" class="text-secondary-light hover-text-primary hover-underline "> /
-                        HRM</a>
-                    <span class="text-secondary-light">/ Add Role</span>
+                    <a href="{{route('dashboard')}}" class="text-secondary-light hover-text-primary hover-underline">Dashboard </a>
+                    <span class="text-secondary-light">/ Roles</span>
                 </div>
             </div>
             <button type="button" class="my-sidebar-btn btn btn-primary-600 d-flex align-items-center gap-6">
@@ -24,11 +22,10 @@
         <div class="mt-24">
             <div class="card h-100">
                 <div class="card-body p-0 dataTable-wrapper">
-
                     <div
                         class="d-flex align-items-center justify-content-between flex-wrap gap-16 px-20 py-12 border-bottom border-neutral-200">
                         <div class="d-flex flex-wrap align-items-center gap-16">
-                            <div class="dropdown">
+                            {{-- <div class="dropdown">
                                 <button type="button"
                                     class="px-12 py-5-px border border-neutral-300 radius-8 d-flex align-items-center gap-20 "
                                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -58,7 +55,7 @@
                                         </button>
                                     </li>
                                 </ul>
-                            </div>
+                            </div> --}}
                             <form class="navbar-search dt-search m-0">
                                 <input type="text" class="dt-input bg-transparent radius-4" aria-controls="dataTable"
                                     name="search" placeholder="Search...">
@@ -193,8 +190,8 @@
                         </label>
 
                         <div class="form-check mb-2">
-                            <input class="form-check-input selectAllCb" name="permissions[]" type="checkbox"
-                                value="all" id="selectAllCb">
+                            <input class="form-check-input selectAllCb" name="permissions[]" type="checkbox" value="all"
+                                id="selectAllCb">
                             <label class="form-check-label" for="selectAll">&nbsp;
                                 All Permissions
                             </label>
@@ -224,10 +221,6 @@
 
                 <div class="col-12">
                     <div class="d-flex align-items-center justify-content-center gap-3 mt-8">
-                        <button type="reset"
-                            class="border border-danger-600 bg-hover-danger-200 text-danger-600 text-md px-50 py-11 radius-8">
-                            Cancel
-                        </button>
                         <button type="submit"
                             class="btn btn-primary-600 border border-primary-600 text-md px-28 py-12 radius-8 max-w-156-px w-100">
                             Save
@@ -487,7 +480,6 @@
 
         });
     </script>
-
     <script>
         const selectAll = document.querySelector('.selectAllCb')
         const selectOne = document.querySelectorAll('.permissionCheckbox')
@@ -511,5 +503,4 @@
             });
         });
     </script>
-
 @endsection
