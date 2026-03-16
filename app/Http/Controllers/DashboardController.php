@@ -19,7 +19,7 @@ class DashboardController extends Controller
         return view('welcome', compact('user'));
     }
     public function adminDashboard()
-    {
+    {   
         return view('dashboard');
     }
 }

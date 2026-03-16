@@ -267,4 +267,9 @@ class StudentController extends Controller
         }
         return Excel::download(new StudentExport($students), 'yearly-students.xlsx');
     }
+
+    public function adminProfile($id){
+         $admin = User::findOrFail($id);
+         return view('students.adminProfile', compact('admin'));
+    }
 }

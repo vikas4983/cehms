@@ -36,6 +36,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('siteSettings', SiteSettingController::class);
     Route::resource('menus', MenuController::class);
     Route::resource('students', StudentController::class);
+    Route::get('admin-profile/{id}', [StudentController::class, 'adminProfile'])->name('profile.admin');
     Route::post('student-status', [StudentController::class, 'studentStatus'])->name('student.status');
     Route::get('inactive-student', [StudentController::class, 'inactiveStudent'])->name('inactive.students');
     Route::get('trash-student', [StudentController::class, 'trashStudent'])->name('trash.students');
