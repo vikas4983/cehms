@@ -30,7 +30,7 @@ class StudentCreateRequest extends FormRequest
             'email' => ['required', 'string', Rule::unique('users', 'email')->ignore($userId)],
             'password' => ['required', 'confirmed'],
             'image' => ['nullable', 'mimes:jpg,jpeg,gif,', 'max:20248'],
-            'status' => ['required', 'in:1,0'],
+            'status' => ['sometimes', 'in:1,0'],
             'father_name' => ['nullable', 'string'],
             'dob' => ['nullable', 'date'],
             'gender' => ['required'],

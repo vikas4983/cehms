@@ -86,8 +86,7 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
-        dd($request->all());
-        $permissions = array_filter((array) $request->permissions);
+         $permissions = array_filter((array) $request->permissions);
         if (empty($permissions)) {
             $role->update($request->all());
             return redirect()->back()->with('success', 'Role name & status has been updated successfully');

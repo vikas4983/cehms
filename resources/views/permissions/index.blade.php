@@ -288,7 +288,7 @@
                     <span class="mb-16 fs-1 line-height-1 text-danger">
                         <iconify-icon icon="fluent:delete-24-regular" class="menu-icon"></iconify-icon>
                     </span>
-                    <h6 class="text-lg fw-semibold text-primary-light mb-0">Are your sure you want to Suspend this teacher
+                    <h6 class="text-lg fw-semibold text-primary-light mb-0">Are you sure you for this action
                     </h6>
                     <div class="d-flex align-items-center justify-content-center gap-3 mt-24">
                         <button type="reset"
