@@ -45,8 +45,7 @@ class StudentController extends Controller
      */
     public function create()
     {
-        $students = User::where('');
-        return view('students.create', compact('students'));
+        return view('students.create');
     }
 
     /**
@@ -136,18 +135,25 @@ class StudentController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::findOrfail($id);
-        if ($user->exists() && $user->image) {
-            $this->imageExist($user->image);
+        $user = User::withTrashed()->find($id);
+        if (!$user) {
+            return redirect()->back()->with('error', 'Something went wrong.');
         }
-        if ($user->exists() && $user->{'10th_marksheet'}) {
-            $this->imageExist($user->{'10th_marksheet'});
-        }
-        if ($user->exists() && $user->{'12th_marksheet'}) {
-            $this->imageExist($user->{'12th_marksheet'});
+        if ($user->trashed()) {
+            if (!empty($user->image)) {
+                $this->imageExist($user->image);
+            }
+            if (!empty($user->{'10th_marksheet'})) {
+                $this->imageExist($user->{'10th_marksheet'});
+            }
+            if (!empty($user->{'12th_marksheet'})) {
+                $this->imageExist($user->{'12th_marksheet'});
+            }
+            $user->forceDelete();
+            return redirect()->back()->with('error', 'Student deleted permanently.');
         }
         $user->delete();
-        return redirect()->route('students.index')->with('error', 'Student has been deleted successfully');
+        return redirect()->back()->with('error', 'Student moved to trash successfully.');
     }
 
     public function studentStatus(Request $request)
@@ -196,7 +202,7 @@ class StudentController extends Controller
     }
     public function trashStudent()
     {
-        $students = User::onlyTrashed()->paginate(20);
+        $students = User::onlyTrashed()->orderByDesc('updated_at')->paginate(20);
         return view('students.trash', compact('students'));
     }
     public function untrashStudent($id)

@@ -22,14 +22,14 @@ trait AssignRoleOrPermission
             $requiredPermissions = ['create user', 'edit user', 'view user'];
             $requiredRoles = ['user'];
         } else {
-            $requiredPermissions = $data['permissions'];
-            $requiredRoles = $data['roles'];
+            $requiredPermissions = $data['permissions'] ?? [];
+            $requiredRoles = $data['roles'] ?? [];
             $user = User::findOrFail($data['studentId']);
         }
 
         $permissions = Permission::active()->whereIn('name', $requiredPermissions)->pluck('name')->toArray();
         $roles = Role::active()->whereIn('name', $requiredRoles)->pluck('name')->toArray();
-        $user->assignRole($roles);
+        $user->syncRoles($roles);
         $user->syncPermissions($permissions);
         return;
     }

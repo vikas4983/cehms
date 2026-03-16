@@ -119,5 +119,4 @@ class User extends Authenticatable
     {
         return Attribute::make(set: fn($value) => strtolower($value));
     }
-
 }

@@ -11,8 +11,10 @@ class ConfirmDeleteComponent extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public $route;
+    public function __construct($route = null)
     {
+        $this->route=$route;
     }
 
     /**

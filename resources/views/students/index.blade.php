@@ -282,7 +282,7 @@
                                                             Role & Permission
                                                         </button>
                                                     </li>
-                                               </ul>
+                                                </ul>
                                             </div>
 
                                             {{ $student?->practitioner_registration ?? '' }}
@@ -329,7 +329,7 @@
                                     </tr>
 
                                     <x-assign-permission-component :groupedPermissions="$groupedPermissions" :student="$student" :roles="$roles" />
-                                    
+
                                 @empty
                                 @endforelse
                             </tbody>

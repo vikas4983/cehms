@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Permission;
+use App\Models\User;
 use App\traits\AssignRoleOrPermission;
+use App\traits\RevokeRoleOrPermission;
 use Illuminate\Http\Request;
 
 use function PHPUnit\Framework\isEmpty;
@@ -11,6 +13,7 @@ use function PHPUnit\Framework\isEmpty;
 class PermissionController extends Controller
 {
     use AssignRoleOrPermission;
+    use RevokeRoleOrPermission;
     /**
      * Display a listing of the resource.
      */
@@ -72,9 +75,8 @@ class PermissionController extends Controller
     }
 
     public function assignPermission(Request $request)
-    {  
-       
-        if (!$request->studentId || empty($request->permissions)) {
+    {
+        if (!$request->studentId) {
             return redirect()->back()->with('error', 'Something went wrong');
         }
         $this->assignPermissionForUser($request->all());

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Student - Add')
+@section('title', 'Student - Trash')
 @section('content')
     <div class="dashboard-main-body">
 
@@ -186,11 +186,13 @@
                                         </td>
                                         <td>
                                             @if ($student->trashed())
-                                                <a href="{{ route('untrash.students', $student?->id ?? '') }}"
-                                                    style="color:rgb(9, 146, 112)" data-url ="{{route('untrash.students',$student->id)}}" title="Undo Record" data-bs-toggle="modal"
-                                                    data-bs-target="#deleteModal"><i
-                                                        class="ri-arrow-go-back-line"></i></a>
+                                                <a href="{{ route('untrash.students', $student->id) }}"
+                                                    style="color:rgb(9, 146, 112)"
+                                                    data-url ="{{ route('untrash.students', $student->id) }}"
+                                                    title="Undo Record"><i class="ri-arrow-go-back-line"></i></a>
                                             @endif
+                                            {{ $student?->name ?? '' }}
+                                        </td>
                                         <td>{{ $student?->email ?? '' }}</td>
                                         <td>{{ $student?->practitioner_registration ?? '' }}</td>
                                         <td>{{ $student->dob }}</td>
@@ -229,5 +231,5 @@
             </div>
         </div>
     </div>
-    <x-button.confirm-delete-component />
+    <x-button.confirm-delete-component :route="request()->segment(1)" />
 @endsection

@@ -6,8 +6,10 @@
             <div class="">
                 <h1 class="fw-semibold mb-4 h6 text-primary-light">Add New Student</h1>
                 <div class="">
-                    <a href="index.html" class="text-secondary-light hover-text-primary hover-underline">Dashboard </a>
-                    <a href="student-list.html" class="text-secondary-light hover-text-primary hover-underline "> /
+                    <a href="{{ route('dashboard') }}"
+                        class="text-secondary-light hover-text-primary hover-underline">Dashboard </a>
+                    <a href="{{ route('students.index') }}" class="text-secondary-light hover-text-primary hover-underline ">
+                        /
                         Student</a>
                     <span class="text-secondary-light">/ Add New Student</span>
                 </div>
@@ -49,8 +51,8 @@
                                 <div class="col-xxl-3 col-xl-4 col-sm-6">
                                     <div class="">
                                         <label for="gender"
-                                            class="text-sm fw-semibold text-primary-light d-inline-block mb-8"> <span
-                                                class="text-danger-600">*</span>Gender</label>
+                                            class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Gender <span
+                                                class="text-danger-600">*</span></label>
                                         <select id="gender" name="gender"
                                             class="form-control form-select @error('gender') is-invalid @enderror "
                                             min-length="10" max-length="12">
@@ -142,7 +144,25 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-xxl-3 col-xl-4 col-sm-6">
+                                <div class="col-sm-3">
+                                    <div class="">
+                                        <label for="status"
+                                            class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Status <span
+                                                class="text-danger-600">*</span></label>
+                                        <select id="status" name="status"
+                                            class="form-control form-select @error('status') is-invalid @enderror">
+                                            <option value="Select section" disabled>Select Status</option>
+                                            <option value="1">Active</option>
+                                            <option value="0">Inactive</option>
+                                        </select>
+                                        @error('status')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-xxl-3 col-xl-4 col-sm-4">
                                     <div class="">
                                         <label class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Student
                                             Photo
@@ -158,25 +178,34 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-4">
-                                    <div class="">
-                                        <label for="status"
-                                            class="text-sm fw-semibold text-primary-light d-inline-block mb-8"><span
-                                                class="text-danger-600">*</span>Status</label>
-                                        <select id="status" name="status"
-                                            class="form-control form-select @error('status') is-invalid @enderror">
-                                            <option value="Select section" disabled>Select Status</option>
-                                            <option value="1">Active</option>
-                                            <option value="0">Inactive</option>
-                                        </select>
-                                        @error('status')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
+                                <div class="col-md-4">
+                                    <label class="text-sm fw-semibold text-primary-light d-inline-block mb-8"">10th
+                                        Marksheet</label>
+
+                                    <input type="file" name="10th_marksheet"
+                                        class="form-control @error('10th_marksheet') is-invalid @enderror">
+
+                                    @error('10th_marksheet')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+
                                 </div>
-                                <div class="col-sm-8">
+
+
+                                <div class="col-md-4">
+                                    <label class="text-sm fw-semibold text-primary-light d-inline-block mb-8"">12th
+                                        Marksheet</label>
+
+                                    <input type="file" name="12th_marksheet"
+                                        class="form-control @error('12th_marksheet') is-invalid @enderror">
+
+                                    @error('12th_marksheet')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+
+                                </div>
+
+                                <div class="col-sm-12">
                                     <div class="">
                                         <label for="others"
                                             class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Other
