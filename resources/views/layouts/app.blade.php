@@ -351,6 +351,12 @@
                         </ul>
                     </li>
                     <li>
+                        <a href="{{ route('medicines.index') }}">
+                           <i class="ri-capsule-line"></i>
+                            <span>Medicines</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{ route('roles.index') }}">
                             <i class="ri-user-follow-line"></i>
                             <span>Roles</span>

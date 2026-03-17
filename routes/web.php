@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\FilterController;
 use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\PermissionController;
@@ -46,6 +47,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('monthly-students-export', [StudentController::class, 'exportMonthlyStudents'])->name('monthly.students.export');
     Route::post('yearly-students-export', [StudentController::class, 'exportYearlyStudents'])->name('yearly.students.export');
     Route::resource('books', BookController::class);
+    Route::resource('medicines', MedicineController::class);
     Route::get('book-status', [BookController::class, 'bookStatus'])->name('book.status');
     Route::get('view-book/{path}', [BookController::class, 'viewBook'])
         ->where('path', '.*')
