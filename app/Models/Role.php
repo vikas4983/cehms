@@ -15,6 +15,10 @@ class Role extends SpatieRole
     {
         return $query->where('status', 1);
     }
+    public function scopeAllRoles($query)
+    {
+        return $query;
+    }
     protected function name(): Attribute
     {
         return Attribute::make(set: fn($value) => strtolower($value));

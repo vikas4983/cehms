@@ -31,10 +31,10 @@ class News extends Model
 
     public function scopeAllNews($query)
     {
-        return $query->orderBydesc('status', 1);
+        return $query->orderBydesc('status', 1)->latest();
     }
     public function scopeActive($query)
     {
-        return $query->where('status', 1);
+        return $query->where('status', 1)->latest();
     }
 }

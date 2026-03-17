@@ -1,43 +1,216 @@
 @extends('layouts.app')
 @section('title', 'Dashboard')
 @section('content')
+    <style>
+        .icon-circle {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background-color: var(--primary);
+            /* dynamic theme color */
+        }
+
+        .icon-circle iconify-icon {
+            color: #fff;
+            font-size: 20px;
+        }
+    </style>
     <div class="dashboard-main-body">
         <div class="breadcrumb d-flex flex-wrap align-items-center justify-content-between gap-3 mb-24">
             <div class="">
                 <h6 class="fw-semibold mb-0">Dashboard</h6>
+
             </div>
         </div>
-
         <div class="mt-24">
             <div class="row gy-4">
                 <div class="col-xxl-8">
                     <div class="row gy-4">
                         <div class="col-xxl-4 col-sm-6">
                             <div class="card shadow-1 radius-8 gradient-bg-end-1 h-100">
-                                <div class="card-body p-20">
-                                    <div class="d-flex flex-wrap align-items-center gap-3 mb-16">
-                                        <div
-                                            class="w-44-px h-44-px bg-warning-600 rounded-circle d-flex justify-content-center align-items-center">
-                                            <img src="{{ asset('assets/images/dashboard-icon1.png') }}" alt="Icon">
+                                <a href="{{ route('students.index') }}">
+                                    <div class="card-body p-20">
+                                        <div class="d-flex flex-wrap align-items-center gap-3 mb-16">
+                                            <div class="icon-circle bg-primary-600">
+                                                <iconify-icon icon="mdi:account-group-outline"
+                                                    class="text-white"></iconify-icon>
+                                            </div>
+                                            <p class="fw-medium text-primary-light mb-1">Total Students</p>
                                         </div>
-                                        <p class="fw-medium text-primary-light mb-1">Total Student</p>
+                                        <h6 class="mb-0">{{ $counts['students'] }}</h6>
                                     </div>
-                                    <h6 class="mb-0">20,000</h6>
-                                    <p
-                                        class="fw-medium text-sm text-primary-light mt-12 mb-0 d-flex align-items-center gap-2">
-                                        <span
-                                            class="d-inline-flex align-items-center gap-1 text-primary-600 text-sm fw-semibold">
-                                            10%
-                                            <iconify-icon icon="bxs:up-arrow" class="text-xs"></iconify-icon>
-                                        </span>
-                                        +5 This Month
-                                    </p>
-                                </div>
+                                </a>
                             </div>
                         </div>
+                        <div class="col-xxl-4 col-sm-6">
+                            <div class="card shadow-1 radius-8 gradient-bg-end-1 h-100">
+                                <a href="{{ route('active.students') }}">
+                                    <div class="card-body p-20">
+                                        <div class="d-flex flex-wrap align-items-center gap-3 mb-16">
+                                            <div class="icon-circle bg-primary-600">
+                                                <iconify-icon icon="mdi:account-check-outline"
+                                                    class="text-white"></iconify-icon>
+                                            </div>
+                                            <p class="fw-medium text-primary-light mb-1">Active Students</p>
+                                        </div>
+                                        <h6 class="mb-0">{{ $counts['activeStudents'] }}</h6>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-xxl-4 col-sm-6">
+                            <div class="card shadow-1 radius-8 gradient-bg-end-1 h-100">
+                                <a href="{{ route('inactive.students') }}">
+                                    <div class="card-body p-20">
+                                        <div class="d-flex flex-wrap align-items-center gap-3 mb-16">
+                                            <div class="icon-circle bg-primary-600">
+                                                <iconify-icon icon="mdi:account-cancel-outline"
+                                                    class="text-white"></iconify-icon>
+                                            </div>
+                                            <p class="fw-medium text-primary-light mb-1">Block Student</p>
+                                        </div>
+                                        <h6 class="mb-0">{{ $counts['suspendedStudents'] }}</h6>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-xxl-4 col-sm-6">
+                            <div class="card shadow-1 radius-8 gradient-bg-end-1 h-100">
+                                <a href="{{ route('trash.students') }}">
+                                    <div class="card-body p-20">
+                                        <div class="d-flex flex-wrap align-items-center gap-3 mb-16">
+                                            <div class="icon-circle bg-primary-600">
+                                                <iconify-icon icon="mdi:trash-can-outline"
+                                                    class="text-white"></iconify-icon>
+                                            </div>
+                                            <p class="fw-medium text-primary-light mb-1">Trashed studentst</p>
+                                        </div>
+                                        <h6 class="mb-0">{{ $counts['trashedStudents'] }}</h6>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-xxl-4 col-sm-6">
+                            <div class="card shadow-1 radius-8 gradient-bg-end-1 h-100">
+                                <a href="{{ route('books.index') }}">
+                                    <div class="card-body p-20">
+                                        <div class="d-flex flex-wrap align-items-center gap-3 mb-16">
+                                            <div class="icon-circle bg-primary-600">
+                                                <iconify-icon icon="mdi:book-check-outline"
+                                                    class="text-white"></iconify-icon>
+                                            </div>
+                                            <p class="fw-medium text-primary-light mb-1">Books</p>
+                                        </div>
+                                        <h6 class="mb-0">{{ $counts['books'] }}</h6>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="col-xxl-4 col-sm-6">
+                            <div class="card shadow-1 radius-8 gradient-bg-end-1 h-100">
+                                <a href="{{ route('news.index') }}">
+                                    <div class="card-body p-20">
+                                        <div class="d-flex flex-wrap align-items-center gap-3 mb-16">
+                                            <div class="icon-circle bg-primary-600">
+                                                <iconify-icon icon="mdi:newspaper-variant-outline"
+                                                    class="text-white"></iconify-icon>
+                                            </div>
+                                            <p class="fw-medium text-primary-light mb-1">News</p>
+                                        </div>
+                                        <h6 class="mb-0">{{ $counts['news'] }}</h6>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="col-xxl-4 col-sm-6">
+                            <div class="card shadow-1 radius-8 gradient-bg-end-1 h-100">
+                                <a href="{{ route('roles.index') }}">
+                                    <div class="card-body p-20">
+                                        <div class="d-flex flex-wrap align-items-center gap-3 mb-16">
+                                            <div class="icon-circle bg-primary-600">
+                                                <iconify-icon icon="mdi:account-key-outline"
+                                                    class="text-white"></iconify-icon>
+                                            </div>
+                                            <p class="fw-medium text-primary-light mb-1">Roles</p>
+                                        </div>
+                                        <h6 class="mb-0">{{ $counts['roles'] }}</h6>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-xxl-4 col-sm-6">
+                            <div class="card shadow-1 radius-8 gradient-bg-end-1 h-100">
+                                <a href="{{ route('permissions.index') }}">
+                                    <div class="card-body p-20">
+                                        <div class="d-flex flex-wrap align-items-center gap-3 mb-16">
+                                            <div class="icon-circle bg-primary-600">
+                                                <iconify-icon icon="mdi:shield-check-outline"
+                                                    class="text-white"></iconify-icon>
+                                            </div>
+                                            <p class="fw-medium text-primary-light mb-1">Permissions</p>
+                                        </div>
+                                        <h6 class="mb-0">{{ $counts['permissions'] }}</h6>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-xxl-4 col-sm-6">
+                            <div class="card shadow-1 radius-8 gradient-bg-end-1 h-100">
+                                <a href="{{ route('siteSettings.index') }}">
+                                    <div class="card-body p-20">
+                                        <div class="d-flex flex-wrap align-items-center gap-3 mb-16">
+                                            <div class="icon-circle bg-primary-600">
+                                                <iconify-icon icon="mdi:web" class="text-white"></iconify-icon>
+                                            </div>
+                                            <p class="fw-medium text-primary-light mb-1">Web Settings</p>
+                                        </div>
+                                        <h6 class="mb-0">{{ $counts['siteSettings'] }}</h6>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-xxl-4 col-sm-6">
+                            <div class="card shadow-1 radius-8 gradient-bg-end-1 h-100">
+                                <a href="{{ route('banners.index') }}">
+                                    <div class="card-body p-20">
+                                        <div class="d-flex flex-wrap align-items-center gap-3 mb-16">
+                                            <div class="icon-circle bg-primary-600">
+                                                <iconify-icon icon="mdi:view-carousel-outline"
+                                                    class="text-white"></iconify-icon>
+                                            </div>
+                                            <p class="fw-medium text-primary-light mb-1">Banners</p>
+                                        </div>
+                                        <h6 class="mb-0">{{ $counts['banners'] }}</h6>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-xxl-4 col-sm-6">
+                            <div class="card shadow-1 radius-8 gradient-bg-end-1 h-100">
+                                <a href="{{ route('menus.index') }}">
+                                    <div class="card-body p-20">
+                                        <div class="d-flex flex-wrap align-items-center gap-3 mb-16">
+                                            <div class="icon-circle bg-primary-600">
+                                                <iconify-icon icon="mdi:view-list-outline"
+                                                    class="text-white"></iconify-icon>
+                                            </div>
+                                            <p class="fw-medium text-primary-light mb-1">Menus</p>
+                                        </div>
+                                        <h6 class="mb-0">{{ $counts['menus'] }}</h6>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
-                <div class="col-xxl-4">
+                {{-- <div class="col-xxl-4">
                     <div class="card h-100">
                         <div class="card-body p-0">
                             <div
@@ -84,8 +257,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-12">
+                </div> --}}
+                {{-- <div class="col-12">
                     <div class="row gy-4">
                         <div class="col-xxl-8">
                             <div class="row gy-4">
@@ -128,7 +301,8 @@
                                                 class="d-flex flex-wrap align-items-center justify-content-between px-20 py-16 border-bottom border-neutral-200">
                                                 <h6 class="text-lg mb-0">Notice Board</h6>
                                                 <div class="dropdown">
-                                                    <button type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <button type="button" data-bs-toggle="dropdown"
+                                                        aria-expanded="false">
                                                         <iconify-icon icon="entypo:dots-three-vertical"
                                                             class="icon text-secondary-light"></iconify-icon>
                                                     </button>
@@ -546,8 +720,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-xxl-4 col-lg-6">
+                </div> --}}
+                {{-- <div class="col-xxl-4 col-lg-6">
                     <div class="card h-100">
                         <div class="card-body p-0">
                             <div
@@ -640,8 +814,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-xxl-8 col-lg-6">
+                </div> --}}
+                {{-- <div class="col-xxl-8 col-lg-6">
                     <div class="card h-100">
                         <div class="card-body p-0">
                             <div
@@ -704,13 +878,161 @@
                             </div>
                         </div>
                     </div>
+                </div> --}}
+
+                <div class="col-xxl-4">
+                    <div class="card radius-12 border-0 h-100">
+                        <div
+                            class="d-flex align-items-center flex-wrap gap-2 justify-content-between py-12 px-20 border-bottom border-neutral-200">
+                            <h6 class="mb-2 fw-bold text-lg">Top Students</h6>
+                            <div class="dropdown">
+                                <button type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <iconify-icon icon="entypo:dots-three-vertical"
+                                        class="icon text-secondary-light"></iconify-icon>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex flex-column gap-28">
+                                @forelse ($todayStudents as $student)
+                                    <div class="d-flex align-items-center justify-content-between gap-10">
+                                        <div class="d-flex align-items-center gap-12">
+                                            <span
+                                                class="w-44-px h-44-px rounded-circle d-flex justify-content-center align-items-center">
+                                                <img src="{{ $student->image
+                                                    ? asset('storage/' . $student->image)
+                                                    : ($student->gender == 'female'
+                                                        ? asset('assets/images/female-avtar.png')
+                                                        : asset('assets/images/male-avtar.png')) }}"
+                                                    alt="Student Image"
+                                                    class="w-44-px h-44-px object-fit-cover rounded-circle">
+                                            </span>
+                                            <div class="">
+                                                <h6 class="text-sm mb-2">
+                                                    <a href="{{ route('students.show', $student->id) }}"
+                                                        style="color: #25A194">
+                                                        {{ ucwords($student?->name ?? '') }}
+                                                    </a>
+                                                </h6>
+                                                <span
+                                                    class="text-xs text-secondary-light">{{ $student->getRoleNames()->first() ?? 'User' }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center gap-8">
+                                            <span
+                                                class="text-sm text-secondary-light">{{ $student?->practitioner_registration ?? '' }}</span>
+                                        </div>
+                                    </div>
+                                @empty
+                                @endforelse
+                            </div>
+                            {{-- <div class="row text-center mt-5">
+                                {{ $todayStudents->links() }}
+                            </div> --}}
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="col-xxl-4">
+                    <div class="card radius-12 border-0 h-100">
+                        <div
+                            class="d-flex align-items-center flex-wrap gap-2 justify-content-between py-12 px-20 border-bottom border-neutral-200">
+                            <h6 class="mb-2 fw-bold text-lg">New Admissions</h6>
+                            <div class="dropdown">
+                                <button type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <iconify-icon icon="entypo:dots-three-vertical"
+                                        class="icon text-secondary-light"></iconify-icon>
+                                </button>
+
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex flex-column gap-28">
+                                <div class="d-flex flex-column gap-28">
+                                    @forelse ($weeklyStudents as $student)
+                                        <div class="d-flex align-items-center justify-content-between gap-10">
+                                            <div class="d-flex align-items-center gap-12">
+                                                <span
+                                                    class="w-44-px h-44-px rounded-circle d-flex justify-content-center align-items-center">
+                                                    <img src="{{ $student->image
+                                                        ? asset('storage/' . $student->image)
+                                                        : ($student->gender == 'female'
+                                                            ? asset('assets/images/female-avtar.png')
+                                                            : asset('assets/images/male-avtar.png')) }}"
+                                                        alt="Student Image"
+                                                        class="w-44-px h-44-px object-fit-cover rounded-circle">
+                                                </span>
+                                                <div class="">
+                                                    <h6 class="text-sm mb-2">
+                                                        <a href="{{ route('students.show', $student->id) }}"
+                                                            style="color: #25A194">
+                                                            {{ ucwords($student?->name ?? '') }}
+                                                        </a>
+                                                    </h6>
+                                                    <span
+                                                        class="text-xs text-secondary-light">{{ $student->getRoleNames()->first() ?? 'User' }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex align-items-center gap-8">
+                                                <span
+                                                    class="text-sm text-secondary-light">{{ $student?->practitioner_registration ?? '' }}</span>
+                                            </div>
+                                        </div>
+                                    @empty
+                                    @endforelse
+                                </div>
+                                {{-- <div class="row text-right mt-5">
+                                    {{ $weeklyStudents->links() }}
+                                </div> --}}
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-xxl-4 col-lg-6">
                     <div class="card h-100">
                         <div class="card-body p-0">
                             <div
                                 class="d-flex flex-wrap align-items-center justify-content-between px-20 py-16 border-bottom border-neutral-200">
-                                <h6 class="text-lg mb-0">Top Teachers</h6>
+                                <h6 class="text-lg mb-0">Top Cources</h6>
+
+                            </div>
+                            @forelse ($books as $book)
+                                <div class="ps-20 pt-20 pb-20">
+                                    <div class="pe-20 d-flex flex-column gap-20 max-h-462-px overflow-y-auto scroll-sm">
+                                        <div class="d-flex align-items-center justify-content-between gap-16">
+                                            <div class="d-flex align-items-start gap-16">
+                                                <div class="">
+                                                    <h6 class="mb-0 text-lg">{{ ucwords($book?->name ?? '') }}</h6>
+                                                    <span
+                                                        class="text-secondary-light text-sm mb-0">{{ ucwords($book?->publisher ?? '') }}</span>
+                                                </div>
+                                            </div>
+                                            @if (!empty($book->pdf))
+                                                <div class="text-end">
+                                                    <span class="d-block fw-semibold text-primary-light"><a href="{{route('book.view',['path' =>$book->pdf ])}}" target="_blank">View</a></span>
+                                                </div>
+                                            @endif
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            @empty
+                            @endforelse
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-xxl-4 col-lg-6">
+                    <div class="card h-100">
+                        <div class="card-body p-0">
+                            <div
+                                class="d-flex flex-wrap align-items-center justify-content-between px-20 py-16 border-bottom border-neutral-200">
+                                <h6 class="text-lg mb-0">Top Medicine</h6>
                                 <div class="dropdown">
                                     <button type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <iconify-icon icon="entypo:dots-three-vertical"
@@ -726,27 +1048,11 @@
                                                 View
                                             </button>
                                         </li>
-                                        <li>
-                                            <button type="button"
-                                                class="dropdown-item px-16 py-8 rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-10"
-                                                data-bs-toggle="modal" data-bs-target="#exampleModalEdit">
-                                                <iconify-icon icon="lucide:edit"
-                                                    class="icon text-lg line-height-1"></iconify-icon>
-                                                Edit
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <button type="button"
-                                                class="delete-item dropdown-item px-16 py-8 rounded text-secondary-light bg-hover-danger-100 text-hover-danger-600 d-flex align-items-center gap-10"
-                                                data-bs-toggle="modal" data-bs-target="#exampleModalDelete">
-                                                <iconify-icon icon="fluent:delete-24-regular"
-                                                    class="icon text-lg line-height-1"></iconify-icon>
-                                                Delete
-                                            </button>
-                                        </li>
+
                                     </ul>
                                 </div>
                             </div>
+
                             <div class="ps-20 pt-20 pb-20">
                                 <div class="pe-20 d-flex flex-column gap-20 max-h-462-px overflow-y-auto scroll-sm">
                                     <div class="d-flex align-items-center justify-content-between gap-16">
@@ -816,10 +1122,13 @@
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
-                <div class="col-xxl-4 col-lg-6">
+
+
+                {{-- <div class="col-xxl-4 col-lg-6">
                     <div class="card h-100">
                         <div class="card-body p-0">
                             <div
@@ -911,200 +1220,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-xxl-4">
-                    <div class="card radius-12 border-0 h-100">
-                        <div
-                            class="d-flex align-items-center flex-wrap gap-2 justify-content-between py-12 px-20 border-bottom border-neutral-200">
-                            <h6 class="mb-2 fw-bold text-lg">Top Student</h6>
-                            <div class="dropdown">
-                                <button type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <iconify-icon icon="entypo:dots-three-vertical"
-                                        class="icon text-secondary-light"></iconify-icon>
-                                </button>
-                                <ul class="dropdown-menu p-12 border bg-base shadow">
-                                    <li>
-                                        <button type="button"
-                                            class="dropdown-item px-16 py-8 rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-10"
-                                            data-bs-toggle="modal" data-bs-target="#exampleModalView">
-                                            <iconify-icon icon="hugeicons:view"
-                                                class="icon text-lg line-height-1"></iconify-icon>
-                                            View
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button type="button"
-                                            class="dropdown-item px-16 py-8 rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-10"
-                                            data-bs-toggle="modal" data-bs-target="#exampleModalEdit">
-                                            <iconify-icon icon="lucide:edit"
-                                                class="icon text-lg line-height-1"></iconify-icon>
-                                            Edit
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button type="button"
-                                            class="delete-item dropdown-item px-16 py-8 rounded text-secondary-light bg-hover-danger-100 text-hover-danger-600 d-flex align-items-center gap-10"
-                                            data-bs-toggle="modal" data-bs-target="#exampleModalDelete">
-                                            <iconify-icon icon="fluent:delete-24-regular"
-                                                class="icon text-lg line-height-1"></iconify-icon>
-                                            Delete
-                                        </button>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="d-flex flex-column gap-28">
-                                <div class="d-flex align-items-center justify-content-between gap-10">
-                                    <div class="d-flex align-items-center gap-12">
-                                        <span
-                                            class="w-44-px h-44-px rounded-circle d-flex justify-content-center align-items-center">
-                                            <img src="{{ asset('assets/images/avatar-img1.png') }}"
-                                                class="w-44-px h-44-px object-fit-cover rounded-circle" alt="Icon">
-                                        </span>
-                                        <div class="">
-                                            <h6 class="text-sm mb-2">Brooklyn Simmons</h6>
-                                            <span class="text-xs text-secondary-light">Class: Six</span>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex align-items-center gap-8">
-                                        <span class="text-sm text-secondary-light">Marks</span>
-                                        <span class="text-primary-light text-sm d-block text-end">
-                                            <svg class="radial-progress w-44-px" data-percentage="20"
-                                                viewBox="0 0 80 80">
-                                                <circle class="incomplete stroke-8-px opacity-02 stroke-blue"
-                                                    cx="40" cy="40" r="35"></circle>
-                                                <circle class="complete stroke-8-px stroke-blue" cx="40"
-                                                    cy="40" r="35">
-                                                </circle>
-                                                <text class="percentage fill-black" x="50%" y="57%"
-                                                    transform="matrix(0, 1, -1, 0, 80, 0)">20</text>
-                                            </svg>
-                                        </span>
-                                    </div>
-                                </div>
+                </div> --}}
 
-                                <div class="d-flex align-items-center justify-content-between gap-10">
-                                    <div class="d-flex align-items-center gap-12">
-                                        <span
-                                            class="w-44-px h-44-px rounded-circle d-flex justify-content-center align-items-center">
-                                            <img src="{{ asset('assets/images/avatar-img2.png') }}"
-                                                class="w-44-px h-44-px object-fit-cover rounded-circle" alt="Icon">
-                                        </span>
-                                        <div class="">
-                                            <h6 class="text-sm mb-2">Floyd Miles</h6>
-                                            <span class="text-xs text-secondary-light">Class: Seven</span>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex align-items-center gap-8">
-                                        <span class="text-sm text-secondary-light">Marks</span>
-                                        <span class="text-primary-light text-sm d-block text-end">
-                                            <svg class="radial-progress w-44-px" data-percentage="35"
-                                                viewBox="0 0 80 80">
-                                                <circle class="incomplete stroke-8-px opacity-02 stroke-red"
-                                                    cx="40" cy="40" r="35"></circle>
-                                                <circle class="complete stroke-8-px stroke-red" cx="40"
-                                                    cy="40" r="35">
-                                                </circle>
-                                                <text class="percentage fill-black" x="50%" y="57%"
-                                                    transform="matrix(0, 1, -1, 0, 80, 0)">35</text>
-                                            </svg>
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <div class="d-flex align-items-center justify-content-between gap-10">
-                                    <div class="d-flex align-items-center gap-12">
-                                        <span
-                                            class="w-44-px h-44-px rounded-circle d-flex justify-content-center align-items-center">
-                                            <img src="{{ asset('assets/images/avatar-img2.png') }}"
-                                                class="w-44-px h-44-px object-fit-cover rounded-circle" alt="Icon">
-                                        </span>
-                                        <div class="">
-                                            <h6 class="text-sm mb-2">Courtney Henry</h6>
-                                            <span class="text-xs text-secondary-light">Class: Eight</span>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex align-items-center gap-8">
-                                        <span class="text-sm text-secondary-light">Marks</span>
-                                        <span class="text-primary-light text-sm d-block text-end">
-                                            <svg class="radial-progress w-44-px" data-percentage="45"
-                                                viewBox="0 0 80 80">
-                                                <circle class="incomplete stroke-8-px opacity-02 stroke-warning"
-                                                    cx="40" cy="40" r="35">
-                                                </circle>
-                                                <circle class="complete stroke-8-px stroke-warning" cx="40"
-                                                    cy="40" r="35">
-                                                </circle>
-                                                <text class="percentage fill-black" x="50%" y="57%"
-                                                    transform="matrix(0, 1, -1, 0, 80, 0)">45</text>
-                                            </svg>
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <div class="d-flex align-items-center justify-content-between gap-10">
-                                    <div class="d-flex align-items-center gap-12">
-                                        <span
-                                            class="w-44-px h-44-px rounded-circle d-flex justify-content-center align-items-center">
-                                            <img src="{{ asset('assets/images/avatar-img4.png') }}"
-                                                class="w-44-px h-44-px object-fit-cover rounded-circle" alt="Icon">
-                                        </span>
-                                        <div class="">
-                                            <h6 class="text-sm mb-2">Kathryn Murphy</h6>
-                                            <span class="text-xs text-secondary-light">Class: Nine</span>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex align-items-center gap-8">
-                                        <span class="text-sm text-secondary-light">Marks</span>
-                                        <span class="text-primary-light text-sm d-block text-end">
-                                            <svg class="radial-progress w-44-px" data-percentage="65"
-                                                viewBox="0 0 80 80">
-                                                <circle class="incomplete stroke-8-px opacity-02 stroke-green"
-                                                    cx="40" cy="40" r="35"></circle>
-                                                <circle class="complete stroke-8-px stroke-green" cx="40"
-                                                    cy="40" r="35">
-                                                </circle>
-                                                <text class="percentage fill-black" x="50%" y="57%"
-                                                    transform="matrix(0, 1, -1, 0, 80, 0)">65</text>
-                                            </svg>
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <div class="d-flex align-items-center justify-content-between gap-10">
-                                    <div class="d-flex align-items-center gap-12">
-                                        <span
-                                            class="w-44-px h-44-px rounded-circle d-flex justify-content-center align-items-center">
-                                            <img src="{{ asset('assets/images/avatar-img5.png') }}"
-                                                class="w-44-px h-44-px object-fit-cover rounded-circle" alt="Icon">
-                                        </span>
-                                        <div class="">
-                                            <h6 class="text-sm mb-2">Annette Black</h6>
-                                            <span class="text-xs text-secondary-light">Class: Ten</span>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex align-items-center gap-8">
-                                        <span class="text-sm text-secondary-light">Marks</span>
-                                        <span class="text-primary-light text-sm d-block text-end">
-                                            <svg class="radial-progress w-44-px" data-percentage="65"
-                                                viewBox="0 0 80 80">
-                                                <circle class="incomplete stroke-8-px opacity-02 stroke-blue"
-                                                    cx="40" cy="40" r="35"></circle>
-                                                <circle class="complete stroke-8-px stroke-blue" cx="40"
-                                                    cy="40" r="35">
-                                                </circle>
-                                                <text class="percentage fill-black" x="50%" y="57%"
-                                                    transform="matrix(0, 1, -1, 0, 80, 0)">65</text>
-                                            </svg>
-                                        </span>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

@@ -271,45 +271,6 @@
                             <span>Dashboard </span>
                         </a>
                     </li>
-                    <li>
-                        <a href="{{ route('roles.index') }}">
-                            <i class="ri-user-follow-line"></i>
-                            <span>Roles</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('permissions.index') }}">
-                            <i class="ri-macbook-line"></i>
-                            <span>Permissions</span>
-                        </a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="javascript:void(0)">
-                            <i class="ri-user-settings-line"></i>
-                            <span>Settings</span>
-                        </a>
-                        <ul class="sidebar-submenu">
-                            <li>
-                                <a href="{{ route('siteSettings.index') }}">
-                                    <i class="ri-circle-fill circle-icon w-auto"></i>
-                                    General
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="{{ route('banners.index') }}">
-                                    <i class="ri-circle-fill circle-icon w-auto"></i>
-                                    Banners
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="{{ route('menus.index') }}">
-                            <i class="ri-menu-line"></i>
-                            <span>Menus</span>
-                        </a>
-                    </li>
                     <li class="dropdown">
                         <a href="javascript:void(0)">
                             <i class="ri-graduation-cap-line"></i>
@@ -389,7 +350,45 @@
                             </li>
                         </ul>
                     </li>
-                 @endrole('admin')
+                    <li>
+                        <a href="{{ route('roles.index') }}">
+                            <i class="ri-user-follow-line"></i>
+                            <span>Roles</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('permissions.index') }}">
+                            <i class="ri-macbook-line"></i>
+                            <span>Permissions</span>
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)">
+                            <i class="ri-user-settings-line"></i>
+                            <span>Settings</span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li>
+                                <a href="{{ route('siteSettings.index') }}">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    General
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('menus.index') }}">
+                                    <i class="ri-menu-line"></i>
+                                    <span>Menus</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('banners.index') }}">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Banners
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                @endrole('admin')
             </ul>
         </div>
     </aside>

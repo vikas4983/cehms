@@ -73,15 +73,23 @@ class User extends Authenticatable
         return Attribute::make(get: fn($value) => Carbon::parse($value)->format('d M Y'));
     }
 
-    protected function scopeInactive($query)
+    public function scopeStudents($query)
     {
-        return $query->where('status', 0);
+        return $query->latest();
     }
-    protected function scopeActiveStudents($query)
+    public function scopeInactive($query)
+    {
+        return $query->where('status', 0)->latest();;
+    }
+    public function scopeActiveStudents($query)
     {
         return $query->where('status', 1)->latest();
     }
-    protected function scopeExportActiveStudents($query)
+    public function scopeTrashedStudents($query)
+    {
+        return $query->onlyTrashed()->latest();
+    }
+    public function scopeExportActiveStudents($query)
     {
         return $query->select('name', 'email', 'dob', 'practitioner_registration', 'mobile', 'gender', 'qualification')->where('status', 1)->latest();
     }
@@ -89,7 +97,7 @@ class User extends Authenticatable
     public function scopeTodayStudents($query)
     {
         return $query
-            ->select('name', 'email', 'dob', 'practitioner_registration', 'mobile', 'gender', 'qualification')
+            ->select('id','image','name', 'email', 'dob', 'practitioner_registration', 'mobile', 'gender', 'qualification')
 
             ->where('status', 1)
             ->whereDate('created_at', today())
@@ -98,7 +106,7 @@ class User extends Authenticatable
     public function scopeWeeklyStudents($query)
     {
         return $query
-            ->select('name', 'email', 'dob', 'practitioner_registration', 'mobile', 'gender', 'qualification')
+            ->select('id','image','name', 'email', 'dob', 'practitioner_registration', 'mobile', 'gender', 'qualification')
             ->where('status', 1)
             ->where('created_at', '>=', now()->subDays(7))
             ->latest();
@@ -106,7 +114,7 @@ class User extends Authenticatable
     public function scopeMonthlyStudents($query)
     {
         return $query
-            ->select('name', 'email', 'dob', 'practitioner_registration', 'mobile', 'gender', 'qualification')
+            ->select('id','image','name', 'email', 'dob', 'practitioner_registration', 'mobile', 'gender', 'qualification')
             ->where('status', 1)
             ->where('created_at', '>=', now()->subDays(30))
             ->latest();

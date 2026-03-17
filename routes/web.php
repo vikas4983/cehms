@@ -35,6 +35,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('admin-profile/{id}', [StudentController::class, 'adminProfile'])->name('profile.admin');
     Route::post('student-status', [StudentController::class, 'studentStatus'])->name('student.status');
     Route::get('inactive-student', [StudentController::class, 'inactiveStudent'])->name('inactive.students');
+    Route::get('active-student', [StudentController::class, 'activeStudent'])->name('active.students');
     Route::get('trash-student', [StudentController::class, 'trashStudent'])->name('trash.students');
     Route::get('untrash-student/{id}', [StudentController::class, 'untrashStudent'])->name('untrash.students');
     Route::post('upload-image', [StudentController::class, 'uploadImage'])->name('upload.image');

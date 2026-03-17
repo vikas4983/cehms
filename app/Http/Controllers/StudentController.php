@@ -200,6 +200,16 @@ class StudentController extends Controller
         });
         return view('students.index', compact('students', 'permissions', 'roles', 'groupedPermissions'));
     }
+    public function activeStudent()
+    {
+        $students = User::activeStudents()->paginate(20);
+        $permissions = Permission::active()->get();
+        $roles = Role::active()->get();
+        $groupedPermissions = $permissions->groupBy(function ($permission) {
+            return explode(' ', $permission->name)[1];
+        });
+        return view('students.index', compact('students', 'permissions', 'roles', 'groupedPermissions'));
+    }
     public function trashStudent()
     {
         $students = User::onlyTrashed()->orderByDesc('updated_at')->paginate(20);

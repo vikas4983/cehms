@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Services\ModelCountService;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\View;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,6 +22,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-       Paginator::useBootstrapFive();
+        Paginator::useBootstrapFive();
+        View::share('counts', app(ModelCountService::class)->modelCount());
     }
 }

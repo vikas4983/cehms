@@ -14,7 +14,7 @@ class Permission extends SpatiePermission
     }
     public function scopeAllPermissions($query)
     {
-        return $query;
+        return $query->latest();
     }
 
     protected function name(): Attribute
