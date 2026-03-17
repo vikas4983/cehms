@@ -86,5 +86,3 @@ Route::get('admission-form/{path}', [RegisterController::class, 'admissionForm']
 Route::get('filter-input/input', [FilterController::class, 'filter'])->name('input.filter');
 
 Route::get('forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot.password');
-
-

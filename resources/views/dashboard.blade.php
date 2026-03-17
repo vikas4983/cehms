@@ -127,6 +127,21 @@
                                 </a>
                             </div>
                         </div>
+                        <div class="col-xxl-4 col-sm-6">
+                            <div class="card shadow-1 radius-8 gradient-bg-end-1 h-100">
+                                <a href="{{ route('medicines.index') }}">
+                                    <div class="card-body p-20">
+                                        <div class="d-flex flex-wrap align-items-center gap-3 mb-16">
+                                            <div class="icon-circle bg-primary-600">
+                                                <iconify-icon icon="mdi:pill" class="text-white"></iconify-icon>
+                                            </div>
+                                            <p class="fw-medium text-primary-light mb-1">Medicines</p>
+                                        </div>
+                                        <h6 class="mb-0">{{ $counts['medicines'] }}</h6>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
 
                         <div class="col-xxl-4 col-sm-6">
                             <div class="card shadow-1 radius-8 gradient-bg-end-1 h-100">
@@ -890,6 +905,17 @@
                                     <iconify-icon icon="entypo:dots-three-vertical"
                                         class="icon text-secondary-light"></iconify-icon>
                                 </button>
+                                <ul class="dropdown-menu p-12 border bg-base shadow">
+                                    <li>
+                                        <a href="{{ route('students.index') }}"
+                                            class="dropdown-item px-16 py-8 rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-10">
+                                            <iconify-icon icon="hugeicons:view"
+                                                class="icon text-lg line-height-1"></iconify-icon>
+                                            View
+                                        </a>
+                                    </li>
+
+                                </ul>
                             </div>
                         </div>
                         <div class="card-body">
@@ -944,7 +970,17 @@
                                     <iconify-icon icon="entypo:dots-three-vertical"
                                         class="icon text-secondary-light"></iconify-icon>
                                 </button>
+                                <ul class="dropdown-menu p-12 border bg-base shadow">
+                                    <li>
+                                        <a href="{{ route('students.index') }}"
+                                            class="dropdown-item px-16 py-8 rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-10">
+                                            <iconify-icon icon="hugeicons:view"
+                                                class="icon text-lg line-height-1"></iconify-icon>
+                                            View
+                                        </a>
+                                    </li>
 
+                                </ul>
                             </div>
                         </div>
                         <div class="card-body">
@@ -996,6 +1032,23 @@
                             <div
                                 class="d-flex flex-wrap align-items-center justify-content-between px-20 py-16 border-bottom border-neutral-200">
                                 <h6 class="text-lg mb-0">Top Cources</h6>
+                                <div class="dropdown">
+                                    <button type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <iconify-icon icon="entypo:dots-three-vertical"
+                                            class="icon text-secondary-light"></iconify-icon>
+                                    </button>
+                                    <ul class="dropdown-menu p-12 border bg-base shadow">
+                                        <li>
+                                            <a href="{{ route('books.index') }}"
+                                                class="dropdown-item px-16 py-8 rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-10">
+                                                <iconify-icon icon="hugeicons:view"
+                                                    class="icon text-lg line-height-1"></iconify-icon>
+                                                View
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </div>
 
                             </div>
                             @forelse ($books as $book)
@@ -1005,13 +1058,16 @@
                                             <div class="d-flex align-items-start gap-16">
                                                 <div class="">
                                                     <h6 class="mb-0 text-lg">{{ ucwords($book?->name ?? '') }}</h6>
+
                                                     <span
                                                         class="text-secondary-light text-sm mb-0">{{ ucwords($book?->publisher ?? '') }}</span>
                                                 </div>
                                             </div>
                                             @if (!empty($book->pdf))
                                                 <div class="text-end">
-                                                    <span class="d-block fw-semibold text-primary-light"><a href="{{route('book.view',['path' =>$book->pdf ])}}" target="_blank">View</a></span>
+                                                    <span class="d-block fw-semibold text-primary-light"><a
+                                                            href="{{ route('book.view', ['path' => $book->pdf]) }}"
+                                                            target="_blank" style="color: #25A194">View</a></span>
                                                 </div>
                                             @endif
 
@@ -1040,13 +1096,12 @@
                                     </button>
                                     <ul class="dropdown-menu p-12 border bg-base shadow">
                                         <li>
-                                            <button type="button"
-                                                class="dropdown-item px-16 py-8 rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-10"
-                                                data-bs-toggle="modal" data-bs-target="#exampleModalView">
+                                            <a href="{{ route('medicines.index') }}"
+                                                class="dropdown-item px-16 py-8 rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-10">
                                                 <iconify-icon icon="hugeicons:view"
                                                     class="icon text-lg line-height-1"></iconify-icon>
                                                 View
-                                            </button>
+                                            </a>
                                         </li>
 
                                     </ul>
@@ -1055,71 +1110,23 @@
 
                             <div class="ps-20 pt-20 pb-20">
                                 <div class="pe-20 d-flex flex-column gap-20 max-h-462-px overflow-y-auto scroll-sm">
-                                    <div class="d-flex align-items-center justify-content-between gap-16">
-                                        <div class="d-flex align-items-start gap-16">
-                                            <img src="{{ asset('assets/images/top-teacher-img1.png') }}" alt="Thumbnail"
-                                                class="w-40-px h-40-px rounded-circle object-fit-cover flex-shrink-0">
-                                            <div class="">
-                                                <h6 class="mb-0 text-lg">Theresa Webb</h6>
-                                                <span class="text-secondary-light text-sm mb-0">example@gmail.com</span>
+                                    @forelse ($medicines as $medicine)
+                                        <div class="d-flex align-items-center justify-content-between gap-16">
+                                            <div class="d-flex align-items-start gap-16">
+                                                {{-- <img src="{{ asset('assets/images/top-teacher-img1.png') }}" alt="Thumbnail"
+                                                class="w-40-px h-40-px rounded-circle object-fit-cover flex-shrink-0"> --}}
+                                                <div class="">
+                                                    <h6 class="mb-0 text-lg">{{ $medicine?->name ?? '' }}</h6>
+                                                    <span
+                                                        class="text-secondary-light text-sm mb-0">{{ $medicine?->code ?? '' }}</span>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="text-end">
+                                            {{-- <div class="text-end">
                                             <span class="d-block fw-semibold text-primary-light">Mathematics</span>
+                                        </div> --}}
                                         </div>
-                                    </div>
-                                    <div class="d-flex align-items-center justify-content-between gap-16">
-                                        <div class="d-flex align-items-start gap-16">
-                                            <img src="{{ asset('assets/images/top-teacher-img2.png') }}" alt="Thumbnail"
-                                                class="w-40-px h-40-px rounded-circle object-fit-cover flex-shrink-0">
-                                            <div class="">
-                                                <h6 class="mb-0 text-lg">Darrell Steward</h6>
-                                                <span class="text-secondary-light text-sm mb-0">example@gmail.com</span>
-                                            </div>
-                                        </div>
-                                        <div class="text-end">
-                                            <span class="d-block fw-semibold text-primary-light">Physics</span>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex align-items-center justify-content-between gap-16">
-                                        <div class="d-flex align-items-start gap-16">
-                                            <img src="{{ asset('assets/images/top-teacher-img3.png') }}" alt="Thumbnail"
-                                                class="w-40-px h-40-px rounded-circle object-fit-cover flex-shrink-0">
-                                            <div class="">
-                                                <h6 class="mb-0 text-lg">Jane Cooper</h6>
-                                                <span class="text-secondary-light text-sm mb-0">example@gmail.com</span>
-                                            </div>
-                                        </div>
-                                        <div class="text-end">
-                                            <span class="d-block fw-semibold text-primary-light">Biology</span>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex align-items-center justify-content-between gap-16">
-                                        <div class="d-flex align-items-start gap-16">
-                                            <img src="{{ asset('assets/images/top-teacher-img4.png') }}" alt="Thumbnail"
-                                                class="w-40-px h-40-px rounded-circle object-fit-cover flex-shrink-0">
-                                            <div class="">
-                                                <h6 class="mb-0 text-lg">Savannah Nguyen</h6>
-                                                <span class="text-secondary-light text-sm mb-0">example@gmail.com</span>
-                                            </div>
-                                        </div>
-                                        <div class="text-end">
-                                            <span class="d-block fw-semibold text-primary-light">English</span>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex align-items-center justify-content-between gap-16">
-                                        <div class="d-flex align-items-start gap-16">
-                                            <img src="{{ asset('assets/images/top-teacher-img5.png') }}" alt="Thumbnail"
-                                                class="w-40-px h-40-px rounded-circle object-fit-cover flex-shrink-0">
-                                            <div class="">
-                                                <h6 class="mb-0 text-lg">Eleanor Pena</h6>
-                                                <span class="text-secondary-light text-sm mb-0">example@gmail.com</span>
-                                            </div>
-                                        </div>
-                                        <div class="text-end">
-                                            <span class="d-block fw-semibold text-primary-light">Math</span>
-                                        </div>
-                                    </div>
+                                    @empty
+                                    @endforelse
                                 </div>
                             </div>
 

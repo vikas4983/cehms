@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Banner;
 use App\Models\Book;
+use App\Models\Medicine;
 use App\Models\Menu;
 use App\Models\News;
 use App\Models\Permission;
@@ -26,6 +27,7 @@ class ModelCountService
             'trashedStudents' => User::trashedStudents()->count(),
             'books' => Book::allBook()->count(),
             'news' => News::allNews()->count(),
+            'medicines' => Medicine::allMedicine()->count(),
             'siteSettings' => SiteSetting::all()->count(),
             
         ];

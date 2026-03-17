@@ -352,7 +352,7 @@
                     </li>
                     <li>
                         <a href="{{ route('medicines.index') }}">
-                           <i class="ri-capsule-line"></i>
+                            <i class="ri-capsule-line"></i>
                             <span>Medicines</span>
                         </a>
                     </li>

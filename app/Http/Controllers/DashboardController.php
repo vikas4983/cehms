@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Medicine;
 use App\Models\Permission;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -25,8 +26,9 @@ class DashboardController extends Controller
         $todayStudents = User::todayStudents()->take(7)->get();
         $weeklyStudents = User::weeklyStudents()->take(7)->get();
         $books = Book::active()->take(7)->get();
+        $medicines = Medicine::activeMedicine()->take(7)->get();
      
 
-        return view('dashboard',compact('todayStudents', 'weeklyStudents','books'));
+        return view('dashboard',compact('todayStudents', 'weeklyStudents','books','medicines'));
     }
 }
