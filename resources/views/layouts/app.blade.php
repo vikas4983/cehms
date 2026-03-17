@@ -368,6 +368,12 @@
                             <span>Permissions</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ route('menus.index') }}">
+                            <i class="ri-menu-line"></i>
+                            <span>Menus</span>
+                        </a>
+                    </li>
                     <li class="dropdown">
                         <a href="javascript:void(0)">
                             <i class="ri-user-settings-line"></i>
@@ -380,12 +386,7 @@
                                     General
                                 </a>
                             </li>
-                            <li>
-                                <a href="{{ route('menus.index') }}">
-                                    <i class="ri-menu-line"></i>
-                                    <span>Menus</span>
-                                </a>
-                            </li>
+
                             <li>
                                 <a href="{{ route('banners.index') }}">
                                     <i class="ri-circle-fill circle-icon w-auto"></i>
