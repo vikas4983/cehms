@@ -12,16 +12,9 @@ class Banner extends Model
     {
         return $query->orderByDesc('status');
     }
-    public function scopeAllHeaders($query)
-    {
-        return $query->orderByDesc('status');
-    }
-    public function scopeAllFooters($query)
-    {
-        return $query->orderByDesc('status');
-    }
+
     public function scopeActiveBanner($query)
     {
-        return $query->orderByAsc('order');
+        return $query->where('status', 1);
     }
 }

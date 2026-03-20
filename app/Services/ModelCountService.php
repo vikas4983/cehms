@@ -21,6 +21,7 @@ class ModelCountService
             'permissions' => Permission::allPermissions()->count(),
             'banners' => Banner::allBanners()->count(),
             'menus' => Menu::all()->count(),
+            'AllStudents' => User::students()->count(),
             'students' => User::activeStudents()->count(),
             'activeStudents' => User::activeStudents()->count(),
             'suspendedStudents' => User::inactive()->count(),
@@ -29,7 +30,6 @@ class ModelCountService
             'news' => News::allNews()->count(),
             'medicines' => Medicine::allMedicine()->count(),
             'siteSettings' => SiteSetting::all()->count(),
-            
         ];
     }
 }

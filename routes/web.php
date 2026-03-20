@@ -16,6 +16,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SiteSettingController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TestimonialController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [AuthController::class, 'home'])->name('/');
@@ -48,6 +49,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('yearly-students-export', [StudentController::class, 'exportYearlyStudents'])->name('yearly.students.export');
     Route::resource('books', BookController::class);
     Route::resource('medicines', MedicineController::class);
+    Route::resource('testimonials', TestimonialController::class);
     Route::get('book-status', [BookController::class, 'bookStatus'])->name('book.status');
     Route::get('view-book/{path}', [BookController::class, 'viewBook'])
         ->where('path', '.*')
@@ -84,5 +86,8 @@ Route::get('admission-form/{path}', [RegisterController::class, 'admissionForm']
 
 // Filter
 Route::get('filter-input/input', [FilterController::class, 'filter'])->name('input.filter');
+
+//Testimonials
+Route::get('testi-monials',[RegisterController::class , 'testimonial'])->name('testimonial');
 
 Route::get('forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot.password');

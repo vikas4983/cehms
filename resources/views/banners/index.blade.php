@@ -23,7 +23,7 @@
         @include('alerts.alert')
         <div class="row">
             @forelse ($banners as $banner)
-                <div class="col-lg-4">
+                <div class="col-lg-4 mt-3">
                     <div class="card">
                         <div class="card-body p-24 text-center position-relative">
 

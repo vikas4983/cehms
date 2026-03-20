@@ -357,6 +357,12 @@
                         </a>
                     </li>
                     <li>
+                        <a href="{{ route('testimonials.index') }}">
+                         <i class="ri-chat-quote-line"></i>
+                            <span>Testimonials</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{ route('roles.index') }}">
                             <i class="ri-user-follow-line"></i>
                             <span>Roles</span>

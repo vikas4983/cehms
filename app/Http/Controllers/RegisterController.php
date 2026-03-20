@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterStudentRequest;
+use App\Models\Testimonial;
 use App\Models\User;
 use App\traits\AssignRoleOrPermission;
 use App\traits\UploadTrait;
@@ -64,5 +65,11 @@ class RegisterController extends Controller
         }
 
         return redirect()->back()->with('error', 'Something went wrong');
+    }
+
+    public function testimonial(Request $request)
+    {
+        $testimonials = Testimonial::ActiveTetimonials()->paginate(20);
+        return view('testimonial', compact('testimonials'));
     }
 }

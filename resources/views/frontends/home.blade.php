@@ -1,56 +1,38 @@
 @extends('layouts.frontend')
-@section('title','CEHSM')
+@section('title', 'CEHSM')
 @section('content')
 
- <!-- ==============================================
-    ** Banner Carousel **
-    =================================================== -->
+    <!-- ==============================================
+                                                            ** Banner Carousel **
+                                                            =================================================== -->
     <div class="banner-outer">
         <div class="banner-slider">
-            <div class="slide1">
-                <div class="container">
-                    <div class="content animated fadeInRight">
-                        <div class="fl-right">
-                            {{-- <h1 class="animated fadeInRight">Explore the World of <span
-                                    class="animated fadeInRight">Our Graduates</span> </h1>
-                            <p class="animated fadeInRight">Lorem Ipsum is simply dummy text of the printing and
-                                typesetting industry.</p>
-                            <a href="about.html" class="btn animated fadeInRight">Know More <span
-                                    class="icon-more-icon"></span></a> --}}
+            @forelse ($banners as $banner)
+                <div class="slide1"
+                    style="background-image: url('{{ asset('storage/' . $banner->banner) }}'); background-size: cover; background-position: center;">
+                    <div class="container">
+                        <div class="content animated fadeInRight">
+                            <div class="fl-right">
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="slide2">
-                <div class="container">
-                    <div class="content">
-                        {{-- <h1 class="animated fadeInUp">MBA Marketing</h1>
-                        <p class="animated fadeInUp">Lorem Ipsum is simply dummy text of the printing and typesetting
-                            industry.</p>
-                        <a href="about.html" class="btn animated fadeInUp">Know More <span
-                                class="icon-more-icon"></span></a>
-                        <a href="gallery.html" class="btn white animated fadeInUp hidden-xs">Take a Tour <span
-                                class="icon-more-icon"></span></a> --}}
+            @empty
+                <div class="slide1"
+                    style="background-image: url('{{ asset('assets-frontend/images/default_banner.png') }}'); background-size: cover; background-position: center;">
+                    <div class="container">
+                        <div class="content animated fadeInRight">
+                            <div class="fl-right">
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="slide3">
-                <div class="container">
-                    <div class="content animated fadeInLeft">
-                        {{-- <h1 class="animated fadeInLeft">Online MBA</h1>
-                        <p class="animated fadeInLeft">Lorem Ipsum is simply dummy text of the printing and typesetting
-                            industry.</p>
-                        <a href="about.html" class="btn animated fadeInLeft">Know More <span
-                                class="icon-more-icon"></span></a> --}}
-                    </div>
-                </div>
-            </div>
+            @endforelse
         </div>
     </div>
-
     <!-- ==============================================
-    ** About **
-    =================================================== -->
+                                                            ** About **
+                                                            =================================================== -->
     <section class="about">
         <div class="container">
             <ul class="row our-links">
@@ -59,8 +41,8 @@
                             class="img-responsive" alt=""></div>
                     <div class="detail">
                         <h3>Apply Online</h3>
-                        <p>Lorem Ipsum is simply dummy text of the printing...</p>
-                        <a href="apply-online.html" class="more"><i class="fa fa-angle-right"
+                        <p>Join certified electro homeopathy network for trusted holistic healthcare.</p>
+                        <a href="{{ route('student.register') }}" class="more"><i class="fa fa-angle-right"
                                 aria-hidden="true"></i></a>
                     </div>
                 </li>
@@ -68,8 +50,8 @@
                     <div class="icon"><img src="{{ asset('assets-frontend/images/prospects-ico.png') }}"
                             class="img-responsive" alt=""></div>
                     <div class="detail">
-                        <h3><span>Download</span>Prospects</h3>
-                        <p>Lorem Ipsum is simply dummy text of the printing...</p>
+                        <h3><span>Search</span>Practitioners</h3>
+                        <p>Find certified electro homeopathy practitioners for safe natural treatment.</p>
                         <a href="#" class="more"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
                     </div>
                 </li>
@@ -77,8 +59,8 @@
                     <div class="icon"><img src="{{ asset('assets-frontend/images/certification-ico.png') }}"
                             class="img-responsive" alt=""></div>
                     <div class="detail">
-                        <h3>Certification</h3>
-                        <p>Lorem Ipsum is simply dummy text of the printing...</p>
+                        <h3>Cources</h3>
+                        <p>Learn electro homeopathy through structured courses for practical professional growth.</p>
                         <a href="#" class="more"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
                     </div>
                 </li>
@@ -86,24 +68,22 @@
         </div>
         <div class="container">
             <div class="row">
-                <div class="col-sm-7 col-sm-push-5 left-block"> <span class="sm-head">the Online Education
-                        portal</span>
-                    <h2>Edumart Online</h2>
-                    <p>Building on Edumart Group’s rich experience with online MBA at Edumart University Online!
-                        Designing and delivering both graduate and post-graduate programs across a variety of
-                        disciplines, Edumart University Online, offering online MBA has worked upon the knowledge-base
-                        created by our highly qualified faculties, our research, publishing and training experience, to
-                        create online MBA programs that offer a rich learning experience.</p>
-                    <div class="know-more-wrapper"> <a href="about.html" class="know-more">Know More <span
-                                class="icon-more-icon"></span></a> </div>
+                <div class="col-sm-7 col-sm-push-5 left-block"> <span class="sm-head">Our Healthcare Vision</span>
+                    <h2>CEHSM Online</h2>
+                    <p>"Our vision is to revolutionize healthcare by integrating the principles of Electro Homeopathy with
+                        modern medical awareness, creating a Faster, Smoother, Stable, Scalable, Efficient, and Reliable
+                        healthcare ecosystem. We aim to empower individuals with natural treatment options, promote
+                        preventive care, and build a trusted medical network that serves humanity with compassion,
+                        innovation, and excellence."</p>
+                    {{-- <div class="know-more-wrapper"> <a href="about.html" class="know-more">Know More <span
+                                class="icon-more-icon"></span></a> </div> --}}
                 </div>
                 <div class="col-sm-5 col-sm-pull-7">
                     <div class="video-block">
-                        <div id="thumbnail_container"> <img
-                                src="{{ asset('assets-frontend/images/about-video.jpg') }}" id="thumbnail"
-                                class="img-responsive" alt=""> </div>
-                        <a href="https://www.youtube.com/watch?v=i11RXCJVEnw" class="start-video video"><img
-                                src="{{ asset('assets-frontend/images/play-btn.png') }}" alt=""></a>
+                        <div id="thumbnail_container"> <img src="{{ asset('assets-frontend/images/about-video.jpeg') }}"
+                                id="thumbnail" class="img-responsive" alt=""> </div>
+                        {{-- <a href="https://www.youtube.com/watch?v=i11RXCJVEnw" class="start-video video"><img
+                                src="{{ asset('assets-frontend/images/play-btn.png') }}" alt=""></a> --}}
                     </div>
                 </div>
             </div>
@@ -111,140 +91,44 @@
     </section>
 
     <!-- ==============================================
-    ** Our Cources **
-    =================================================== -->
+                                                            ** Our Cources **
+                                                            =================================================== -->
     <section class="our-cources padding-lg">
         <div class="container">
-            <h2> <span>Unique Features of our programs</span> What do you want to study?</h2>
+            <h2><span>Our Books Collection</span> What do you want to read?</h2>
             <ul class="course-list owl-carousel">
-                <li>
-                    <div class="inner">
-                        <figure><img src="{{ asset('assets-frontend/images/course-img1.jpg') }}" alt="">
-                        </figure>
-                        <h3>Online <span>MBA General</span></h3>
-                        <p>A comprehensive study of modern business...</p>
-                        <div class="bottom-txt clearfix">
-                            <div class="duration">
-                                <h4>2 Year</h4>
-                                <span> Courses</span>
+                @foreach ($books as $book)
+                    <li>
+                        <div class="inner">
+                            <figure>
+                                <img src="{{ $book->image ? asset('storage/' . $book->image) : asset('assets-frontend/images/course-img3.jpg') }}"
+                                    alt="">
+                            </figure>
+                            <h3>
+                                {{ $book->name }}
+                            </h3>
+                            <p>{{ Str::limit($book->publisher, 30) }}</p>
+                            <div class="bottom-txt clearfix">
+                                <div class="duration">
+                                    <h4>{{ $book->pages ?? '2 YEAR' }}</h4>
+                                    <span> COURSES</span>
+                                </div>
+
+                                <a href="{{ route('books.show', $book->id) }}" style="color: white">
+                                    View
+                                </a>
                             </div>
-                            <a href="#"><span class="icon-more-icon"></span></a>
+
                         </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="inner">
-                        <figure><img src="{{ asset('assets-frontend/images/course-img2.jpg') }}" alt="">
-                        </figure>
-                        <h3>Online MBA <span>Operations</span></h3>
-                        <p>A comprehensive study of modern business...</p>
-                        <div class="bottom-txt clearfix">
-                            <div class="duration">
-                                <h4>1 Year</h4>
-                                <span> Courses</span>
-                            </div>
-                            <a href="#"><span class="icon-more-icon"></span></a>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="inner">
-                        <figure><img src="{{ asset('assets-frontend/images/course-img3.jpg') }}" alt="">
-                        </figure>
-                        <h3>Online MBA <span>Marketing</span></h3>
-                        <p>A comprehensive study of modern business...</p>
-                        <div class="bottom-txt clearfix">
-                            <div class="duration">
-                                <h4>3 Year</h4>
-                                <span> Courses</span>
-                            </div>
-                            <a href="#"><span class="icon-more-icon"></span></a>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="inner">
-                        <figure><img src="{{ asset('assets-frontend/images/course-img4.jpg') }}" alt="">
-                        </figure>
-                        <h3>Online MBA <span>Human</span><span>Resource</span></h3>
-                        <p>A comprehensive study of modern business...</p>
-                        <div class="bottom-txt clearfix">
-                            <div class="duration">
-                                <h4>2 Year</h4>
-                                <span> Courses</span>
-                            </div>
-                            <a href="#"><span class="icon-more-icon"></span></a>
-                        </div>
-                    </div>
-                </li>
+                    </li>
+                @endforeach
+
             </ul>
         </div>
     </section>
 
-    <!-- ==============================================
-    ** Our Importance **
-    =================================================== -->
-    <section class="our-impotance padding-lg">
-        <div class="container">
-            <ul class="row">
-                <li class="col-sm-4 equal-hight">
-                    <div class="inner"> <img src="{{ asset('assets-frontend/images/study-time-ico.jpg') }}"
-                            alt="Malleable Study Time">
-                        <h3>Malleable Study Time</h3>
-                        <p>Study material available online 24/7. Study in your free time, no time management issues,
-                            perfect balance between work and study time.</p>
-                    </div>
-                </li>
-                <li class="col-sm-4 equal-hight">
-                    <div class="inner"> <img src="{{ asset('assets-frontend/images/placement-ico.jpg') }}"
-                            alt="Placement Assistance">
-                        <h3>Placement Assistance</h3>
-                        <p>Edumart University Online has access to all of Edumart Group’s placement resources and alumni
-                            network, through which thousands of job opportunities are generated.</p>
-                    </div>
-                </li>
-                <li class="col-sm-4 equal-hight">
-                    <div class="inner"> <img src="{{ asset('assets-frontend/images/easy-access-ico.jpg') }}"
-                            alt="Easy To Access">
-                        <h3>Easy To Access</h3>
-                        <p>There is easy accessibility to online help in terms of online teachers and online forums.
-                            Teachers can be contacted with the help of video chats and e-mails.</p>
-                    </div>
-                </li>
-                <li class="col-sm-4 equal-hight">
-                    <div class="inner"> <img src="{{ asset('assets-frontend/images/study-go-ico.jpg') }}"
-                            alt="Study on the Go">
-                        <h3>Study on the Go</h3>
-                        <p>LMS that is easily accessible on a number of devices such as mobile phones, I-pads, computers
-                            and other such devices. Availability of ready reckoners such that students can remember the
-                            key points of the session learnt.</p>
-                    </div>
-                </li>
-                <li class="col-sm-4 equal-hight">
-                    <div class="inner"> <img src="{{ asset('assets-frontend/images/get-innovative-ico.jpg') }}"
-                            alt="Get an Innovative, In-depth Transition">
-                        <h3>Get an Innovative, <span>In-depth Transition</span></h3>
-                        <p>The transition to an environment of learning becomes easy with the availability of multiple
-                            sources of learning such as text books, power-point presentations, and story boards on
-                            various subjects.</p>
-                    </div>
-                </li>
-                <li class="col-sm-4 equal-hight">
-                    <div class="inner"> <img src="{{ asset('assets-frontend/images/practical-ico.jpg') }}"
-                            alt="Practical & Interactive Participation">
-                        <h3>Practical & Interactive <span>Participation</span></h3>
-                        <p>Assessments and interactivities are given at the end of every session such that the practical
-                            application of theory learnt can be gauged.</p>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </section>
 
-    <!-- ==============================================
-    ** How Study **
-    =================================================== -->
-    <section class="how-study padding-lg">
+    {{-- <section class="how-study padding-lg">
         <div class="container">
             <h2> <span>There are many ways to learn</span> How do you want to study?</h2>
             <ul class="row">
@@ -257,8 +141,8 @@
                         </div>
                         <a href="#" class="more"><i class="fa fa-caret-right" aria-hidden="true"></i></a>
                     </div>
-                    <figure><img src="{{ asset('assets-frontend/images/how-study-img1.jpg') }}"
-                            class="img-responsive" alt=""></figure>
+                    <figure><img src="{{ asset('assets-frontend/images/how-study-img1.jpg') }}" class="img-responsive"
+                            alt=""></figure>
                 </li>
                 <li class="col-sm-4">
                     <div class="overly">
@@ -269,8 +153,8 @@
                         </div>
                         <a href="#" class="more"><i class="fa fa-caret-right" aria-hidden="true"></i></a>
                     </div>
-                    <figure><img src="{{ asset('assets-frontend/images/how-study-img2.jpg') }}"
-                            class="img-responsive" alt=""></figure>
+                    <figure><img src="{{ asset('assets-frontend/images/how-study-img2.jpg') }}" class="img-responsive"
+                            alt=""></figure>
                 </li>
                 <li class="col-sm-4">
                     <div class="overly">
@@ -281,294 +165,70 @@
                         </div>
                         <a href="#" class="more"><i class="fa fa-caret-right" aria-hidden="true"></i></a>
                     </div>
-                    <figure><img src="{{ asset('assets-frontend/images/how-study-img3.jpg') }}"
-                            class="img-responsive" alt=""></figure>
+                    <figure><img src="{{ asset('assets-frontend/images/how-study-img3.jpg') }}" class="img-responsive"
+                            alt=""></figure>
                 </li>
             </ul>
         </div>
-    </section>
+    </section> --}}
 
     <!-- ==============================================
-    ** Why Choose **
-    =================================================== -->
+                                                            ** Why Choose **
+                                                            =================================================== -->
     <section class="why-choose padding-lg">
         <div class="container">
             <h2><span>The Numbers Say it All</span>Why Choose Us</h2>
             <ul class="our-strength">
                 <li>
-                    <div class="icon"><span class="icon-certification-icon"> </span></div>
-                    <span class="counter">36</span>
+                    {{-- <div class="icon"><i class="fa fa-graduation-cap"></i></div> --}}
+                    <span class="counter">{{ $counts['books'] ?? '' }}</span>
                     <div class="title">Certified Courses</div>
                 </li>
                 <li>
-                    <div class="icon"><span class="icon-student-icon"></span></div>
-                    <span class="counter">258,658</span>
+                    {{-- <div class="icon"><span class="fa fa-graduation-cap"></span></div> --}}
+                    <span class="counter">{{ $counts['AllStudents'] ?? '' }}</span>
                     <div class="title">Students Enrolled </div>
                 </li>
                 <li>
-                    <div class="icon"><span class="icon-book-icon"></span></div>
-                    <div class="couter-outer"><span class="counter">95</span><span>%</span></div>
-                    <div class="title">Passing to Universities</div>
-                </li>
-                <li>
-                    <div class="icon"><span class="icon-parents-icon"></span></div>
-                    <div class="couter-outer"><span class="counter">100</span><span>%</span></div>
-                    <div class="title">Satisfied Parents</div>
+                    {{-- <div class="icon"><span class="fa fa-graduation-cap">456</span></div> --}}
+                    <span class="counter">{{ $counts['medicines'] ?? '' }}</span>
+                    <div class="title">Tested Medicines</div>
                 </li>
             </ul>
         </div>
     </section>
-
     <!-- ==============================================
-    ** News & Events **
-    =================================================== -->
-    <section class="news-events padding-lg">
-        <div class="container">
-            <h2><span>There are many ways to learn</span>News and events</h2>
-            <ul class="row cs-style-3">
-                <li class="col-sm-4">
-                    <div class="inner">
-                        <figure> <img src="{{ asset('assets-frontend/images/new-event-img1.jpg') }}"
-                                class="img-responsive">
-                            <figcaption>
-                                <div class="cnt-block"> <a href="news.html" class="plus-icon">+</a>
-                                    <h3>We have added new features to Dream Palace</h3>
-                                    <div class="bottom-block clearfix">
-                                        <div class="date">
-                                            <div class="icon"><span class="icon-calander-icon"></span></div>
-                                            <span>14 Feb</span> 2017
-                                        </div>
-                                        <div class="comment">
-                                            <div class="icon"><span class="icon-chat-icon"></span></div>
-                                            <span>24</span> comments
-                                        </div>
-                                    </div>
-                                </div>
-                            </figcaption>
-                        </figure>
-                    </div>
-                </li>
-                <li class="col-sm-4">
-                    <div class="inner">
-                        <figure> <img src="{{ asset('assets-frontend/images/new-event-img2.jpg') }}"
-                                class="img-responsive">
-                            <figcaption>
-                                <div class="cnt-block"> <a href="news.html" class="plus-icon">+</a>
-                                    <h3>We have added new features to Dream Palace</h3>
-                                    <div class="bottom-block clearfix">
-                                        <div class="date">
-                                            <div class="icon"><span class="icon-calander-icon"></span></div>
-                                            <span>14 Feb</span> 2017
-                                        </div>
-                                        <div class="comment">
-                                            <div class="icon"><span class="icon-chat-icon"></span></div>
-                                            <span>24</span> comments
-                                        </div>
-                                    </div>
-                                </div>
-                            </figcaption>
-                        </figure>
-                    </div>
-                </li>
-                <li class="col-sm-4">
-                    <div class="inner">
-                        <figure> <img src="{{ asset('assets-frontend/images/new-event-img3.jpg') }}"
-                                class="img-responsive">
-                            <figcaption>
-                                <div class="cnt-block"> <a href="news.html" class="plus-icon">+</a>
-                                    <h3>We have added new features to Dream Palace</h3>
-                                    <div class="bottom-block clearfix">
-                                        <div class="date">
-                                            <div class="icon"><span class="icon-calander-icon"></span></div>
-                                            <span>14 Feb</span> 2017
-                                        </div>
-                                        <div class="comment">
-                                            <div class="icon"><span class="icon-chat-icon"></span></div>
-                                            <span>24</span> comments
-                                        </div>
-                                    </div>
-                                </div>
-                            </figcaption>
-                        </figure>
-                    </div>
-                </li>
-            </ul>
-            <div class="know-more-wrapper"> <a href="news.html" class="know-more">More Post <span
-                        class="icon-more-icon"></span></a> </div>
-        </div>
-    </section>
-
-    <!-- ==============================================
-    ** Campus Tour **
-    =================================================== -->
-    <section class="campus-tour padding-lg">
-        <div class="container">
-            <h2><span>Our campus have a lot to offer for our students</span>TAKE A CAMPUS TOUR</h2>
-        </div>
-        <ul class="gallery clearfix">
-            <li>
-                <div class="overlay">
-                    <h3>Lorem ipsum</h3>
-                    <p>Lorem ipsum</p>
-                    <a class="galleryItem" href="images/tour-lg1.jpg"><span class="icon-enlarge-icon"></span></a>
-                    <a href="gallery.html" class="more"><span class="icon-gallery-more-arrow"></span></a>
-                </div>
-                <figure><img src="{{ asset('assets-frontend/images/tour1.jpg') }}" class="img-responsive"
-                        alt=""></figure>
-            </li>
-            <li>
-                <div class="overlay">
-                    <h3>Lorem ipsum</h3>
-                    <p>Lorem ipsum</p>
-                    <a class="galleryItem" href="images/tour-lg2.jpg"><span class="icon-enlarge-icon"></span></a>
-                    <a href="gallery.html" class="more"><span class="icon-gallery-more-arrow"></span></a>
-                </div>
-                <figure><img src="{{ asset('assets-frontend/images/tour2.jpg') }}" class="img-responsive"
-                        alt=""></figure>
-            </li>
-            <li>
-                <div class="overlay">
-                    <h3>Lorem ipsum</h3>
-                    <p>Lorem ipsum</p>
-                    <a class="galleryItem" href="images/tour-lg3.jpg"><span class="icon-enlarge-icon"></span></a>
-                    <a href="gallery.html" class="more"><span class="icon-gallery-more-arrow"></span></a>
-                </div>
-                <figure><img src="{{ asset('assets-frontend/images/tour3.jpg') }}" class="img-responsive"
-                        alt=""></figure>
-            </li>
-            <li>
-                <div class="overlay">
-                    <h3>Lorem ipsum</h3>
-                    <p>Lorem ipsum</p>
-                    <a class="galleryItem" href="images/tour-lg4.jpg"><span class="icon-enlarge-icon"></span></a>
-                    <a href="gallery.html" class="more"><span class="icon-gallery-more-arrow"></span></a>
-                </div>
-                <figure><img src="{{ asset('assets-frontend/images/tour4.jpg') }}" class="img-responsive"
-                        alt=""></figure>
-            </li>
-            <li>
-                <div class="overlay">
-                    <h3>Lorem ipsum</h3>
-                    <p>Lorem ipsum</p>
-                    <a class="galleryItem" href="images/tour-lg5.jpg"><span class="icon-enlarge-icon"></span></a>
-                    <a href="gallery.html" class="more"><span class="icon-gallery-more-arrow"></span></a>
-                </div>
-                <figure><img src="{{ asset('assets-frontend/images/tour5.jpg') }}" class="img-responsive"
-                        alt=""></figure>
-            </li>
-            <li>
-                <div class="overlay">
-                    <h3>Lorem ipsum</h3>
-                    <p>Lorem ipsum</p>
-                    <a class="galleryItem" href="images/tour-lg6.jpg"><span class="icon-enlarge-icon"></span></a>
-                    <a href="gallery.html" class="more"><span class="icon-gallery-more-arrow"></span></a>
-                </div>
-                <figure><img src="{{ asset('assets-frontend/images/tour6.jpg') }}" class="img-responsive"
-                        alt=""></figure>
-            </li>
-            <li>
-                <div class="overlay">
-                    <h3>Lorem ipsum</h3>
-                    <p>Lorem ipsum</p>
-                    <a class="galleryItem" href="images/tour-lg7.jpg"><span class="icon-enlarge-icon"></span></a>
-                    <a href="gallery.html" class="more"><span class="icon-gallery-more-arrow"></span></a>
-                </div>
-                <figure><img src="{{ asset('assets-frontend/images/tour7.jpg') }}" class="img-responsive"
-                        alt=""></figure>
-            </li>
-            <li>
-                <div class="overlay">
-                    <h3>Lorem ipsum</h3>
-                    <p>Lorem ipsum</p>
-                    <a class="galleryItem" href="images/tour-lg8.jpg"><span class="icon-enlarge-icon"></span></a>
-                    <a href="gallery.html" class="more"><span class="icon-gallery-more-arrow"></span></a>
-                </div>
-                <figure><img src="{{ asset('assets-frontend/images/tour8.jpg') }}" class="img-responsive"
-                        alt=""></figure>
-            </li>
-            <li>
-                <div class="overlay">
-                    <h3>Lorem ipsum</h3>
-                    <p>Lorem ipsum</p>
-                    <a class="galleryItem" href="images/tour-lg9.jpg"><span class="icon-enlarge-icon"></span></a>
-                    <a href="gallery.html" class="more"><span class="icon-gallery-more-arrow"></span></a>
-                </div>
-                <figure><img src="{{ asset('assets-frontend/images/tour9.jpg') }}" class="img-responsive"
-                        alt=""></figure>
-            </li>
-            <li>
-                <div class="overlay">
-                    <h3>Lorem ipsum</h3>
-                    <p>Lorem ipsum</p>
-                    <a class="galleryItem" href="images/tour-lg10.jpg"><span class="icon-enlarge-icon"></span></a>
-                    <a href="gallery.html" class="more"><span class="icon-gallery-more-arrow"></span></a>
-                </div>
-                <figure><img src="{{ asset('assets-frontend/images/tour10.jpg') }}" class="img-responsive"
-                        alt=""></figure>
-            </li>
-        </ul>
-    </section>
-
-    <!-- ==============================================
-    ** Brands **
-    =================================================== -->
-    <section class="logos">
-        <div class="container">
-            <ul class="owl-carousel clearfix">
-                <li><a href="#"><img src="{{ asset('assets-frontend/images/logo1.jpg') }}"
-                            class="img-responsive" alt=""></a></li>
-                <li><a href="#"><img src="{{ asset('assets-frontend/images/logo2.jpg') }}"
-                            class="img-responsive" alt=""></a></li>
-                <li><a href="#"><img src="{{ asset('assets-frontend/images/logo3.jpg') }}"
-                            class="img-responsive" alt=""></a></li>
-                <li><a href="#"><img src="{{ asset('assets-frontend/images/logo4.jpg') }}"
-                            class="img-responsive" alt=""></a></li>
-                <li><a href="#"><img src="{{ asset('assets-frontend/images/logo5.jpg') }}"
-                            class="img-responsive" alt=""></a></li>
-                <li><a href="#"><img src="{{ asset('assets-frontend/images/logo6.jpg') }}"
-                            class="img-responsive" alt=""></a></li>
-            </ul>
-        </div>
-    </section>
-
-    <!-- ==============================================
-    ** Testimonials **
-    =================================================== -->
+                                                            ** Testimonials **
+                                                            =================================================== -->
     <section class="testimonial padding-lg">
         <div class="container">
             <div class="wrapper">
                 <h2>Alumini Testimonials</h2>
+
                 <ul class="testimonial-slide">
-                    <li>
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-                            been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
-                            galley...<a href="#">Read more</a></p>
-                        <span>Thomas, <span>London</span></span>
-                    </li>
-                    <li>
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-                            been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
-                            galley...<a href="#">Read more</a></p>
-                        <span>Thomas, <span>London</span></span>
-                    </li>
-                    <li>
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-                            been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
-                            galley...<a href="#">Read more</a></p>
-                        <span>Thomas, <span>London</span></span>
-                    </li>
+                    @foreach ($testimonials as $testimonial)
+                        <li>
+                            <p>
+                                {{ \Illuminate\Support\Str::words($testimonial->content, 20, '...') }}
+                                <span><a href="{{ route('testimonial') }}">Read more</a></span>
+                            </p>
+                            <span>
+                                {{ $testimonial->name }},
+
+                            </span>
+                        </li>
+                    @endforeach
                 </ul>
+
                 <div id="bx-pager">
-                    <a data-slide-index="0" href=""><img
-                            src="{{ asset('assets-frontend/images/testimonial-thumb1.jpg') }}" class="img-circle"
-                            alt="" /></a>
-                    <a data-slide-index="1" href=""><img
-                            src="{{ asset('assets-frontend/images/testimonial-thumb2.jpg') }}" class="img-circle"
-                            alt="" /></a>
-                    <a data-slide-index="2" href=""><img
-                            src="{{ asset('assets-frontend/images/testimonial-thumb3.jpg') }}" class="img-circle"
-                            alt="" /></a>
+                    @foreach ($testimonials as $key => $testimonial)
+                        <a data-slide-index="{{ $key }}" href="">
+                            <img src="{{ asset('storage/' . $testimonial->image) }}" class="img-circle"
+                                style="width:70px; height:70px; object-fit:cover;" alt="{{ $testimonial->name }}" />
+                        </a>
+                    @endforeach
                 </div>
+
             </div>
         </div>
     </section>

@@ -2,8 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\Banner;
+use App\Models\Book;
 use App\Models\Menu;
 use App\Models\SiteSetting;
+use App\Models\Testimonial;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -24,15 +27,28 @@ class FrontendServiceProvider extends ServiceProvider
             return SiteSetting::first();
         });
         $headers = Cache::remember('headers', 60, function () {
-            return Menu::header()->where('status',1)->get();
+            return Menu::header()->where('status', 1)->get();
         });
         $footers = Cache::remember('footers', 60, function () {
-            return Menu::footer()->where('status',1)->get();
+            return Menu::footer()->where('status', 1)->get();
         });
+        $banners = Cache::remember('banners', 60, function () {
+            return Banner::activeBanner()->get();
+        });
+        $books = Cache::remember('books', 60, function () {
+            return Book::active()->get();
+        });
+        $testimonials = Cache::remember('testimonials', 60, function () {
+            return Testimonial::activeTetimonials()->get();
+        });
+
         View::share([
             'setting' => $setting,
             'headers' => $headers,
             'footers' => $footers,
+            'banners' => $banners,
+            'books' => $books,
+            'testimonials' => $testimonials,
         ]);
     }
 }

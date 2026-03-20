@@ -12,6 +12,7 @@
     <title>@yield('title', 'CEHSM')</title>
 
     <!-- CSS -->
+
     <link href="{{ asset('assets-frontend/css/datepicker.css') }}">
     <link href="{{ asset('assets-frontend/css/reset.css') }}" rel="stylesheet">
     <link href="{{ asset('assets-frontend/css/fonts.css') }}" rel="stylesheet">
@@ -146,9 +147,8 @@
                                     {{ substr($setting?->landline, 0, 4) . '-' . substr($setting?->primary_number, 4) }}</a>
                             </li>
                         </ul>
-                        @forelse ($headers->where('name', 'Student Login') as $header)
-                            <a href="{{ route($header->url ?? '#') }}"
-                                class="login">{{ $header?->name ?? 'Student Login' }}
+                        @forelse ($headers->where('name', 'Login') as $header)
+                            <a href="{{ route($header->url ?? '#') }}" class="login">{{ $header?->name ?? 'Login' }}
                                 &nbsp;&nbsp;&nbsp;<i class="fa fa-play-circle"></i></span></a>
                         @empty
                         @endforelse
