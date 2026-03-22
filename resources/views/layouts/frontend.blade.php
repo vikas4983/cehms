@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0; maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -176,7 +176,7 @@
                             @if ($header->name == 'Home')
                                 <li> <a href="{{ route($header->url ?? '#') }}">{{ $header?->name ?? '' }}</a></li>
                             @elseif($header->name == 'About us')
-                                <li> <a href="{{ route($header->url ?? '#') }}">{{ $header?->name ?? '' }}</a></li>
+                                <li> <a href="{{ url($header->url ?? '#') }}">{{ $header?->name ?? '' }}</a></li>
                             @elseif($header->name == 'Academics')
                                 @if ($header->children->count())
                                     <li class="dropdown"> <a data-toggle="dropdown"
@@ -184,20 +184,28 @@
                                                 class="fa fa-angle-down" aria-hidden="true"></i></a>
                                         <ul class="dropdown-menu">
                                             @forelse ($header->children as $subMenu)
-                                                <li><a
-                                                        href="{{ route($subMenu->url ?? '#') }}">{{ $subMenu->name ?? '' }}</a>
+                                                <li>
+                                                    <a
+                                                        href="{{ url($subMenu->url ?? '#') }}">{{ $subMenu->name ?? '' }}</a>
                                                 </li>
                                             @empty
                                             @endforelse
+                                            @if (!empty($setting->admission_form))
+                                                <li>
+                                                    <a href="{{ route('download', ['path' => $setting->admission_form]) }}"
+                                                        target="_blank">Student
+                                                        Form</a>
+                                                </li>
+                                            @endif
                                         </ul>
                                     </li>
                                 @endif
                             @elseif($header->name == 'Update')
-                                <li> <a href="{{ route($header->url ?? '#') }}">{{ $header?->name ?? '' }}</a></li>
+                                <li> <a href="{{ url($header->url ?? '#') }}">{{ $header?->name ?? '' }}</a></li>
                             @elseif($header->name == 'Practitioners')
-                                <li> <a href="{{ route($header->url ?? '#') }}">{{ $header?->name ?? '' }}</a></li>
+                                <li> <a href="{{ url($header->url ?? '#') }}">{{ $header?->name ?? '' }}</a></li>
                             @elseif($header->name == 'Contact')
-                                <li> <a href="{{ route($header->url ?? '#') }}">{{ $header?->name ?? '' }}</a></li>
+                                <li> <a href="{{ url($header->url ?? '#') }}">{{ $header?->name ?? '' }}</a></li>
                             @endif
                         @empty
                         @endforelse
@@ -261,11 +269,11 @@
                         <ul>
                             @forelse ($footers as $footer)
                                 @if (!empty($footer) && $footer->name == 'Books')
-                                    <li><a href="{{ route($footer->url ?? '') }}">{{ $footer?->name ?? '' }}</a></li>
+                                    <li><a href="{{ url($footer->url ?? '') }}">{{ $footer?->name ?? '' }}</a></li>
                                 @elseif(!empty($footer) && $footer->name == 'Medicine')
-                                    <li><a href="{{ route($footer->url ?? '') }}">{{ $footer?->name ?? '' }}</a></li>
+                                    <li><a href="{{ url($footer->url ?? '') }}">{{ $footer?->name ?? '' }}</a></li>
                                 @elseif(!empty($footer) && $footer->name == 'Practitioners')
-                                    <li><a href="{{ route($footer->url ?? '') }}">{{ $footer?->name ?? '' }}</a></li>
+                                    <li><a href="{{ url($footer->url ?? '') }}">{{ $footer?->name ?? '' }}</a></li>
                                 @endif
                             @empty
                             @endforelse
@@ -278,9 +286,9 @@
                         <ul>
                             @forelse ($footers as $footer)
                                 @if (!empty($footer) && $footer->name == 'Contact')
-                                    <li><a href="{{ route($footer->url ?? '') }}">{{ $footer?->name ?? '' }}</a></li>
+                                    <li><a href="{{ url($footer->url ?? '') }}">{{ $footer?->name ?? '' }}</a></li>
                                 @elseif(!empty($footer) && $footer->name == 'Update')
-                                    <li><a href="{{ route($footer->url ?? '') }}">{{ $footer?->name ?? '' }}</a></li>
+                                    <li><a href="{{ url($footer->url ?? '') }}">{{ $footer?->name ?? '' }}</a></li>
                                 @elseif(!empty($footer) && $footer->name == 'Apply For')
                                     <li><a href="{{ route($footer->url ?? '') }}">{{ $footer?->name ?? '' }}</a></li>
                                 @endif

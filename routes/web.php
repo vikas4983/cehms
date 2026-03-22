@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\CmsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\FilterController;
@@ -50,10 +51,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('books', BookController::class);
     Route::resource('medicines', MedicineController::class);
     Route::resource('testimonials', TestimonialController::class);
+    Route::resource('cms', CmsController::class);
     Route::get('book-status', [BookController::class, 'bookStatus'])->name('book.status');
     Route::get('view-book/{path}', [BookController::class, 'viewBook'])
-        ->where('path', '.*')
-        ->name('book.view');
+        ->where('path', '.*')->name('book.view');
     Route::post('banner-status', [BannerController::class, 'bannerStatus'])->name('banner.status');
     Route::resource('news', NewsController::class);
     Route::resource('banners', BannerController::class);
@@ -71,23 +72,26 @@ Route::get('view-document/{path}', [DocumentController::class, 'view'])
     ->where('path', '.*')
     ->name('view.document');
 
-Route::get('books-list', [FrontendController::class, 'books'])->name('books.list');
-Route::get('about-us', [FrontendController::class, 'aboutUs'])->name('about.us');
-Route::get('medicine', [FrontendController::class, 'medicine'])->name('medicine');
-Route::get('update', [FrontendController::class, 'update'])->name('update');
-Route::get('practitioner', [FrontendController::class, 'practitioner'])->name('practitioner');
-Route::get('contact', [FrontendController::class, 'contact'])->name('contact');
+//Route::get('books-list', [FrontendController::class, 'books'])->name('books.list');
+// Route::get('about-us', [FrontendController::class, 'aboutUs'])->name('about.us');
+//Route::get('medicine', [FrontendController::class, 'medicine'])->name('medicine');
+//Route::get('update', [FrontendController::class, 'update'])->name('update');
+// Route::get('practitioner', [FrontendController::class, 'practitioner'])->name('practitioner');
+//Route::get('contact', [FrontendController::class, 'contact'])->name('contact');
 Route::get('apply-for', [FrontendController::class, 'applyFor'])->name('apply.for');
 
-// Adminssion Form
-Route::get('admission-form/{path}', [RegisterController::class, 'admissionForm'])
-    ->where('path', '.*')
-    ->name('form.admission');
+// Download
+Route::get('download/{path}', [FrontendController::class, 'download'])
+        ->where('path', '.*')->name('download');
 
 // Filter
 Route::get('filter-input/input', [FilterController::class, 'filter'])->name('input.filter');
 
-//Testimonials
+// Testimonials
 Route::get('testi-monials',[RegisterController::class , 'testimonial'])->name('testimonial');
 
+// Forgot password
 Route::get('forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot.password');
+
+// CMS pages
+Route::get('{slug}', [FrontendController::class, 'page']);

@@ -85,6 +85,7 @@
                 </div>
             </div>
         </div>
+        </div>
         <!-- Add sidebar start -->
         <div
             class="my-sidebar bg-white position-fixed end-0 top-0 h-100vh overflow-y-auto z-99 max-w-700-px w-100 translate-x-full duration-300 active-translate-0">

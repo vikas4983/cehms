@@ -399,6 +399,12 @@
                                     Banners
                                 </a>
                             </li>
+                            <li>
+                                <a href="{{ route('cms.index') }}">
+                                    <i class="ri-circle-fill circle-icon w-auto"></i>
+                                    Cms
+                                </a>
+                            </li>
                         </ul>
                     </li>
                 @endrole('admin')

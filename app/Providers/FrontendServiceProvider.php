@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Banner;
 use App\Models\Book;
+use App\Models\Cms;
 use App\Models\Menu;
 use App\Models\SiteSetting;
 use App\Models\Testimonial;
@@ -41,6 +42,7 @@ class FrontendServiceProvider extends ServiceProvider
         $testimonials = Cache::remember('testimonials', 60, function () {
             return Testimonial::activeTetimonials()->get();
         });
+       
 
         View::share([
             'setting' => $setting,
@@ -49,6 +51,7 @@ class FrontendServiceProvider extends ServiceProvider
             'banners' => $banners,
             'books' => $books,
             'testimonials' => $testimonials,
+           
         ]);
     }
 }
