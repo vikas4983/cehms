@@ -52,7 +52,7 @@
                     <div class="detail">
                         <h3><span>Search</span>Practitioners</h3>
                         <p>Find certified electro homeopathy practitioners for safe natural treatment.</p>
-                        <a href="#" class="more"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                        <a href="{{ url('practitioner') }}" class="more"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
                     </div>
                 </li>
                 <li class="col-sm-4 certification clearfix equal-hight">
@@ -61,7 +61,7 @@
                     <div class="detail">
                         <h3>Cources</h3>
                         <p>Learn electro homeopathy through structured courses for practical professional growth.</p>
-                        <a href="#" class="more"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                        <a href="{{ url('book') }}" class="more"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
                     </div>
                 </li>
             </ul>
