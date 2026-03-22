@@ -80,6 +80,11 @@ Route::get('view-document/{path}', [DocumentController::class, 'view'])
 //Route::get('contact', [FrontendController::class, 'contact'])->name('contact');
 Route::get('apply-for', [FrontendController::class, 'applyFor'])->name('apply.for');
 
+
+Route::get('admission-form/{path}', [RegisterController::class, 'admissionForm'])
+    ->where('path', '.*')
+    ->name('form.admission');
+    
 // Download
 Route::get('download/{path}', [FrontendController::class, 'download'])
         ->where('path', '.*')->name('download');

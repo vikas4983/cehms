@@ -229,7 +229,7 @@
                                     class="text-secondary-light fw-normal @error('admission_form') is-invalid @enderror">(Only
                                     Pdf)</span>
                                 @if (!empty($setting->admission_form))
-                                    <a href="{{ route('download', ['path' => $setting->admission_form]) }}"
+                                    <a href="{{ route('form.admission', ['path' => $setting->admission_form]) }}"
                                         target="_blanck">View Form</a>
                                 @endif
                             </label>
