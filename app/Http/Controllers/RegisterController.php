@@ -60,11 +60,18 @@ class RegisterController extends Controller
 
     public function admissionForm($path)
     {
-        if (Storage::disk('public')->exists($path)) {
-            return response()->file(storage_path('app/public/' . $path));
+        // if (Storage::disk('public')->exists($path)) {
+        //     return response()->file(storage_path('app/public/' . $path));
+        // }
+
+        // return redirect()->back()->with('error', 'Something went wrong');
+        $filePath = storage_path('app/public/' . $path);
+
+        if (file_exists($filePath)) {
+            return response()->download($filePath);
         }
 
-        return redirect()->back()->with('error', 'Something went wrong');
+        return back()->with('error', 'File not found');
     }
 
     public function testimonial(Request $request)
