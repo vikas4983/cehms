@@ -6,6 +6,7 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\CmsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\EnquiryController;
 use App\Http\Controllers\FilterController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\MedicineController;
@@ -54,15 +55,16 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('cms', CmsController::class);
     Route::get('book-status', [BookController::class, 'bookStatus'])->name('book.status');
     Route::get('view-book/{path}', [BookController::class, 'viewBook'])
-        ->where('path', '.*')->name('book.view');
+        ->where('path', '.*')
+        ->name('book.view');
     Route::post('banner-status', [BannerController::class, 'bannerStatus'])->name('banner.status');
     Route::resource('news', NewsController::class);
     Route::resource('banners', BannerController::class);
     Route::view('recursive', 'recursive');
+    Route::get('filter-input/input', [FilterController::class, 'filter'])->name('input.filter');
 });
 
 // FRONTEND
-
 Route::get('register', [RegisterController::class, 'register'])->name('student.register');
 Route::post('student-store', [RegisterController::class, 'storeStudent'])->name('student.store');
 Route::get('my-profile', [ProfileController::class, 'myProfile'])->name('my.profile');
@@ -72,25 +74,19 @@ Route::get('view-document/{path}', [DocumentController::class, 'view'])
     ->where('path', '.*')
     ->name('view.document');
 
-//Route::get('books-list', [FrontendController::class, 'books'])->name('books.list');
-// Route::get('about-us', [FrontendController::class, 'aboutUs'])->name('about.us');
-//Route::get('medicine', [FrontendController::class, 'medicine'])->name('medicine');
-//Route::get('update', [FrontendController::class, 'update'])->name('update');
-// Route::get('practitioner', [FrontendController::class, 'practitioner'])->name('practitioner');
-//Route::get('contact', [FrontendController::class, 'contact'])->name('contact');
-Route::get('apply-for', [FrontendController::class, 'applyFor'])->name('apply.for');
-
-
-
 // Download
 Route::get('download/{path}', [FrontendController::class, 'download'])
-        ->where('path', '.*')->name('download');
+    ->where('path', '.*')
+    ->name('download');
 
 // Filter
-Route::get('filter-input/input', [FilterController::class, 'filter'])->name('input.filter');
+Route::post('enquiry', [EnquiryController::class, 'store'])->name('store.enquiry');
+
+// Search Practitioner
+Route::get('search-practitioner/input', [FrontendController::class, 'searchPractitioner'])->name('search.practitioner');
 
 // Testimonials
-Route::get('testi-monials',[RegisterController::class , 'testimonial'])->name('testimonial');
+Route::get('testi-monials', [RegisterController::class, 'testimonial'])->name('testimonial');
 
 // Forgot password
 Route::get('forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot.password');

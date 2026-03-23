@@ -21,15 +21,15 @@ class RegisterStudentRequest extends FormRequest
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
-    {   
+    {
         $id = auth()->id();
         return [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email',Rule::unique('users','email')->ignore($id)],
+            'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($id)],
             'password' => ['required', 'confirmed', 'min:6'],
-            'gender' => ['required'],
+            'gender' => ['required', 'in:male,female'],
             'dob' => ['required', 'date'],
-            'mobile' => ['required', 'regex:/^[6789](\d{9}|\d{11})$/'],
+            'mobile' => ['required', 'unique:users,mobile', 'regex:/^[6789](\d{9}|\d{11})$/'],
             'address' => ['nullable', 'string'],
             'qualification' => ['nullable', 'string'],
             'father_name' => ['nullable', 'string'],

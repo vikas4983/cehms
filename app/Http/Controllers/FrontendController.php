@@ -6,6 +6,7 @@ use App\Models\Book;
 use App\Models\Cms;
 use App\Models\Medicine;
 use App\Models\News;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -77,5 +78,53 @@ class FrontendController extends Controller
         }
 
         return redirect()->back()->with('error', 'Something went wrong');
+    }
+
+    public function searchPractitioner(Request $request)
+    {
+        $input = $request->input ?? '';
+        if (!$input) {
+            if ($request->wantsJson() || $request->ajax()) {
+                return response()->json(
+                    [
+                        'status' => false,
+                        'message' => 'Enter input value',
+                    ],
+                    422,
+                );
+            }
+            return view('searchPractitioner')->with('error', 'Enter practitioner id.');
+        }
+        $student = User::select('name', 'practitioner_registration', 'father_name', 'address')
+            ->where('email', $input)
+            ->orWhere('name', 'LIKE', "%{$input}%")
+            ->orWhere('id', $input)
+            ->orWhere('practitioner_registration', $input)
+            ->first();
+
+        if (!empty($student)) {
+            if ($request->wantsJson() || $request->ajax()) {
+                $result = view('frontends.result', compact('student'))->render();
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Record successfully retreived.',
+                    'data' => $result,
+                ]);
+            } else {
+                return view('searchPractitioner', compact('student'))->with('success', 'Record found successfully.');
+            }
+        } else {
+            if ($request->wantsJson() || $request->ajax()) {
+                return response()->json(
+                    [
+                        'status' => false,
+                        'message' => 'Record not found.',
+                    ],
+                    422,
+                );
+            } else {
+                return view('searchPractitioner')->with('error', 'Record not found.');
+            }
+        }
     }
 }

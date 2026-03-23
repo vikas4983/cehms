@@ -1,315 +1,212 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>CEHMS - Register</title>
-
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-</head>
-
-<body>
-
-    <div class="container-fluid min-vh-100">
-        <div class="row min-vh-100">
-
-            <!-- LEFT IMAGE (hidden on mobile) -->
-            <div class="col-lg-6 d-none d-lg-block p-0">
-
-                <img src="{{ asset('assets/images/login-img1.png') }}" class="w-100 h-100 object-fit-cover"
-                    alt="Register Image">
-
+@extends('layouts.frontend')
+@section('title', 'Register')
+@section('content')
+    <section>
+        <style>
+            .star {
+                color: red;
+                font-weight: bold;
+                font-size: 20px;
+            }
+        </style>
+        <div class="container">
+            <div class="text-center" style="margin-top: 3rem">
+                <h3>Register Now</h3>
             </div>
+            <div class="cnt-block">
+                <div class="row padding-lg" style="margin-top: 0rem">
+                    <div class="col-sm-12">
+                        <form action="{{ route('student.store') }}" method="post" class="form-outer"
+                            enctype="multipart/form-data">
+                            @csrf
+                            <div class="row">
 
+                                @error('name')
+                                    <div class="invalid-feedback d-block text-danger">{{ $message }}</div>
+                                @enderror
 
-            <!-- RIGHT FORM -->
-            <div class="col-lg-6 col-12 d-flex align-items-center justify-content-center bg-light px-lg-5 px-3 py-4">
+                                <div class="col-sm-6">
+                                    <h2>Name<span class="star"> *</span></h2>
+                                    <input name="name" class=" form-control @error('name') is-invalid @enderror"
+                                        type="text" placeholder="FULL NAME">
 
-                <div class="w-100" style="max-width:750px;">
-
-
-                    <!-- Heading -->
-                    <div class="mb-4 text-center">
-
-                        <h3 class="fw-bold">Create Your Account 🚀</h3>
-
-                        <p class="text-muted">
-                            Fill in the details to get started
-                        </p>
-                        <a href="{{ route('/') }}" class="btn btn-outline-success rounded-circle border"
-                            title="Back">
-                            <i class="bi bi-arrow-left"></i>
-                        </a>
-                    </div>
-                    <form action="{{ route('student.store') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-
-
-                        <!-- PERSONAL INFO -->
-
-                        <div class="card shadow-sm mb-4">
-
-                            <div class="card-header bg-white">
-                                <h6 class="mb-0 fw-semibold">Personal Info</h6>
-                            </div>
-
-                            <div class="card-body">
-
-                                <div class="row g-3">
-
-                                    <div class="col-md-6">
-                                        <label class="form-label">Full Name *</label>
-
-                                        <input type="text" name="name"
-                                            class="form-control @error('name') is-invalid @enderror"
-                                            placeholder="Enter full name">
-
-                                        @error('name')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-
-                                    </div>
-
-
-                                    <div class="col-md-6">
-                                        <label class="form-label">Gender *</label>
-
-                                        <select name="gender"
-                                            class="form-select @error('gender') is-invalid @enderror">
-
-                                            <option value="">Select Gender</option>
-                                            <option value="Male">Male</option>
-                                            <option value="Female">Female</option>
-
-                                        </select>
-
-                                        @error('gender')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-
-                                    </div>
-
-
-                                    <div class="col-md-6">
-                                        <label class="form-label">Date of Birth *</label>
-
+                                </div>
+                                <div class="col-sm-6">
+                                    @error('dob')
+                                        <div class="invalid-feedback d-block text-danger">{{ $message }}</div>
+                                    @enderror
+                                    <div class="date">
+                                        <h2>Dob <span class="star">*</span></h2>
                                         <input type="date" name="dob"
-                                            class="form-control @error('dob') is-invalid @enderror">
-
-                                        @error('dob')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-
+                                            class=" form-control @error('dob') is-invalid @enderror" placeholder="DOB">
                                     </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6 clearfix">
+                                    @error('mobile')
+                                        <div class="invalid-feedback d-block text-danger ">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                    <span>
+                                        <h2>Mobile Number <span class="star">*</span></h2><input name="country code"
+                                            type="text" placeholder="+91" class="country-code" disabled>
+                                    </span>
+                                    <input name="mobile" type="text"
+                                        class="phone-no form-control @error('mobile') is-invalid @enderror"
+                                        placeholder="Enter 10 digit mobile" value="{{ old('mobile') }}" maxlength="10"
+                                        inputmode="numeric"
+                                        oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0,10)">
 
+                                </div>
+                                <div class="col-sm-6">
+                                    @error('address')
+                                        <div class="invalid-feedback d-block text-danger">{{ $message }}</div>
+                                    @enderror
+                                    <h2>Address</h2>
+                                    <input name="address" class="form-control @error('address') is-invalid @enderror"
+                                        type="text" placeholder="Address">
 
-                                    <div class="col-md-6">
-                                        <label class="form-label">Phone *</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    @error('gender')
+                                        <div class="invalid-feedback d-block text-danger">{{ $message }}</div>
+                                    @enderror
+                                    <div class="col-left">
+                                        <h2>Gender <span class="star">*</span></h2>
+                                        <ul class="select-opt clearfix">
+                                            <li>
+                                                <input id="f-option" name="gender"
+                                                    class="form-control @error('gender') is-invalid @enderror"
+                                                    value="male" type="radio">
+                                                <label for="f-option">Male</label>
+                                                <div class="check"></div>
+                                            </li>
+                                            <li>
+                                                <input id="s-option" name="gender"
+                                                    class="form-control @error('gender') is-invalid @enderror"
+                                                    value="male" type="radio">
+                                                <label for="s-option">Female</label>
+                                                <div class="check"></div>
+                                            </li>
 
-                                        <input type="text" name="mobile"
-                                            class="form-control @error('mobile') is-invalid @enderror"
-                                            placeholder="Enter phone">
-
-                                        @error('mobile')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-
+                                        </ul>
                                     </div>
-
-
-                                    <div class="col-md-6">
-                                        <label class="form-label">Address</label>
-
-                                        <input type="text" name="address"
-                                            class="form-control @error('address') is-invalid @enderror"
-                                            placeholder="Enter address">
-
-                                        @error('address')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-
-                                    </div>
-
-
-                                    <div class="col-md-6">
-                                        <label class="form-label">Qualification</label>
-
-                                        <input type="text" name="qualification"
-                                            class="form-control @error('qualification') is-invalid @enderror"
-                                            placeholder="Enter qualification">
-
-                                        @error('qualification')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-
-                                    </div>
-
-
-                                    <div class="col-md-4">
-                                        <label class="form-label">Student Photo</label>
-
-                                        <input type="file" name="image"
-                                            class="form-control @error('image') is-invalid @enderror">
-
-                                        @error('image')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-
-                                    </div>
-
-
-                                    <div class="col-md-4">
-                                        <label class="form-label">10th Marksheet</label>
-
-                                        <input type="file" name="10th_marksheet"
-                                            class="form-control @error('10th_marksheet') is-invalid @enderror">
-
-                                        @error('10th_marksheet')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-
-                                    </div>
-
-
-                                    <div class="col-md-4">
-                                        <label class="form-label">12th Marksheet</label>
-
-                                        <input type="file" name="12th_marksheet"
-                                            class="form-control @error('12th_marksheet') is-invalid @enderror">
-
-                                        @error('12th_marksheet')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-
-                                    </div>
-
+                                </div>
+                                <div class="col-sm-6  ">
+                                    @error('qualification')
+                                        <div class="invalid-feedback d-block text-danger">{{ $message }}</div>
+                                    @enderror
+                                    <h2>Qualification</h2>
+                                    <input name="qualification"
+                                        class="form-control @error('qualification') is-invalid @enderror" type="text"
+                                        placeholder="Qualification" class="">
                                 </div>
 
                             </div>
-                        </div>
-
-
-
-                        <!-- PARENT DETAILS -->
-
-                        <div class="card shadow-sm mb-4">
-
-                            <div class="card-header bg-white">
-                                <h6 class="mb-0 fw-semibold">Parent Details</h6>
-                            </div>
-
-                            <div class="card-body">
-
-                                <div class="row g-3">
-
-                                    <div class="col-md-6">
-                                        <label class="form-label">Father Name</label>
-
-                                        <input type="text" name="father_name"
-                                            class="form-control @error('father_name') is-invalid @enderror">
-
-                                        @error('father_name')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-
-                                    </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    @error('father_name')
+                                        <div class="invalid-feedback d-block text-danger">{{ $message }}</div>
+                                    @enderror
+                                    <h2>Father name</h2>
+                                    <input name="father_name"
+                                        class=" form-control @error('father_name') is-invalid @enderror" type="text"
+                                        placeholder="father name">
 
                                 </div>
-
                             </div>
-                        </div>
+                            <div class="row">
+                                <div class="col-sm-4 clearfix">
+                                    @error('image')
+                                        <div class="invalid-feedback d-block text-danger">{{ $message }}</div>
+                                    @enderror
 
+                                    <h2> Student Photo</h2>
+                                    <input name="image" class=" form-control @error('image') is-invalid @enderror"
+                                        type="file">
+                                    <div class="check"></div>
 
-
-                        <!-- ACCOUNT DETAILS -->
-
-                        <div class="card shadow-sm mb-4">
-
-                            <div class="card-header bg-white">
-                                <h6 class="mb-0 fw-semibold">Account Details</h6>
-                            </div>
-
-                            <div class="card-body">
-
-                                <div class="row g-3">
-
-                                    <div class="col-md-4">
-                                        <label class="form-label">Email *</label>
-
-                                        <input type="email" name="email"
-                                            class="form-control @error('email') is-invalid @enderror">
-
-                                        @error('email')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-
-                                    </div>
-
-
-                                    <div class="col-md-4">
-                                        <label class="form-label">Password *</label>
-
-                                        <input type="password" name="password"
-                                            class="form-control @error('password') is-invalid @enderror">
-
-                                        @error('password')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-
-                                    </div>
-
-
-                                    <div class="col-md-4">
-                                        <label class="form-label">Confirm Password *</label>
-
-                                        <input type="password" name="password_confirmation"
-                                            class="form-control @error('password_confirmation') is-invalid @enderror">
-
-                                        @error('password_confirmation')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-
-                                    </div>
 
                                 </div>
+                                <div class="col-sm-4 clearfix">
+                                    @error('10th_marksheet')
+                                        <div class="invalid-feedback d-block text-danger">{{ $message }}</div>
+                                    @enderror
 
+                                    <h2>10th Marksheet</h2>
+                                    <input name="10th_marksheet"
+                                        class=" form-control @error('10th_marksheet') is-invalid @enderror" type="file">
+
+                                    <div class="check"></div>
+
+                                </div>
+                                <div class="col-sm-4 clearfix">
+                                    @error('12th_marksheet')
+                                        <div class="invalid-feedback d-block text-danger">{{ $message }}</div>
+                                    @enderror
+
+                                    <h2>12th Marksheet</h2>
+                                    <input name="12th_marksheet"
+                                        class=" form-control @error('12th_marksheet') is-invalid @enderror"
+                                        type="file">
+
+                                    <div class="check"></div>
+
+                                </div>
                             </div>
-                        </div>
+                            <div class="row">
+                                <div class="col-sm-4 clearfix">
+                                    @error('email')
+                                        <div class="invalid-feedback d-block text-danger">{{ $message }}</div>
+                                    @enderror
 
+                                    <h2> Email <span class="star">*</span></h2>
+                                    <input id="f-option" class="form-control @error('email') is-invalid @enderror"
+                                        name="email" type="text" placeholder="Enter Email">
 
+                                    <div class="check"></div>
 
-                        <!-- BUTTONS -->
+                                </div>
+                                <div class="col-sm-4 clearfix">
+                                    @error('password')
+                                        <div class="invalid-feedback d-block text-danger">{{ $message }}</div>
+                                    @enderror
 
-                        <div class=" text-center ">
-                            <button type="submit" class="btn btn-outline-primary ">
-                                Submit
-                            </button>
+                                    <h2> Password <span class="star">*</span></h2>
+                                    <input id="f-option" class=" form-control @error('password') is-invalid @enderror"
+                                        name="password" type="password" placeholder="Enter Password">
 
-                        </div>
-                    </form>
-                    <div class="text-center mt-4">
-                        Already have an account?
-                        <a href="{{ route('login') }}" class="fw-semibold">
-                            Log In & &nbsp;<a href="{{ route('/') }}" class="btn btn-sm btn-outline-success">
-                                Home
-                            </a>
-                        </a>
+                                    <div class="check"></div>
 
+                                </div>
+                                <div class="col-sm-4 clearfix">
+                                    @error('password_confirmation')
+                                        <div class="invalid-feedback d-block text-danger">{{ $message }}</div>
+                                    @enderror
+
+                                    <h2>Confirm Password <span class="star">*</span></h2>
+                                    <input id="f-option"
+                                        class="form-control @error('password_confirmation') is-invalid @enderror"
+                                        name="password_confirmation" type="password"
+                                        placeholder="Enter confirm password">
+                                    <div class="check"></div>
+
+                                </div>
+                            </div>
+                            <div class="button-outer text-center" style="margin-top: 3rem">
+                                <button class="btn">Get Started Now &nbsp;&nbsp;&nbsp;<i
+                                        class="fa fa-play-circle"></i></button>
+                            </div>
+                        </form>
                     </div>
-
-
                 </div>
             </div>
+
         </div>
-    </div>
+    </section>
 
-    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
-
-</body>
-
-</html>
+@endsection

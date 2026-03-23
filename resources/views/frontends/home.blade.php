@@ -1,12 +1,11 @@
 @extends('layouts.frontend')
 @section('title', 'CEHSM')
 @section('content')
-
-    <!-- ==============================================
-                                                            ** Banner Carousel **
-                                                            =================================================== -->
+    <x-enquiry-component />
     <div class="banner-outer">
+
         <div class="banner-slider">
+
             @forelse ($banners as $banner)
                 <div class="slide1"
                     style="background-image: url('{{ asset('storage/' . $banner->banner) }}'); background-size: cover; background-position: center;">
@@ -30,9 +29,10 @@
             @endforelse
         </div>
     </div>
+
     <!-- ==============================================
-                                                            ** About **
-                                                            =================================================== -->
+                                                                                                ** About **
+                                                                                                =================================================== -->
     <section class="about">
         <div class="container">
             <ul class="row our-links">
@@ -52,7 +52,8 @@
                     <div class="detail">
                         <h3><span>Search</span>Practitioners</h3>
                         <p>Find certified electro homeopathy practitioners for safe natural treatment.</p>
-                        <a href="{{ url('practitioner') }}" class="more"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                        <a href="{{ url('practitioner') }}" class="more"><i class="fa fa-angle-right"
+                                aria-hidden="true"></i></a>
                     </div>
                 </li>
                 <li class="col-sm-4 certification clearfix equal-hight">
@@ -61,7 +62,8 @@
                     <div class="detail">
                         <h3>Cources</h3>
                         <p>Learn electro homeopathy through structured courses for practical professional growth.</p>
-                        <a href="{{ url('book') }}" class="more"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                        <a href="{{ url('book') }}" class="more"><i class="fa fa-angle-right"
+                                aria-hidden="true"></i></a>
                     </div>
                 </li>
             </ul>
@@ -91,8 +93,8 @@
     </section>
 
     <!-- ==============================================
-                                                            ** Our Cources **
-                                                            =================================================== -->
+                                                                                                ** Our Cources **
+                                                                                                =================================================== -->
     <section class="our-cources padding-lg">
         <div class="container">
             <h2><span>Our Books Collection</span> What do you want to read?</h2>
@@ -173,8 +175,8 @@
     </section> --}}
 
     <!-- ==============================================
-                                                            ** Why Choose **
-                                                            =================================================== -->
+                                                                                                ** Why Choose **
+                                                                                                =================================================== -->
     <section class="why-choose padding-lg">
         <div class="container">
             <h2><span>The Numbers Say it All</span>Why Choose Us</h2>
@@ -198,38 +200,42 @@
         </div>
     </section>
     <!-- ==============================================
-                                                            ** Testimonials **
-                                                            =================================================== -->
+                                                                                                ** Testimonials **
+                                                                                                =================================================== -->
     <section class="testimonial padding-lg">
         <div class="container">
-            <div class="wrapper">
-                <h2>Alumini Testimonials</h2>
 
-                <ul class="testimonial-slide">
-                    @foreach ($testimonials as $testimonial)
-                        <li>
-                            <p>
-                                {{ \Illuminate\Support\Str::words($testimonial->content, 20, '...') }}
-                                <span><a href="{{ route('testimonial') }}">Read more</a></span>
-                            </p>
-                            <span>
-                                {{ $testimonial->name }},
+            <span class="mt-3 d-inline-block" style="color: #FFC107; font-size:6rem;">
+                ❝
+            </span>
+            <h2>Alumini Testimonials</h2>
+            <ul class="testimonial-slide">
+                @foreach ($testimonials as $testimonial)
+                    <li>
+                        <p>
+                            {{ \Illuminate\Support\Str::words($testimonial->content, 20, '...') }}
+                            <span><a href="{{ route('testimonial') }}">Read more</a></span>
+                        </p>
+                        <span>
+                            {{ $testimonial->name }},
 
-                            </span>
-                        </li>
-                    @endforeach
-                </ul>
+                        </span>
+                    </li>
+                @endforeach
+            </ul>
 
-                <div id="bx-pager">
-                    @foreach ($testimonials as $key => $testimonial)
-                        <a data-slide-index="{{ $key }}" href="">
-                            <img src="{{ asset('storage/' . $testimonial->image) }}" class="img-circle"
-                                style="width:70px; height:70px; object-fit:cover;" alt="{{ $testimonial->name }}" />
-                        </a>
-                    @endforeach
-                </div>
-
+            <div id="bx-pager">
+                @foreach ($testimonials as $key => $testimonial)
+                    <a data-slide-index="{{ $key }}" href="">
+                        <img src="{{ asset('storage/' . $testimonial->image) }}" class="img-circle"
+                            style="width:70px; height:70px; object-fit:cover;" alt="{{ $testimonial->name }}" />
+                    </a>
+                @endforeach
             </div>
+            <span style="color:#FFC107; font-size:6rem; display:inline-block; margin-top:25px;">
+                ❝
+            </span>
+        </div>
         </div>
     </section>
 @endsection

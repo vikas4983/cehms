@@ -7,6 +7,7 @@ use App\Models\Testimonial;
 use App\Models\User;
 use App\traits\AssignRoleOrPermission;
 use App\traits\UploadTrait;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -17,12 +18,13 @@ class RegisterController extends Controller
 {
     use UploadTrait;
     use AssignRoleOrPermission;
+
     public function register()
     {
         if (!auth()->check()) {
             return view('register');
         }
-        return 'User Dashboard';
+        return redirect()->route('dashboard');
     }
 
     public function storeStudent(RegisterStudentRequest $request)
@@ -63,8 +65,7 @@ class RegisterController extends Controller
         if (Storage::disk('public')->exists($path)) {
             return response()->file(storage_path('app/public/' . $path));
         }
-      return redirect()->back()->with('error', 'Something went wrong');
-      
+        return redirect()->back()->with('error', 'Something went wrong');
     }
 
     public function testimonial(Request $request)

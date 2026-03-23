@@ -52,7 +52,6 @@
 </head>
 
 <body>
-
     <!-- ==============================================
     ** Preloader **
     =================================================== -->
@@ -101,10 +100,11 @@
                 </ul>
 
                 <div class="right-block clearfix">
-                    <ul class="top-nav hidden-xs">
+                    <ul class="top-nav">
                         @if ($headers->isNotEmpty())
                             @forelse ($headers->where('name','Register') as $header)
-                                <li><a href="{{ route($header->url ?? '#') }}">{{ $header?->name ?? 'REGISTER' }}</a>
+                                <li><a href="{{ route($header->url ?? '#') }}"
+                                        style="color: #fff">{{ $header?->name ?? 'REGISTER' }}</a>
                                 </li>
                             @empty
                             @endforelse
@@ -167,9 +167,11 @@
                     </button>
                 </div>
                 <div class="navbar-collapse collapse" id="navbar">
-                    <form class="navbar-form navbar-right">
-                        <input type="text" placeholder="Search Now" class="form-control">
-                        <button class="search-btn"><i class="fa fa-search"></i></span></button>
+                    <form action="{{ route('search.practitioner') }}" method="get"
+                        class="navbar-form navbar-right">
+                        <input type="text" name="input" placeholder="Enter Practitioner ID"
+                            class="form-control">
+                        <button type="submit" class="search-btn"><i class="fa fa-search"></i></span></button>
                     </form>
                     <ul class="nav navbar-nav">
                         @forelse ($headers as $header)
@@ -305,9 +307,16 @@
                                 alt=""></a></div>
                     <p>© 2026 <span>CEHSM</span>. All rights reserved</p>
                     <ul class="terms clearfix">
-                        <li><a href="#">TERMS OF USE</a></li>
-                        <li><a href="#">PRIVACY POLICY</a></li>
-                        <li><a href="#">SITEMAP</a></li>
+                        @forelse ($footers as $footer)
+                            @if (!empty($footer) && $footer->name == 'Terms of use')
+                                <li><a href="{{ url($footer->url ?? '') }}">{{ ucwords($footer?->name ?? '') }}</a>
+                                </li>
+                            @elseif(!empty($footer) && $footer->name == 'Privacy')
+                                <li><a href="{{ url($footer->url ?? '') }}">{{ ucwords($footer?->name ?? '') }}</a>
+                                </li>
+                            @endif
+                        @empty
+                        @endforelse
                     </ul>
                 </div>
             </div>
