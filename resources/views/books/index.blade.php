@@ -173,6 +173,7 @@
                                     </th>
                                     <th scope="col">Book Name</th>
                                     <th scope="col">Publisher</th>
+                                    <th scope="col">Image</th>
                                     <th scope="col">View</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Action</th>
@@ -191,6 +192,13 @@
                                         </td>
                                         <td>{{ $book?->name ?? '' }}</td>
                                         <td>{{ Str::limit($book?->publisher ?? '', 20) }}</td>
+                                        <td>
+                                            @if (!empty($book->image))
+                                                <a href="{{ asset('storage/' . $book->image) }}" target="_blank">
+                                                    View
+                                                </a>
+                                            @endif
+                                        </td>
                                         <td>
                                             @can('view pdf')
                                                 @if (!empty($book->pdf))

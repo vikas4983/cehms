@@ -31,8 +31,8 @@
     </div>
 
     <!-- ==============================================
-                                                                                                            ** About **
-                                                                                                            =================================================== -->
+                                                                                                                    ** About **
+                                                                                                                    =================================================== -->
     <section class="about">
         <div class="container">
             <ul class="row our-links">
@@ -93,8 +93,8 @@
     </section>
 
     <!-- ==============================================
-                                                                                                            ** Our Cources **
-                                                                                                            =================================================== -->
+                                                                                                                    ** Our Cources **
+                                                                                                                    =================================================== -->
     <section class="our-cources padding-lg">
         <div class="container">
             <h2><span>Our Books Collection</span> What do you want to read?</h2>
@@ -175,8 +175,8 @@
     </section> --}}
 
     <!-- ==============================================
-                                                                                                            ** Why Choose **
-                                                                                                            =================================================== -->
+                                                                                                                    ** Why Choose **
+                                                                                                                    =================================================== -->
     <section class="why-choose padding-lg">
         <div class="container">
             <h2><span>The Numbers Say it All</span>Why Choose Us</h2>
@@ -200,8 +200,8 @@
         </div>
     </section>
     <!-- ==============================================
-                                                                                                            ** Testimonials **
-                                                                                                            =================================================== -->
+                                                                                                                    ** Testimonials **
+                                                                                                                    =================================================== -->
     <section class="testimonial padding-lg">
         <div class="container">
 

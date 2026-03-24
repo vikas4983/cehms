@@ -25,6 +25,7 @@ class BookCreateRequest extends FormRequest
             'name' => ['required', 'string'],
             'publisher' => ['required', 'string'],
             'pdf' => ['nullable', 'mimes:pdf'],
+            'image' => ['nullable', 'mimes:jpeg,jpg,png,gif'],
             'status' => ['required', 'in:1,0'],
         ];
     }

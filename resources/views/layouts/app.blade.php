@@ -358,7 +358,7 @@
                     </li>
                     <li>
                         <a href="{{ route('testimonials.index') }}">
-                         <i class="ri-chat-quote-line"></i>
+                            <i class="ri-chat-quote-line"></i>
                             <span>Testimonials</span>
                         </a>
                     </li>
@@ -693,8 +693,10 @@
 
         <footer class="d-footer">
             <div class="">
-                <p class="mb-0 text-center"> &copy; <span class="current-year"></span> Made With ❤️ by Wowtheme7.
-                </p>
+                <p>© <span id="year"></span> <span>CEHSM</span>. All rights reserved</p>
+                <script>
+                    document.getElementById("year").innerText = new Date().getFullYear();
+                </script>
             </div>
         </footer>
     </main>

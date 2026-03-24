@@ -305,7 +305,11 @@
                     <div class="footer-logo hidden-xs"><a href="index.html"><img
                                 src="{{ asset('assets-frontend/') }}images/footer-logo.png" class="img-responsive"
                                 alt=""></a></div>
-                    <p>© 2026 <span>CEHSM</span>. All rights reserved</p>
+                    <p>© <span id="year"></span> <span>CEHSM</span>. All rights reserved</p>
+
+                    <script>
+                        document.getElementById("year").innerText = new Date().getFullYear();
+                    </script>
                     <ul class="terms clearfix">
                         @forelse ($footers as $footer)
                             @if (!empty($footer) && $footer->name == 'Terms of use')

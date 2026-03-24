@@ -32,7 +32,7 @@
                         </div>
                         <div class="card-body p-20">
                             <div class="row gy-3">
-                                <div class=" col-sm-9">
+                                <div class=" col-sm-6">
                                     <div class="">
                                         <label for="name"
                                             class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Book Name
@@ -41,6 +41,21 @@
                                             class="form-control @error('name') is-invalid @enderror" id="name"
                                             placeholder="Enter book name" required>
                                         @error('name')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class=" col-sm-3">
+                                    <div class="">
+                                        <label for="image"
+                                            class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Book Image
+                                            (189*209)
+                                        </label>
+                                        <input type="file" name="image" value="{{ old('image') }}"
+                                            class="form-control @error('image') is-invalid @enderror" id="image">
+                                        @error('image')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>

@@ -47,6 +47,10 @@ class BookController extends Controller
             if ($request->hasFile('pdf')) {
                 $validatedData['pdf'] = $request->file('pdf')->store('books', 'public');
             }
+            if ($request->hasFile('image')) {
+                $validatedData['image'] = $request->file('image')->store('books', 'public');
+            }
+
             Book::firstOrCreate(['name' => $validatedData['name']], $validatedData);
             DB::commit();
             return redirect()->back()->with('success', 'Book has been added successfully');
@@ -91,6 +95,12 @@ class BookController extends Controller
                 }
                 $validatedData['pdf'] = $request->file('pdf')->store('books', 'public');
             }
+            if ($request->hasFile('image')) {
+                if ($book && $book->image) {
+                    $this->imageExist($book->image);
+                }
+                $validatedData['image'] = $request->file('image')->store('books', 'public');
+            }
             $book->update($validatedData);
             DB::commit();
             return redirect()->back()->with('success', 'Book has been added successfully');
@@ -115,8 +125,11 @@ class BookController extends Controller
         if ($book->pdf) {
             $this->imageExist($book->pdf);
         }
+        if ($book->pdf) {
+            $this->imageExist($book->image);
+        }
         $book->delete();
-        return redirect()->back()->with('error', 'Book has been deleted successfully');
+        return redirect()->back()->with('error', 'Book has been deleted successfully.');
     }
     public function bookStatus(Request $request)
     {

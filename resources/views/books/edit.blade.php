@@ -33,7 +33,7 @@
                         </div>
                         <div class="card-body p-20">
                             <div class="row gy-3">
-                                <div class=" col-sm-9">
+                                <div class=" col-sm-6">
                                     <div class="">
                                         <label for="name"
                                             class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Book Name
@@ -42,6 +42,29 @@
                                             class="form-control @error('name') is-invalid @enderror" id="name"
                                             placeholder="Enter book name">
                                         @error('name')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class=" col-sm-3">
+                                    <div class="">
+                                        <label for="image"
+                                            class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Book Image
+                                        </label> &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                                        <label class="text-end">
+                                            @if (!empty($book->image))
+                                                <a href="{{ asset('storage/' . $book->image) }}" target="_blank"
+                                                    class="text-sm fw-semibold text-primary-light d-inline-block mb-2">
+                                                    View
+                                                </a>
+                                                @endif
+                                       </label>
+                                        <input type="file" name="image" value="{{ old('image') }}"
+                                            class="form-control @error('image') is-invalid @enderror" id="image"
+                                            placeholder="Enter book image" required>
+                                        @error('image')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
