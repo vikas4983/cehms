@@ -31,8 +31,8 @@
     </div>
 
     <!-- ==============================================
-                                                                                                ** About **
-                                                                                                =================================================== -->
+                                                                                                            ** About **
+                                                                                                            =================================================== -->
     <section class="about">
         <div class="container">
             <ul class="row our-links">
@@ -93,8 +93,8 @@
     </section>
 
     <!-- ==============================================
-                                                                                                ** Our Cources **
-                                                                                                =================================================== -->
+                                                                                                            ** Our Cources **
+                                                                                                            =================================================== -->
     <section class="our-cources padding-lg">
         <div class="container">
             <h2><span>Our Books Collection</span> What do you want to read?</h2>
@@ -175,8 +175,8 @@
     </section> --}}
 
     <!-- ==============================================
-                                                                                                ** Why Choose **
-                                                                                                =================================================== -->
+                                                                                                            ** Why Choose **
+                                                                                                            =================================================== -->
     <section class="why-choose padding-lg">
         <div class="container">
             <h2><span>The Numbers Say it All</span>Why Choose Us</h2>
@@ -200,20 +200,26 @@
         </div>
     </section>
     <!-- ==============================================
-                                                                                                ** Testimonials **
-                                                                                                =================================================== -->
+                                                                                                            ** Testimonials **
+                                                                                                            =================================================== -->
     <section class="testimonial padding-lg">
         <div class="container">
 
             <span class="mt-3 d-inline-block" style="color: #FFC107; font-size:6rem;">
                 ❝
             </span>
-            <h2>Alumini Testimonials</h2>
+            <h2>Voices of Electro Homeopathy
+            </h2>
             <ul class="testimonial-slide">
                 @foreach ($testimonials as $testimonial)
                     <li>
                         <p>
-                            {{ \Illuminate\Support\Str::words($testimonial->content, 20, '...') }}
+                            {{ \Illuminate\Support\Str::words(
+                                $testimonial?->content ??
+                                    'What is Electro Homoeopathy? Electrohomoeopathy (also spelled Electrohomeopathy, Electropathy, or known as the Mattei cancer cure) is a system of alternative herbal medicine developed in the 19th century. It is a derivative of classical homeopathy but incorporates pseudoscientific concepts of "electric bio-energy" extracted from plants. The name breaks down as follows: "electro" refers to the claimed electrical properties of the remedies, "homeo" (from Greek "homoios," meaning "similar")',
+                                30,
+                                '...',
+                            ) }}
                             <span><a href="{{ route('testimonial') }}">Read more</a></span>
                         </p>
                         <span>
@@ -227,8 +233,9 @@
             <div id="bx-pager">
                 @foreach ($testimonials as $key => $testimonial)
                     <a data-slide-index="{{ $key }}" href="">
-                        <img src="{{ asset('storage/' . $testimonial->image) }}" class="img-circle"
-                            style="width:70px; height:70px; object-fit:cover;" alt="{{ $testimonial->name }}" />
+                        <img src="{{ $testimonial->image ? asset('storage/' . $testimonial->image) : asset('assets-frontend/images/default-testimonial.png') }}"
+                            class="img-circle" style="width:70px; height:70px; object-fit:cover;"
+                            alt="{{ $testimonial->name }}" />
                     </a>
                 @endforeach
             </div>

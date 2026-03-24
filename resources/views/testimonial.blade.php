@@ -35,7 +35,7 @@
                                     ❝
                                 </span>
                                 <p class="text-muted">
-                                    {{ \Illuminate\Support\Str::words($testimonial->content, 20, '...') }}
+                                    {{Str::words($testimonial?->content ?? '') }}
                                 </p>
 
                             </div>

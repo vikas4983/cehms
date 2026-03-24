@@ -25,10 +25,10 @@ return new class extends Migration
     $table->string('secondary_number')->nullable();
     $table->string('website')->nullable();
     $table->string('zip')->nullable();
-    $table->string('instagram')->nullable();
-    $table->string('youtube')->nullable();
-    $table->string('google')->nullable();
-    $table->string('facebook')->nullable();
+    $table->text('instagram')->nullable();
+    $table->text('youtube')->nullable();
+    $table->text('google')->nullable();
+    $table->text('facebook')->nullable();
     $table->string('address')->nullable();
     $table->text('map')->nullable();
     $table->boolean('status')->default(0); 

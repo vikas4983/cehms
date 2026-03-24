@@ -190,7 +190,7 @@
                                             </div>
                                         </td>
                                         <td>{{ $book?->name ?? '' }}</td>
-                                        <td>{{ $book?->publisher ?? '' }}</td>
+                                        <td>{{ Str::limit($book?->publisher ?? '', 20) }}</td>
                                         <td>
                                             @can('view pdf')
                                                 @if (!empty($book->pdf))
