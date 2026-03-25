@@ -1,11 +1,34 @@
 @extends('layouts.frontend')
 @section('title', 'CEHSM')
 @section('content')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        .my-toast {
+            font-size: 16px !important;
+            padding: 16px 20px !important;
+            border-radius: 10px !important;
+        }
+
+        /* Close button style */
+        .my-toast .swal2-close {
+            color: #ffffff !important;
+            font-size: 27px !important;
+            font-weight: bold;
+            right: 10px;
+            top: 8px;
+            margin-bottom: 1rem;
+        }
+
+        /* Hover effect (optional) */
+        .my-toast .swal2-close:hover {
+            color: #ffffff !important;
+            transform: scale(1.2);
+        }
+    </style>
+
     <x-enquiry-component />
     <div class="banner-outer">
-
         <div class="banner-slider">
-
             @forelse ($banners as $banner)
                 <div class="slide1"
                     style="background-image: url('{{ asset('storage/' . $banner->banner) }}'); background-size: cover; background-position: center;">
@@ -29,10 +52,6 @@
             @endforelse
         </div>
     </div>
-
-    <!-- ==============================================
-                                                                                                                    ** About **
-                                                                                                                    =================================================== -->
     <section class="about">
         <div class="container">
             <ul class="row our-links">
@@ -91,10 +110,8 @@
             </div>
         </div>
     </section>
-
     <!-- ==============================================
-                                                                                                                    ** Our Cources **
-                                                                                                                    =================================================== -->
+                                                                                                                                                        =================================================== -->
     <section class="our-cources padding-lg">
         <div class="container">
             <h2><span>Our Books Collection</span> What do you want to read?</h2>
@@ -128,55 +145,6 @@
             </ul>
         </div>
     </section>
-
-
-    {{-- <section class="how-study padding-lg">
-        <div class="container">
-            <h2> <span>There are many ways to learn</span> How do you want to study?</h2>
-            <ul class="row">
-                <li class="col-sm-4">
-                    <div class="overly">
-                        <div class="cnt-block">
-                            <h3>Self-paced distance
-                                learning</h3>
-                            <p>Lorem Ipsum is simply dummy text of the printing...</p>
-                        </div>
-                        <a href="#" class="more"><i class="fa fa-caret-right" aria-hidden="true"></i></a>
-                    </div>
-                    <figure><img src="{{ asset('assets-frontend/images/how-study-img1.jpg') }}" class="img-responsive"
-                            alt=""></figure>
-                </li>
-                <li class="col-sm-4">
-                    <div class="overly">
-                        <div class="cnt-block">
-                            <h3>Study on
-                                campus</h3>
-                            <p>Lorem Ipsum is simply dummy text of the printing...</p>
-                        </div>
-                        <a href="#" class="more"><i class="fa fa-caret-right" aria-hidden="true"></i></a>
-                    </div>
-                    <figure><img src="{{ asset('assets-frontend/images/how-study-img2.jpg') }}" class="img-responsive"
-                            alt=""></figure>
-                </li>
-                <li class="col-sm-4">
-                    <div class="overly">
-                        <div class="cnt-block">
-                            <h3> Our Learning
-                                Partners </h3>
-                            <p>Lorem Ipsum is simply dummy text of the printing...</p>
-                        </div>
-                        <a href="#" class="more"><i class="fa fa-caret-right" aria-hidden="true"></i></a>
-                    </div>
-                    <figure><img src="{{ asset('assets-frontend/images/how-study-img3.jpg') }}" class="img-responsive"
-                            alt=""></figure>
-                </li>
-            </ul>
-        </div>
-    </section> --}}
-
-    <!-- ==============================================
-                                                                                                                    ** Why Choose **
-                                                                                                                    =================================================== -->
     <section class="why-choose padding-lg">
         <div class="container">
             <h2><span>The Numbers Say it All</span>Why Choose Us</h2>
@@ -200,8 +168,8 @@
         </div>
     </section>
     <!-- ==============================================
-                                                                                                                    ** Testimonials **
-                                                                                                                    =================================================== -->
+                                                                                                                                                        ** Testimonials **
+                                                                                                                                                        =================================================== -->
     <section class="testimonial padding-lg">
         <div class="container">
 
@@ -245,4 +213,29 @@
         </div>
         </div>
     </section>
+    @if (session('success'))
+        <script>
+            window.onload = function() {
+                Swal.fire({
+                    toast: true,
+                    position: 'bottom',
+                    icon: 'success',
+                    title: "{{ session('success') }}",
+                    showConfirmButton: false,
+                    showCloseButton: true,
+                    timer: 3000,
+                    timerProgressBar: true,
+
+                    background: '#28a745',
+                    color: '#ffffff',
+                    iconColor: '#ffffff',
+
+                    customClass: {
+                        popup: 'my-toast'
+                    }
+                });
+            };
+        </script>
+    @endif
+
 @endsection

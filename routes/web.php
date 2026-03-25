@@ -80,7 +80,7 @@ Route::get('download/{path}', [FrontendController::class, 'download'])
     ->name('download');
 
 // Filter
-Route::post('enquiry', [EnquiryController::class, 'store'])->name('store.enquiry');
+Route::resource('enquiries', EnquiryController::class);
 
 // Search Practitioner
 Route::get('search-practitioner/input', [FrontendController::class, 'searchPractitioner'])->name('search.practitioner');

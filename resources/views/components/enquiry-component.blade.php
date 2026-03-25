@@ -82,7 +82,7 @@
     <div class="inner">
         <h3>Enquire now</h3>
         @include('alerts.alert')
-        <form action="{{ route('store.enquiry') }}" data-url="" method="post">
+        <form action="{{ route('enquiries.store') }}" data-url="" method="post">
             @csrf
             <div class="row1">
                 <input name="name" id="name" placeholder="Name" type="text" required>

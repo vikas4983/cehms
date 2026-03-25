@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class EnquiryCreateRequest extends FormRequest
 {
@@ -22,10 +23,11 @@ class EnquiryCreateRequest extends FormRequest
      */
     public function rules(): array
     {
+        $enquiryId = $this->route('enquiry');
         return [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255', 'unique:users,email'],
-            'mobile' => ['required', 'digits:10', 'regex:/^[6-9][0-9]{9}$/', 'unique:users,mobile'],
+            'email' => ['required', 'email', 'max:255', Rule::unique('enquiries', 'email')->ignore($enquiryId)],
+            'mobile' => ['required', 'digits:10', 'regex:/^[6-9][0-9]{9}$/', Rule::unique('enquiries', 'mobile')->ignore($enquiryId)],
         ];
     }
     public function messages(): array

@@ -363,6 +363,12 @@
                         </a>
                     </li>
                     <li>
+                        <a href="{{ route('enquiries.index') }}">
+                            <i class="ri-file-list-line"></i>
+                            <span>Enquiries</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{ route('roles.index') }}">
                             <i class="ri-user-follow-line"></i>
                             <span>Roles</span>
@@ -1104,6 +1110,82 @@
     </script>
     {{-- Disable Data Table --}}
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterBtn = document.querySelector('.filterBtn');
+            if (filterBtn) {
+                filterBtn.addEventListener('click', function(e) {
+                    filterBtn.innerHTML = `
+  <span class="spinner-border spinner-border-sm text-primary me-2"></span>
+  
+`;
+                    filterBtn.disabled = true;
+                    e.preventDefault();
+                    const input = document.querySelector('#input').value;
+                    if (!input) {
+                        alert('Enter input value');
+                        return;
+                    }
+                    const form = document.querySelector('#inputForm');
+                    const action = form.dataset.url;
+                    const params = new URLSearchParams(new FormData(form));
+                    submitUrl(action, params);
+                });
+            }
+
+            function submitUrl(action, params) {
+                fetch(`${action}?${params}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status) {
+                            filterBtn.innerText = 'Search';
+                            filterBtn.disabled = false;
+                            document.querySelector('.result').innerHTML = data.data;
+                            const successMessage = document.querySelector('.successMessage');
+                            if (successMessage) {
+                                successMessage.style.display = 'block';
+                                successMessage.innerText = data.message;
+                                setTimeout(() => {
+                                    successMessage.style.display = 'none';
+                                }, 3000);
+                            }
+                        } else {
+                            filterBtn.innerText = 'Search';
+                            filterBtn.disabled = false;
+                            document.querySelector('.result').innerHTML = '';
+                            const errorMessage = document.querySelector('.errorMessage');
+                            if (errorMessage) {
+                                errorMessage.style.display = 'block';
+                                errorMessage.innerText = data.message;
+                                setTimeout(() => {
+                                    errorMessage.style.display = 'none';
+                                }, 3000);
+                            }
+
+                        }
+                    })
+                    .catch(error => {
+                        alert(error);
+                    })
+            }
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if ($.fn.DataTable.isDataTable('#dataTable')) {
+                $('#dataTable').DataTable().destroy();
+            }
+            $('#dataTable').DataTable({
+                paging: false,
+                searching: false,
+                info: false,
+                lengthChange: false,
+                ordering: false,
+                dom: 't',
+                scrollX: true
+            });
+        });
+    </script>
 </body>
 
 </html>

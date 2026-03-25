@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Enquiry;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -19,11 +20,20 @@ class FilterController extends Controller
                 422,
             );
         }
-        $students = User::where('email', $input)
-            ->orWhere('name', 'LIKE', "%{$input}%")
-            ->orWhere('id', $input)
-            ->orWhere('practitioner_registration', $input)
-            ->paginate(20);
+        if ($request->route == 'enquiries.index') {
+            $students = Enquiry::where('email', $input)
+                ->orWhere('name', 'LIKE', "%{$input}%")
+                ->orWhere('id', $input)
+                ->orWhere('mobile', $input)
+                ->paginate(20);
+        }
+        if ($request->route == 'students.index') {
+            $students = User::where('email', $input)
+                ->orWhere('name', 'LIKE', "%{$input}%")
+                ->orWhere('id', $input)
+                ->orWhere('practitioner_registration', $input)
+                ->paginate(20);
+        }
 
         if ($students->isNotEmpty()) {
             $result = view('students.result', compact('students'))->render();

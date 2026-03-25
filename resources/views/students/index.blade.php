@@ -118,7 +118,10 @@
                                 @csrf
                                 <input id="input" type="text" class="dt-input bg-transparent radius-4"
                                     aria-controls="dataTable" name="input" placeholder="Enter Id | Name | Email">
+                                <input id="route" type="hidden" value="{{ Route::currentRouteName() }}"
+                                    class="dt-input bg-transparent radius-4" aria-controls="dataTable" name="route">
                                 <iconify-icon icon="ion:search-outline" class="icon"></iconify-icon>
+
                                 <button class="btn btn-primary-600 filterBtn">Search</button>
                             </form>
                             <a href="{{ route('students.index') }}" class="btn btn-primary-600 filterBtn" title="Reload"><i
@@ -348,71 +351,6 @@
     <x-button.confirm-delete-component />
     <x-confirm-download-component />
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const filterBtn = document.querySelector('.filterBtn');
-            if (filterBtn) {
-                filterBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const input = document.querySelector('#input').value;
-                    if (!input) {
-                        alert('Enter input value');
-                        return;
-                    }
-                    const form = document.querySelector('#inputForm');
-                    const action = form.dataset.url;
-                    const params = new URLSearchParams(new FormData(form));
-                    submitUrl(action, params);
-                });
-            }
 
-            function submitUrl(action, params) {
-                fetch(`${action}?${params}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.status) {
-                            document.querySelector('.result').innerHTML = data.data;
-                            const successMessage = document.querySelector('.successMessage');
-                            if (successMessage) {
-                                successMessage.style.display = 'block';
-                                successMessage.innerText = data.message;
-                                setTimeout(() => {
-                                    successMessage.style.display = 'none';
-                                }, 3000);
-                            }
-                        } else {
-                            const errorMessage = document.querySelector('.errorMessage');
-                            if (errorMessage) {
-                                errorMessage.style.display = 'block';
-                                errorMessage.innerText = data.message;
-                                setTimeout(() => {
-                                    errorMessage.style.display = 'none';
-                                }, 3000);
-                            }
-
-                        }
-                    })
-                    .catch(error => {
-                        alert(error);
-                    })
-            }
-        });
-    </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            if ($.fn.DataTable.isDataTable('#dataTable')) {
-                $('#dataTable').DataTable().destroy();
-            }
-            $('#dataTable').DataTable({
-                paging: false,
-                searching: false,
-                info: false,
-                lengthChange: false,
-                ordering: false,
-                dom: 't',
-                scrollX: true
-            });
-        });
-    </script>
 
 @endsection
