@@ -62,11 +62,11 @@
                                             class="form-control form-select @error('gender') is-invalid @enderror "
                                             min-length="10" max-length="12">
                                             <option value="" disabled>Select Gender</option>
-                                            <option value="Male"
-                                                {{ old('gender', $student->gender ?? '') == 'Male' ? 'selected' : '' }}>Male
+                                            <option value="male"
+                                                {{ old('gender', $student->gender ?? '') == 'male' ? 'selected' : '' }}>Male
                                             </option>
-                                            <option value="Female"
-                                                {{ old('gender', $student->gender ?? '') == 'Female' ? 'selected' : '' }}>
+                                            <option value="female"
+                                                {{ old('gender', $student->gender ?? '') == 'female' ? 'selected' : '' }}>
                                                 Female</option>
                                         </select>
                                         @error('gender')

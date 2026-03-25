@@ -24,7 +24,7 @@ class StudentCreateRequest extends FormRequest
     public function rules(): array
     {
         $userId = $this->route('student');
-       
+
         return [
             'name' => ['required', 'string'],
             'email' => ['required', 'string', Rule::unique('users', 'email')->ignore($userId)],
@@ -33,12 +33,12 @@ class StudentCreateRequest extends FormRequest
             'status' => ['sometimes', 'in:1,0'],
             'father_name' => ['nullable', 'string'],
             'dob' => ['nullable', 'date'],
-            'gender' => ['required'],
-            'mobile' => ['required', 'numeric', 'regex:/^[6789]\d{9,11}$/'],
+            'gender' => ['required', 'string', 'in:male,female'],
+            'mobile' => ['required', 'numeric', 'regex:/^[6789]\d{9,11}$/', Rule::unique('users', 'mobile')->ignore($userId)],
             'address' => ['nullable', 'string'],
             'qualification' => ['nullable', 'string'],
             'practitioner_registration' => ['nullable', 'string'],
-             '10th_marksheet' => ['nullable', 'file', 'mimes:pdf', 'max:4096'],
+            '10th_marksheet' => ['nullable', 'file', 'mimes:pdf', 'max:4096'],
             '12th_marksheet' => ['nullable', 'file', 'mimes:pdf', 'max:4096'],
         ];
     }
