@@ -42,7 +42,100 @@
             border: 0;
         }
     </style>
+    <style>
+        .navbar-nav>li>a {
+            position: relative;
+            text-decoration: none;
+        }
 
+        .navbar-nav>li>a.active {
+            color: #0d6efd !important;
+        }
+
+        /* underline */
+        .navbar-nav>li>a.active::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 100%;
+            height: 2px;
+            background-color: #0d6efd;
+        }
+    </style>
+    <style>
+        /* 🔥 Force flex layout (override bootstrap) */
+        .col-sm-12.footer-flex {
+            display: flex !important;
+            gap: 30px;
+            flex-wrap: nowrap;
+            align-items: flex-start;
+        }
+
+        /* 🔥 Remove bootstrap float issue */
+        .footer-flex .foot-nav {
+            float: none !important;
+        }
+
+        /* 🔥 Width control */
+        .footer-flex .foot-50 {
+            width: 50%;
+        }
+
+        .footer-flex .foot-25 {
+            width: 25%;
+        }
+
+        /* 🔥 Prevent overflow */
+        .footer-flex>div {
+            box-sizing: border-box;
+        }
+
+        /* 🔥 Map responsive */
+        .map-responsive iframe {
+            width: 100%;
+            height: 200px;
+            border: 0;
+        }
+
+        /* 🔥 List clean */
+        .foot-nav ul {
+            padding: 0;
+            list-style: none;
+        }
+
+        .foot-nav ul li {
+            margin-bottom: 8px;
+        }
+
+        /* 🔥 Links */
+        .foot-nav a {
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .foot-nav a:hover {
+            color: #0d6efd;
+        }
+
+        /* 🔥 Heading */
+        .foot-nav h3 {
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        /* 🔥 Mobile responsive */
+        @media (max-width: 768px) {
+            .col-sm-12.footer-flex {
+                flex-direction: column;
+            }
+
+            .footer-flex .foot-50,
+            .footer-flex .foot-25 {
+                width: 100%;
+            }
+        }
+    </style>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
         <script src="js/html5shiv.min.js"></script>
@@ -176,24 +269,28 @@
                     <ul class="nav navbar-nav">
                         @forelse ($headers as $header)
                             @if ($header->name == 'Home')
-                                <li> <a href="{{ route($header->url ?? '#') }}">{{ $header?->name ?? '' }}</a></li>
+                                <li class="{{ request()->is($header->url) ? 'active' : '' }}"> <a
+                                        href="{{ route($header->url ?? '#') }}">{{ $header?->name ?? '' }}</a></li>
                             @elseif($header->name == 'About us')
-                                <li> <a href="{{ url($header->url ?? '#') }}">{{ $header?->name ?? '' }}</a></li>
+                                <li class="{{ request()->is($header->url) ? 'active' : '' }}"> <a
+                                        href="{{ url($header->url ?? '#') }}">{{ $header?->name ?? '' }}</a></li>
                             @elseif($header->name == 'Academics')
                                 @if ($header->children->count())
-                                    <li class="dropdown"> <a data-toggle="dropdown"
+                                    <li class="dropdown" class="{{ request()->is($header->url) ? 'active' : '' }}">
+                                        <a data-toggle="dropdown"
                                             href="{{ $header->url ?? '#' }}">{{ $header?->name ?? '' }} <i
+                                                class="{{ request()->is($header->url) ? 'active' : '' }}"
                                                 class="fa fa-angle-down" aria-hidden="true"></i></a>
                                         <ul class="dropdown-menu">
                                             @forelse ($header->children as $subMenu)
-                                                <li>
+                                                <li class="{{ request()->is($header->url) ? 'active' : '' }}">
                                                     <a
                                                         href="{{ url($subMenu->url ?? '#') }}">{{ $subMenu->name ?? '' }}</a>
                                                 </li>
                                             @empty
                                             @endforelse
                                             @if (!empty($setting->admission_form))
-                                                <li>
+                                                <li class="{{ request()->is($header->url) ? 'active' : '' }}">
                                                     <a href="{{ route('download', ['path' => $setting->admission_form]) }}"
                                                         target="_blank">Student
                                                         Form</a>
@@ -203,11 +300,15 @@
                                     </li>
                                 @endif
                             @elseif($header->name == 'Update')
-                                <li> <a href="{{ url($header->url ?? '#') }}">{{ $header?->name ?? '' }}</a></li>
+                                <li class="{{ request()->is($header->url) ? 'active' : '' }}"> <a
+                                        href="{{ url($header->url ?? '#') }}">{{ $header?->name ?? '' }}</a>
+                                </li>
                             @elseif($header->name == 'Practitioners')
-                                <li> <a href="{{ url($header->url ?? '#') }}">{{ $header?->name ?? '' }}</a></li>
+                                <li class="{{ request()->is($header->url) ? 'active' : '' }}"> <a
+                                        href="{{ url($header->url ?? '#') }}">{{ $header?->name ?? '' }}</a></li>
                             @elseif($header->name == 'Contact')
-                                <li> <a href="{{ url($header->url ?? '#') }}">{{ $header?->name ?? '' }}</a></li>
+                                <li class="{{ request()->is($header->url) ? 'active' : '' }}"> <a
+                                        href="{{ url($header->url ?? '#') }}">{{ $header?->name ?? '' }}</a></li>
                             @endif
                         @empty
                         @endforelse
@@ -223,108 +324,65 @@
     <!-- ==============================================
     ** Footer **
     =================================================== -->
+
+
     <footer class="footer">
         <!-- Start Footer Top -->
         <div class="container">
-            <div class="row row1">
-                <div class="col-sm-12 clearfix">
-                    <div class="foot-nav">
-                        <h3>
-                            @if (!empty($setting->name))
-                                {{ $setting->name }}
-                            @endif
-                        </h3>
-                        @if (!empty($setting->map))
-                            <div class="map-responsive">
-                                <iframe src="{{ $setting->map }}" loading="lazy"></iframe>
-                            </div>
+            <div class="col-sm-12 footer-flex">
+
+                <div class="foot-nav foot-50">
+                    <h3>
+                        @if (!empty($setting->name))
+                            {{ $setting->name }}
+                        @endif
+                    </h3>
+
+                    @if (!empty($setting->map))
+                        <div class="map-responsive">
+                            <iframe src="{{ $setting->map }}" loading="lazy"></iframe>
+                        </div>
+                    @endif
+                </div>
+
+                <div class="foot-nav foot-25">
+                    <h3>Address</h3>
+                    <ul>
+                        @if (!empty($setting->address))
+                            <li>{{ $setting->address }}</li>
                         @endif
 
-                    </div>
-                    <div class="foot-nav">
-                        <h3>Address</h3>
-                        <ul>
-                            @if (!empty($setting->address))
-                                <li><a href="#">{{ $setting->address }}</a></li>
-                            @endif
+                        @if (!empty($setting->landline))
+                            <li><a href="tel:{{ $setting->landline }}">{{ $setting->landline }}</a></li>
+                        @endif
 
-                            @if (!empty($setting->landline))
-                                <li><a href="tel:{{ $setting->landline }}">{{ $setting->landline }}</a></li>
-                            @endif
+                        @if (!empty($setting->primary_number))
+                            <li><a href="tel:{{ $setting->primary_number }}">{{ $setting->primary_number }}</a></li>
+                        @endif
 
-                            @if (!empty($setting->primary_number))
-                                <li><a href="tel:{{ $setting->primary_number }}">{{ $setting->primary_number }}</a>
-                                </li>
-                            @endif
-
-                            @if (!empty($setting->secondary_number))
-                                <li><a
-                                        href="tel:{{ $setting->secondary_number }}">{{ $setting->secondary_number }}</a>
-                                </li>
-                            @endif
-
-
-                        </ul>
-                    </div>
-                    <div class="foot-nav">
-                        <h3>Departments</h3>
-                        <ul>
-                            @forelse ($footers as $footer)
-                                @if (!empty($footer) && $footer->name == 'Books')
-                                    <li><a href="{{ url($footer->url ?? '') }}">{{ $footer?->name ?? '' }}</a></li>
-                                @elseif(!empty($footer) && $footer->name == 'Medicine')
-                                    <li><a href="{{ url($footer->url ?? '') }}">{{ $footer?->name ?? '' }}</a></li>
-                                @elseif(!empty($footer) && $footer->name == 'Practitioners')
-                                    <li><a href="{{ url($footer->url ?? '') }}">{{ $footer?->name ?? '' }}</a></li>
-                                @endif
-                            @empty
-                            @endforelse
-
-
-                        </ul>
-                    </div>
-                    <div class="foot-nav">
-                        <h3>Useful Links</h3>
-                        <ul>
-                            @forelse ($footers as $footer)
-                                @if (!empty($footer) && $footer->name == 'Contact')
-                                    <li><a href="{{ url($footer->url ?? '') }}">{{ $footer?->name ?? '' }}</a></li>
-                                @elseif(!empty($footer) && $footer->name == 'Update')
-                                    <li><a href="{{ url($footer->url ?? '') }}">{{ $footer?->name ?? '' }}</a></li>
-                                @elseif(!empty($footer) && $footer->name == 'Apply For')
-                                    <li><a href="{{ route($footer->url ?? '') }}">{{ $footer?->name ?? '' }}</a></li>
-                                @endif
-                            @empty
-                            @endforelse
-                        </ul>
-                    </div>
-
-
-                </div>
-                <div class="col-sm-3">
-                    <div class="footer-logo hidden-xs"><a href="index.html"><img
-                                src="{{ asset('assets-frontend/') }}images/footer-logo.png" class="img-responsive"
-                                alt=""></a></div>
-                    <p>© <span id="year"></span> <span>CEHSM</span>. All rights reserved</p>
-
-                    <script>
-                        document.getElementById("year").innerText = new Date().getFullYear();
-                    </script>
-                    <ul class="terms clearfix">
-                        @forelse ($footers as $footer)
-                            @if (!empty($footer) && $footer->name == 'Terms of use')
-                                <li><a href="{{ url($footer->url ?? '') }}">{{ ucwords($footer?->name ?? '') }}</a>
-                                </li>
-                            @elseif(!empty($footer) && $footer->name == 'Privacy')
-                                <li><a href="{{ url($footer->url ?? '') }}">{{ ucwords($footer?->name ?? '') }}</a>
-                                </li>
-                            @endif
-                        @empty
-                        @endforelse
+                        @if (!empty($setting->secondary_number))
+                            <li><a href="tel:{{ $setting->secondary_number }}">{{ $setting->secondary_number }}</a>
+                            </li>
+                        @endif
                     </ul>
                 </div>
+
+                <div class="foot-nav foot-25">
+                    <h3>Useful Links</h3>
+                    <ul>
+                        @foreach ($footers as $footer)
+                            <li>
+                                <a href="{{ url($footer->url ?? '') }}">
+                                    {{ $footer->name ?? '' }}
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+
             </div>
         </div>
+
         <!-- End Footer Top -->
         <!-- Start Footer Bottom -->
         {{-- <div class="bottom">

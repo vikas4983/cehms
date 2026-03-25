@@ -133,7 +133,7 @@
                                     <span> COURSES</span>
                                 </div>
 
-                                <a href="{{ route('books.show', $book->id) }}" style="color: white">
+                                <a href="{{ url('book') }}" style="color: white">
                                     View
                                 </a>
                             </div>
