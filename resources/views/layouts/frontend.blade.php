@@ -500,6 +500,44 @@
     <script src="{{ asset('assets-frontend/js/modernizr.custom.js') }}"></script>
     <script src="{{ asset('assets-frontend/js/custom.js') }}"></script>
     <script src="{{ asset('assets-frontend/js/datepicker.js') }}"></script>
+
+     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            const logout = document.getElementById('logOut');
+
+            if (!logout) return;
+
+            logout.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                const token = document
+                    .querySelector('meta[name="csrf-token"]')
+                    .getAttribute('content');
+
+                fetch('/logout', {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': token,
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            window.location.href = '/';
+                        } else {
+                            alert('Logout failed');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+
+            });
+
+        });
+    </script>
 </body>
 
 </html>
