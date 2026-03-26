@@ -11,16 +11,13 @@
                     </div>
                 </th>
                 <th scope="col">Name</th>
-                <th scope="col">Email</th>
-                <th scope="col">Practitioner Registration</th>
-                <th scope="col">Date of Birth</th>
-                <th scope="col">Mobile Number</th>
+                <th scope="col">Publisher</th>
                 <th scope="col">Status</th>
                 <th scope="col">Action</th>
             </tr>
         </thead>
         <tbody>
-            @forelse ($data as $count => $student)
+            @forelse ($data as $count => $book)
                 <tr>
                     <td>
                         <div class="form-check style-check d-flex align-items-center">
@@ -31,15 +28,12 @@
                         </div>
                     </td>
                     <td>
-                        <a href="{{ route('students.show', $student?->id ?? '') }}"
-                            style="color:rgb(9, 146, 112)">{{ $student?->name ?? '' }}</a>
+                        <a href="{{ route('books.show', $book->id ) }}"
+                            style="color:rgb(9, 146, 112)">{{ $book->name  }}</a>
                     </td>
-                    <td>{{ $student?->email ?? '' }}</td>
-                    <td>{{ $student?->practitioner_registration ?? '' }}</td>
-                    <td>{{ $student->dob }}</td>
-                    <td>{{ $student?->mobile ?? '' }}</td>
-                    <td>
-                        @if ($student?->status ?? '' == '1')
+                    <td>{{ $book->publisher  }}</td>
+                     <td>
+                        @if ($book->status== '1')
                             <span
                                 class="bg-success-100 text-success-600 px-24 py-4 radius-4 fw-medium text-sm">Active</span>
                         @else
@@ -55,11 +49,11 @@
                             </button>
                             <ul class="dropdown-menu dropdown-menu-lg-end border p-12">
                                 <li>
-                                    <x-button.edit-button-component :route="route('students.edit', $student->id)" />
+                                    <x-button.edit-button-component :route="route('books.edit', $book->id)" />
 
                                 </li>
                                 <li>
-                                    <x-button.delete-button-component :route="route('students.destroy', $student->id)" :id="$student->id" />
+                                    <x-button.delete-button-component :route="route('books.destroy', $book->id)" :id="$book->id" />
                                 </li>
 
                             </ul>
@@ -67,28 +61,7 @@
                     </td>
                 </tr>
             @empty
-                <table class="table bordered-table mb-0 " id="dataTable" data-page-length='10'>
-                    <thead>
-                        <tr>
-                            <th scope="col">
-                                <div class="form-check style-check d-flex align-items-center">
-                                    <input class="form-check-input" type="checkbox">
-                                    <label class="form-check-label">
-                                        S.L
-                                    </label>
-                                </div>
-                            </th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Practitioner Registration</th>
-                            <th scope="col">Date of Birth</th>
-                            <th scope="col">Mobile Number</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Action</th>
-                        </tr>
-
-                    </thead>
-                </table>
+                
             @endforelse
         </tbody>
 

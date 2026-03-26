@@ -103,7 +103,7 @@ class BookController extends Controller
             }
             $book->update($validatedData);
             DB::commit();
-            return redirect()->back()->with('success', 'Book has been added successfully');
+            return redirect()->route('books.index')->with('success', 'Book has been added successfully');
         } catch (\Throwable $e) {
             Log::error('Book creation failed', [
                 'error' => $e->getMessage(),

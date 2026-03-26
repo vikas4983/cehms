@@ -60,7 +60,7 @@
                     </span>
                     <span class="errorMessage  alert alert-danger" style="width: 100%; display:none;">
                     </span>
-                    <div class="p-0 result">
+                    <div class="p-0 result table-responsive">
                         <table class="table  bordered-table mb-0">
                             <thead>
                                 <tr>
@@ -90,13 +90,13 @@
                                         <td>
                                             @if (!empty($enquiry->insertOn))
                                                 {{ $enquiry->insertOn->format('d M Y') }}
-                                                @else
-                                                  {{ $enquiry->created_at->format('d M Y') }}
+                                            @else
+                                                {{ $enquiry->created_at->format('d M Y') }}
                                             @endif
                                         </td>
-                                        <td>{{ $enquiry->name}}</td>
-                                        <td>{{ $enquiry->mobile}}</td>
-                                        <td>{{ $enquiry->email}}</td>
+                                        <td>{{ $enquiry->name }}</td>
+                                        <td>{{ $enquiry->mobile }}</td>
+                                        <td>{{ $enquiry->email }}</td>
                                         <td>
                                             <div class="btn-group">
                                                 <button type="button" class="text-primary-light text-xl"
@@ -275,11 +275,7 @@
                             </div>
                         </div>
                     </div>
-
-
                 </div>
-
-
                 <div class="col-12">
                     <div class="d-flex align-items-center justify-content-center gap-3 mt-8">
                         <button type="submit"

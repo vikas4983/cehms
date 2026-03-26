@@ -113,8 +113,7 @@
 
                                 </ul>
                             </div>
-                            <form id="inputForm" data-url={{ route('input.filter') }} class="navbar-search dt-search m-0"
-                                action="POST">
+                            <form id="inputForm" data-url={{ route('input.filter') }} class="navbar-search dt-search m-0">
                                 @csrf
                                 <input id="input" type="text" class="dt-input bg-transparent radius-4"
                                     aria-controls="dataTable" name="input" placeholder="Enter Id | Name | Email">
@@ -126,99 +125,15 @@
                             </form>
                             <a href="{{ route('students.index') }}" class="btn btn-primary-600 filterBtn" title="Reload"><i
                                     class="ri-refresh-line"></i></a>
-                            {{-- <div class="dropdown">
-                                <button type="button"
-                                    class="px-12 py-5-px border border-neutral-300 radius-8 d-flex align-items-center gap-20"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    <span class="d-flex align-items-center gap-1 text-secondary-light text-sm">
-                                        Filter
-                                    </span>
-                                    <span class="">
-                                        <i class="ri-arrow-down-s-line"></i>
-                                    </span>
-                                </button>
-                                <div class="dropdown-menu border bg-base shadow dropdown-menu-lg p-0">
-                                    <div class="d-flex align-items-center justify-content-between border-bottom py-8 px-16">
-                                        <span class="fw-semibold text-lg text-primary-light">Filter</span>
-                                        <button type="button">
-                                            <i class="ri-close-large-line"></i>
-                                        </button>
-                                    </div>
 
-                                    <form action="#" class="p-16 d-grid grid-cols-2 gap-16">
-                                        <div class="">
-                                            <label for="class"
-                                                class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Class</label>
-                                            <select id="class" class="form-control form-select">
-                                                <option value="Select" disabled>Select Class</option>
-                                                <option value="Primary">Primary</option>
-                                                <option value="SSC">SSC</option>
-                                                <option value="HSC">HSC</option>
-                                                <option value="Hons">Hons</option>
-                                                <option value="Masters">Masters</option>
-                                            </select>
-                                        </div>
-                                        <div class="">
-                                            <label for="section"
-                                                class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Section</label>
-                                            <select id="section" class="form-control form-select">
-                                                <option value="Select">Select Section</option>
-                                                <option value="Arts">Arts</option>
-                                                <option value="Science">Science</option>
-                                                <option value="Commerce">Commerce</option>
-                                            </select>
-                                        </div>
-                                        <div class="">
-                                            <label for="gender"
-                                                class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Gender</label>
-                                            <select id="gender" class="form-control form-select">
-                                                <option value="Select">Select Gender</option>
-                                                <option value="Male">Male</option>
-                                                <option value="Female">Female</option>
-                                            </select>
-                                        </div>
-                                        <div class="">
-                                            <label for="status"
-                                                class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Status</label>
-                                            <select id="status" class="form-control form-select">
-                                                <option value="Select">Select Status</option>
-                                                <option value="Active">Active</option>
-                                                <option value="Inactive">Inactive</option>
-                                            </select>
-                                        </div>
-                                        <div class="">
-                                            <button type="reset"
-                                                class="btn btn-danger-200 text-danger-600 w-100">Reset</button>
-                                        </div>
-                                        <div class="">
-                                            <button type="submit" class="btn btn-primary-600 w-100">Apply</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div> --}}
                         </div>
-                        {{-- <div class="d-flex align-items-center gap-8 text-secondary-light">
-                            <span class="">
-                                Rows per page:
-                            </span>
-                            <div class="dt-length">
-                                <select name="dataTable_length" aria-controls="dataTable"
-                                    class="dt-input form-control form-select">
-                                    <option value="5">5</option>
-                                    <option value="10" selected>10</option>
-                                    <option value="25">25</option>
-                                    <option value="50">50</option>
-                                    <option value="100">100</option>
-                                </select>
-                            </div>
-                        </div> --}}
                     </div>
                     @include('alerts.alert')
                     <span class="successMessage  alert alert-success" style="width: 100%; display:none;">
                     </span>
                     <span class="errorMessage  alert alert-danger" style="width: 100%; display:none;">
                     </span>
-                    <div class="p-0 result">
+                    <div class="p-0 result table-responsive">
                         <table class="table bordered-table mb-0 " id="dataTable" data-page-length='10'>
                             <thead>
                                 <tr>
@@ -238,105 +153,97 @@
                                     <th scope="col">Status</th>
                                     <th scope="col">Action</th>
                                 </tr>
+                                <tr class="error-row" style="display:none;">
+                                    <th colspan="4" class="text-danger text-center"></th>
+                                </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="noResult"></tbody>
+                            @forelse ($students as $count => $student)
+                                <tr>
+                                    <td>
+                                        <div class="form-check style-check d-flex align-items-center">
+                                            <input class="form-check-input" type="checkbox">
+                                            <label class="form-check-label">
+                                                {{ $count + 1 }}
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('students.show', $student?->id ?? '') }}"
+                                            style="color:rgb(9, 146, 112)">
+                                            {{ $student?->name ?? '' }}</a>
+                                    </td>
+                                    <td>
+                                        {{ $student?->email ?? '' }}
+                                    </td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="text-primary-light text-xl"
+                                                data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                                                <iconify-icon icon="tabler:dots-vertical"></iconify-icon>
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-menu-lg-end border p-12">
+                                                <li>
+                                                    <x-button.edit-button-component :route="route('students.edit', $student->id)" />
 
-                                @forelse ($students as $count => $student)
-                                    <tr>
-                                        <td>
-                                            <div class="form-check style-check d-flex align-items-center">
-                                                <input class="form-check-input" type="checkbox">
-                                                <label class="form-check-label">
-                                                    {{ $count + 1 }}
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>
+                                                </li>
+                                                <li>
+                                                    <x-button.delete-button-component :route="route('students.destroy', $student->id)" :id="$student->id" />
+                                                </li>
+                                                <li>
+                                                    <button data-bs-toggle="modal" data-student="{{ $student }}"
+                                                        data-bs-target="#student{{ $student->id }}"
+                                                        class="dropdown-item rounded  text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6">
+                                                        <i class="ri-shield-keyhole-line"></i>
+                                                        Role & Permission
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        {{ $student?->practitioner_registration ?? '' }}
+                                    </td>
+                                    <td>{{ $student->dob }}</td>
+                                    <td>{{ $student?->mobile ?? '' }}</td>
+                                    <td>
+                                        @if ($student?->status ?? '' == '1')
+                                            <span
+                                                class="bg-success-100 text-success-600 px-24 py-4 radius-4 fw-medium text-sm">Active</span>
+                                        @else
+                                            <span
+                                                class="bg-danger-100 text-danger-600 px-24 py-4 radius-4 fw-medium text-sm">Inactive</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="text-primary-light text-xl"
+                                                data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                                                <iconify-icon icon="tabler:dots-vertical"></iconify-icon>
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-menu-lg-end border p-12">
+                                                <li>
+                                                    <x-button.edit-button-component :route="route('students.edit', $student->id)" />
 
-                                            <a href="{{ route('students.show', $student?->id ?? '') }}"
-                                                style="color:rgb(9, 146, 112)">
-                                                {{ $student?->name ?? '' }}</a>
-                                        </td>
-                                        <td>
+                                                </li>
+                                                <li>
+                                                    <x-button.delete-button-component :route="route('students.destroy', $student->id)" :id="$student->id" />
+                                                </li>
+                                                <li>
+                                                    <button data-bs-toggle="modal" data-student="{{ $student }}"
+                                                        data-bs-target="#student{{ $student->id }}"
+                                                        class="dropdown-item rounded  text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6">
+                                                        <i class="ri-shield-keyhole-line"></i>
+                                                        Role & Permission
+                                                    </button>
+                                                </li>
 
-                                            {{ $student?->email ?? '' }}
-                                        </td>
-                                        <td>
-                                            <div class="btn-group">
-                                                <button type="button" class="text-primary-light text-xl"
-                                                    data-bs-toggle="dropdown" data-bs-display="static"
-                                                    aria-expanded="false">
-                                                    <iconify-icon icon="tabler:dots-vertical"></iconify-icon>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-lg-end border p-12">
-                                                    <li>
-                                                        <x-button.edit-button-component :route="route('students.edit', $student->id)" />
-
-                                                    </li>
-                                                    <li>
-                                                        <x-button.delete-button-component :route="route('students.destroy', $student->id)"
-                                                            :id="$student->id" />
-                                                    </li>
-                                                    <li>
-                                                        <button data-bs-toggle="modal" data-student="{{ $student }}"
-                                                            data-bs-target="#student{{ $student->id }}"
-                                                            class="dropdown-item rounded  text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6">
-                                                            <i class="ri-shield-keyhole-line"></i>
-                                                            Role & Permission
-                                                        </button>
-                                                    </li>
-                                                </ul>
-                                            </div>
-
-                                            {{ $student?->practitioner_registration ?? '' }}
-                                        </td>
-                                        <td>{{ $student->dob }}</td>
-                                        <td>{{ $student?->mobile ?? '' }}</td>
-                                        <td>
-                                            @if ($student?->status ?? '' == '1')
-                                                <span
-                                                    class="bg-success-100 text-success-600 px-24 py-4 radius-4 fw-medium text-sm">Active</span>
-                                            @else
-                                                <span
-                                                    class="bg-danger-100 text-danger-600 px-24 py-4 radius-4 fw-medium text-sm">Inactive</span>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            <div class="btn-group">
-                                                <button type="button" class="text-primary-light text-xl"
-                                                    data-bs-toggle="dropdown" data-bs-display="static"
-                                                    aria-expanded="false">
-                                                    <iconify-icon icon="tabler:dots-vertical"></iconify-icon>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-lg-end border p-12">
-                                                    <li>
-                                                        <x-button.edit-button-component :route="route('students.edit', $student->id)" />
-
-                                                    </li>
-                                                    <li>
-                                                        <x-button.delete-button-component :route="route('students.destroy', $student->id)"
-                                                            :id="$student->id" />
-                                                    </li>
-                                                    <li>
-                                                        <button data-bs-toggle="modal" data-student="{{ $student }}"
-                                                            data-bs-target="#student{{ $student->id }}"
-                                                            class="dropdown-item rounded  text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6">
-                                                            <i class="ri-shield-keyhole-line"></i>
-                                                            Role & Permission
-                                                        </button>
-                                                    </li>
-
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <x-assign-permission-component :groupedPermissions="$groupedPermissions" :student="$student" :roles="$roles" />
-
-                                @empty
-                                @endforelse
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <x-assign-permission-component :groupedPermissions="$groupedPermissions" :student="$student" :roles="$roles" />
+                            @empty
+                            @endforelse
                             </tbody>
-
                         </table>
                         <div class="row text-right">
                             {{ $students->links() }}
@@ -350,7 +257,6 @@
     <!-- Modal Delete Event start -->
     <x-button.confirm-delete-component />
     <x-confirm-download-component />
-
 
 
 @endsection

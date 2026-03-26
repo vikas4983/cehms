@@ -16,7 +16,7 @@ class EnquiryController extends Controller
     public function index()
     {
         $enquiries = Enquiry::allEnquiries()->paginate(20);
-        return view('enquries.index', compact('enquiries'));
+        return view('enquiries.index', compact('enquiries'));
     }
 
     /**
@@ -56,7 +56,7 @@ class EnquiryController extends Controller
      */
     public function edit(Enquiry $enquiry)
     {
-        //
+        return view('enquiries.edit', compact('enquiry'));
     }
 
     /**
@@ -66,7 +66,7 @@ class EnquiryController extends Controller
     {
         $validatedData = $request->validated();
         $enquiry->update($validatedData);
-        return redirect()->back()->with('success', 'Enquiry has been updated successfully.');
+        return redirect()->route('enquiries.index')->with('success', 'Enquiry has been updated successfully.');
     }
 
     /**

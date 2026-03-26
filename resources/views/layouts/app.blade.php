@@ -1152,7 +1152,6 @@
                         } else {
                             filterBtn.innerText = 'Search';
                             filterBtn.disabled = false;
-                            document.querySelector('.result').innerHTML = '';
                             const errorMessage = document.querySelector('.errorMessage');
                             if (errorMessage) {
                                 errorMessage.style.display = 'block';

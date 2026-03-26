@@ -63,7 +63,7 @@
                                        </label>
                                         <input type="file" name="image" value="{{ old('image') }}"
                                             class="form-control @error('image') is-invalid @enderror" id="image"
-                                            placeholder="Enter book image" required>
+                                            placeholder="Enter book image" >
                                         @error('image')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
