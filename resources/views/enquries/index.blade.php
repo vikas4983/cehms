@@ -90,6 +90,8 @@
                                         <td>
                                             @if (!empty($enquiry->insertOn))
                                                 {{ $enquiry->insertOn->format('d M Y') }}
+                                                @else
+                                                  {{ $enquiry->created_at->format('d M Y') }}
                                             @endif
                                         </td>
                                         <td>{{ $enquiry->name}}</td>
