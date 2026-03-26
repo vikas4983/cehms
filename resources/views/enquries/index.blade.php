@@ -87,15 +87,14 @@
                                                 <label class="ms-2">{{ $index + 1 }}</label>
                                             </div>
                                         </td>
-
                                         <td>
-                                            {{ $enquiry->insertOn->format('d-M-Y') }}
+                                            @if (!empty($enquiry->insertOn))
+                                                {{ $enquiry->insertOn->format('d M Y') }}
+                                            @endif
                                         </td>
-
-                                        <td>{{ $enquiry->name }}</td>
-                                        <td>{{ $enquiry->mobile }}</td>
-                                        <td>{{ $enquiry->email }}</td>
-
+                                        <td>{{ $enquiry->name}}</td>
+                                        <td>{{ $enquiry->mobile}}</td>
+                                        <td>{{ $enquiry->email}}</td>
                                         <td>
                                             <div class="btn-group">
                                                 <button type="button" class="text-primary-light text-xl"
