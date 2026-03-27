@@ -6,6 +6,7 @@ use App\Models\Book;
 use App\Models\Cms;
 use App\Models\Medicine;
 use App\Models\News;
+use App\Models\OldStudent;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -95,13 +96,7 @@ class FrontendController extends Controller
             }
             return view('searchPractitioner')->with('error', 'Enter practitioner id.');
         }
-        $student = User::select('name', 'practitioner_registration', 'father_name', 'address')
-            ->where('email', $input)
-            ->orWhere('name', 'LIKE', "%{$input}%")
-            ->orWhere('id', $input)
-            ->orWhere('practitioner_registration', $input)
-            ->first();
-
+        $student = OldStudent::select('registration_no', 'registration_date', 'first_name', 'last_name', 'father_name', 'address', 'course')->where('registration_no', $input)->first();
         if (!empty($student)) {
             if ($request->wantsJson() || $request->ajax()) {
                 $result = view('frontends.result', compact('student'))->render();

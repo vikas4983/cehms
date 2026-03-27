@@ -329,7 +329,7 @@
     <footer class="footer">
         <!-- Start Footer Top -->
         <div class="container">
-            <div class="col-sm-12 footer-flex">
+            <div class="col-sm-12 footer-flex" style="margin-top: 1rem">
 
                 <div class="foot-nav foot-50">
                     <h3>
@@ -501,7 +501,7 @@
     <script src="{{ asset('assets-frontend/js/custom.js') }}"></script>
     <script src="{{ asset('assets-frontend/js/datepicker.js') }}"></script>
 
-     <script>
+    <script>
         document.addEventListener('DOMContentLoaded', function() {
 
             const logout = document.getElementById('logOut');

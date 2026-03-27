@@ -24,6 +24,7 @@
                          Cancel
                      </button>
                      <form id="delete-form" method="POST">
+                          {{-- <input type="hidden" name="_method" value="DELETE"> --}}
                          @csrf
                          @method('DELETE')
                          <button type="submit"

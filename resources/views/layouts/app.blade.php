@@ -257,7 +257,7 @@
                                 <li>
                                     <a href="{{ route('dashboard') }}">
                                         <i class="ri-circle-fill circle-icon w-auto"></i>
-                                        Student
+                                        Students
                                     </a>
                                 </li>
                             @endcan
@@ -292,16 +292,20 @@
                             <li>
                                 <a href="{{ route('inactive.students') }}">
                                     <i class="ri-circle-fill circle-icon w-auto"></i>
-                                    Suspend Student
+                                    Suspend Students
                                 </a>
                             </li>
                             <li>
                                 <a href="{{ route('trash.students') }}">
-                                    <i class="ri-circle-fill circle-icon w-auto"></i> Trash Student
+                                    <i class="ri-circle-fill circle-icon w-auto"></i> Trash Students
                                 </a>
                             </li>
-
                         </ul>
+                    </li>
+                    <li>
+                        <a href="{{ route('oldStudents.index') }}">
+                            <i class="ri-graduation-cap-line"></i> Old Students
+                        </a>
                     </li>
                     <li class="dropdown">
                         <a href="javascript:void(0)">
@@ -439,257 +443,34 @@
                             <button
                                 class="has-indicator w-40-px h-40-px bg-neutral-200 rounded-circle d-flex justify-content-center align-items-center"
                                 type="button" data-bs-toggle="dropdown" aria-label="Language Change Button">
-                                <img src="{{ asset('assets/images/flag1.png') }}" alt="image"
-                                    class="w-24 h-24 object-fit-cover rounded-circle">
+                                <img src="{{ auth()->user()->image
+                                    ? asset('storage/' . auth()->user()->image)
+                                    : (auth()->user()->gender == 'female'
+                                        ? asset('assets/images/female-avtar.png')
+                                        : asset('assets/images/male-avtar.png')) }}"
+                                    alt="Thumbnail" class="w-24 h-24 object-fit-cover rounded-circle">
                             </button>
                             <div class="dropdown-menu to-top dropdown-menu-sm">
-                                <div
-                                    class="py-12 px-16 radius-8 bg-primary-50 mb-16 d-flex align-items-center justify-content-between gap-2">
-                                    <div>
-                                        <h6 class="text-lg text-primary-light fw-semibold mb-0">Choose Your Language
-                                        </h6>
-                                    </div>
-                                </div>
-
                                 <div class="max-h-400-px overflow-y-auto scroll-sm pe-8">
-                                    <div
-                                        class="form-check style-check d-flex align-items-center justify-content-between mb-16">
-                                        <label class="form-check-label line-height-1 fw-medium text-secondary-light"
-                                            for="english">
-                                            <span
-                                                class="text-black hover-bg-transparent hover-text-primary d-flex align-items-center gap-3">
-                                                <img src="{{ asset('assets/images/flag1.png') }}" alt="Image"
-                                                    class="w-36-px h-36-px bg-success-subtle text-success-main rounded-circle flex-shrink-0">
-                                                <span class="text-md fw-semibold mb-0">English</span>
-                                            </span>
-                                        </label>
-                                        <input class="form-check-input" type="radio" name="crypto"
-                                            id="english">
-                                    </div>
 
-                                    <div
-                                        class="form-check style-check d-flex align-items-center justify-content-between mb-16">
-                                        <label class="form-check-label line-height-1 fw-medium text-secondary-light"
-                                            for="japan">
-                                            <span
-                                                class="text-black hover-bg-transparent hover-text-primary d-flex align-items-center gap-3">
-                                                <img src="{{ asset('assets/images/flag2.png') }}" alt="Image"
-                                                    class="w-36-px h-36-px bg-success-subtle text-success-main rounded-circle flex-shrink-0">
-                                                <span class="text-md fw-semibold mb-0">Japan</span>
-                                            </span>
-                                        </label>
-                                        <input class="form-check-input" type="radio" name="crypto"
-                                            id="japan">
-                                    </div>
+                                    <li>
+                                        <a href="{{ route('profile.admin', auth()->user()->id) }}"
+                                            class="dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6">
+                                            <i class="ri-user-3-line"></i>
+                                            My Profile
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a id="logOut" style="cursor: pointer"
+                                            class="dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6">
+                                            <i class="ri-shut-down-line"></i>
+                                            Log Out
+                                        </a>
+                                    </li>
 
-                                    <div
-                                        class="form-check style-check d-flex align-items-center justify-content-between mb-16">
-                                        <label class="form-check-label line-height-1 fw-medium text-secondary-light"
-                                            for="france">
-                                            <span
-                                                class="text-black hover-bg-transparent hover-text-primary d-flex align-items-center gap-3">
-                                                <img src="{{ asset('assets/images/flag3.png') }}" alt="Image"
-                                                    class="w-36-px h-36-px bg-success-subtle text-success-main rounded-circle flex-shrink-0">
-                                                <span class="text-md fw-semibold mb-0">France</span>
-                                            </span>
-                                        </label>
-                                        <input class="form-check-input" type="radio" name="crypto"
-                                            id="france">
-                                    </div>
-
-                                    <div
-                                        class="form-check style-check d-flex align-items-center justify-content-between mb-16">
-                                        <label class="form-check-label line-height-1 fw-medium text-secondary-light"
-                                            for="germany">
-                                            <span
-                                                class="text-black hover-bg-transparent hover-text-primary d-flex align-items-center gap-3">
-                                                <img src="{{ asset('assets/images/flag4.png') }}" alt="Image"
-                                                    class="w-36-px h-36-px bg-success-subtle text-success-main rounded-circle flex-shrink-0">
-                                                <span class="text-md fw-semibold mb-0">Germany</span>
-                                            </span>
-                                        </label>
-                                        <input class="form-check-input" type="radio" name="crypto"
-                                            id="germany">
-                                    </div>
-
-                                    <div
-                                        class="form-check style-check d-flex align-items-center justify-content-between mb-16">
-                                        <label class="form-check-label line-height-1 fw-medium text-secondary-light"
-                                            for="korea">
-                                            <span
-                                                class="text-black hover-bg-transparent hover-text-primary d-flex align-items-center gap-3">
-                                                <img src="{{ asset('assets/images/flag5.png') }}" alt="Image"
-                                                    class="w-36-px h-36-px bg-success-subtle text-success-main rounded-circle flex-shrink-0">
-                                                <span class="text-md fw-semibold mb-0">South Korea</span>
-                                            </span>
-                                        </label>
-                                        <input class="form-check-input" type="radio" name="crypto"
-                                            id="korea">
-                                    </div>
-
-                                    <div
-                                        class="form-check style-check d-flex align-items-center justify-content-between mb-16">
-                                        <label class="form-check-label line-height-1 fw-medium text-secondary-light"
-                                            for="bangladesh">
-                                            <span
-                                                class="text-black hover-bg-transparent hover-text-primary d-flex align-items-center gap-3">
-                                                <img src="{{ asset('assets/images/flag6.png') }}" alt="Image"
-                                                    class="w-36-px h-36-px bg-success-subtle text-success-main rounded-circle flex-shrink-0">
-                                                <span class="text-md fw-semibold mb-0">Bangladesh</span>
-                                            </span>
-                                        </label>
-                                        <input class="form-check-input" type="radio" name="crypto"
-                                            id="bangladesh">
-                                    </div>
-
-                                    <div
-                                        class="form-check style-check d-flex align-items-center justify-content-between mb-16">
-                                        <label class="form-check-label line-height-1 fw-medium text-secondary-light"
-                                            for="india">
-                                            <span
-                                                class="text-black hover-bg-transparent hover-text-primary d-flex align-items-center gap-3">
-                                                <img src="{{ asset('assets/images/flag7.png') }}" alt="Image"
-                                                    class="w-36-px h-36-px bg-success-subtle text-success-main rounded-circle flex-shrink-0">
-                                                <span class="text-md fw-semibold mb-0">India</span>
-                                            </span>
-                                        </label>
-                                        <input class="form-check-input" type="radio" name="crypto"
-                                            id="india">
-                                    </div>
-                                    <div
-                                        class="form-check style-check d-flex align-items-center justify-content-between">
-                                        <label class="form-check-label line-height-1 fw-medium text-secondary-light"
-                                            for="canada">
-                                            <span
-                                                class="text-black hover-bg-transparent hover-text-primary d-flex align-items-center gap-3">
-                                                <img src="{{ asset('assets/images/flag8.png') }}" alt="Image"
-                                                    class="w-36-px h-36-px bg-success-subtle text-success-main rounded-circle flex-shrink-0">
-                                                <span class="text-md fw-semibold mb-0">Canada</span>
-                                            </span>
-                                        </label>
-                                        <input class="form-check-input" type="radio" name="crypto"
-                                            id="canada">
-                                    </div>
                                 </div>
                             </div>
                         </div><!-- Language dropdown end -->
-
-                        {{-- <div class="dropdown">
-                            <button
-                                class="has-indicator w-40-px h-40-px bg-neutral-200 rounded-circle d-flex justify-content-center align-items-center position-relative"
-                                type="button" data-bs-toggle="dropdown" aria-label="Notification Button">
-                                <iconify-icon icon="iconoir:bell" class="text-primary-light text-xl"></iconify-icon>
-                                <span
-                                    class="w-8-px h-8-px bg-danger-600 position-absolute end-0 top-0 rounded-circle mt-2 me-2"></span>
-                            </button>
-                            <div class="dropdown-menu to-top dropdown-menu-lg p-0">
-                                <div
-                                    class="m-16 py-12 px-16 radius-8 bg-primary-50 mb-16 d-flex align-items-center justify-content-between gap-2">
-                                    <div>
-                                        <h6 class="text-lg text-primary-light fw-semibold mb-0">Notifications</h6>
-                                    </div>
-                                    <span
-                                        class="text-primary-600 fw-semibold text-lg w-40-px h-40-px rounded-circle bg-base d-flex justify-content-center align-items-center">05</span>
-                                </div>
-
-                                <div class="max-h-400-px overflow-y-auto scroll-sm pe-4">
-                                    <a href="javascript:void(0)"
-                                        class="px-24 py-12 d-flex align-items-start gap-3 mb-2 justify-content-between">
-                                        <div
-                                            class="text-black hover-bg-transparent hover-text-primary d-flex align-items-center gap-3">
-                                            <span
-                                                class="w-44-px h-44-px bg-success-subtle text-success-main rounded-circle d-flex justify-content-center align-items-center flex-shrink-0">
-                                                <iconify-icon icon="bitcoin-icons:verify-outline"
-                                                    class="icon text-xxl"></iconify-icon>
-                                            </span>
-                                            <div>
-                                                <h6 class="text-md fw-semibold mb-4">Congratulations</h6>
-                                                <p class="mb-0 text-sm text-secondary-light text-w-200-px">Your profile
-                                                    has been Verified. Your
-                                                    profile has been Verified</p>
-                                            </div>
-                                        </div>
-                                        <span class="text-sm text-secondary-light flex-shrink-0">23 Mins ago</span>
-                                    </a>
-
-                                    <a href="javascript:void(0)"
-                                        class="px-24 py-12 d-flex align-items-start gap-3 mb-2 justify-content-between bg-neutral-50">
-                                        <div
-                                            class="text-black hover-bg-transparent hover-text-primary d-flex align-items-center gap-3">
-                                            <span
-                                                class="w-44-px h-44-px bg-success-subtle text-success-main rounded-circle d-flex justify-content-center align-items-center flex-shrink-0">
-                                                <img src="{{ asset('assets/images/profile-1.png') }}" alt="Image">
-                                            </span>
-                                            <div>
-                                                <h6 class="text-md fw-semibold mb-4">Ronald Richards</h6>
-                                                <p class="mb-0 text-sm text-secondary-light text-w-200-px">You can
-                                                    stitch between artboards</p>
-                                            </div>
-                                        </div>
-                                        <span class="text-sm text-secondary-light flex-shrink-0">23 Mins ago</span>
-                                    </a>
-
-                                    <a href="javascript:void(0)"
-                                        class="px-24 py-12 d-flex align-items-start gap-3 mb-2 justify-content-between">
-                                        <div
-                                            class="text-black hover-bg-transparent hover-text-primary d-flex align-items-center gap-3">
-                                            <span
-                                                class="w-44-px h-44-px bg-info-subtle text-info-main rounded-circle d-flex justify-content-center align-items-center flex-shrink-0">
-                                                AM
-                                            </span>
-                                            <div>
-                                                <h6 class="text-md fw-semibold mb-4">Arlene McCoy</h6>
-                                                <p class="mb-0 text-sm text-secondary-light text-w-200-px">Invite you
-                                                    to prototyping</p>
-                                            </div>
-                                        </div>
-                                        <span class="text-sm text-secondary-light flex-shrink-0">23 Mins ago</span>
-                                    </a>
-
-                                    <a href="javascript:void(0)"
-                                        class="px-24 py-12 d-flex align-items-start gap-3 mb-2 justify-content-between bg-neutral-50">
-                                        <div
-                                            class="text-black hover-bg-transparent hover-text-primary d-flex align-items-center gap-3">
-                                            <span
-                                                class="w-44-px h-44-px bg-success-subtle text-success-main rounded-circle d-flex justify-content-center align-items-center flex-shrink-0">
-                                                <img src="{{ asset('assets/images/profile-2.png') }}" alt="Image">
-                                            </span>
-                                            <div>
-                                                <h6 class="text-md fw-semibold mb-4">Robiul Hasan</h6>
-                                                <p class="mb-0 text-sm text-secondary-light text-w-200-px">Invite you
-                                                    to prototyping</p>
-                                            </div>
-                                        </div>
-                                        <span class="text-sm text-secondary-light flex-shrink-0">23 Mins ago</span>
-                                    </a>
-
-                                    <a href="javascript:void(0)"
-                                        class="px-24 py-12 d-flex align-items-start gap-3 mb-2 justify-content-between">
-                                        <div
-                                            class="text-black hover-bg-transparent hover-text-primary d-flex align-items-center gap-3">
-                                            <span
-                                                class="w-44-px h-44-px bg-info-subtle text-info-main rounded-circle d-flex justify-content-center align-items-center flex-shrink-0">
-                                                DR
-                                            </span>
-                                            <div>
-                                                <h6 class="text-md fw-semibold mb-4">Darlene Robertson</h6>
-                                                <p class="mb-0 text-sm text-secondary-light text-w-200-px">Invite you
-                                                    to prototyping</p>
-                                            </div>
-                                        </div>
-                                        <span class="text-sm text-secondary-light flex-shrink-0">23 Mins ago</span>
-                                    </a>
-                                </div>
-
-                                <div class="text-center py-12 px-16">
-                                    <a href="javascript:void(0)"
-                                        class="text-primary-600 fw-semibold text-md hover-underline">See All
-                                        Notification</a>
-                                </div>
-
-                            </div>
-                        </div><!-- Notification dropdown end --> --}}
-
                     </div>
                 </div>
             </div>
@@ -1169,7 +950,7 @@
             }
         });
     </script>
-    <script>
+    {{-- <script>
         document.addEventListener('DOMContentLoaded', function() {
             if ($.fn.DataTable.isDataTable('#dataTable')) {
                 $('#dataTable').DataTable().destroy();
@@ -1184,7 +965,38 @@
                 scrollX: true
             });
         });
+    </script> --}}
+
+    <script>
+        // document.addEventListener('change', function(e) {
+        //     // ALL checkbox
+        //     if (e.target.matches('.allCb')) {
+
+        //         const parent = e.target.closest('.modal') || document;
+        //         const singles = parent.querySelectorAll('.singleCb');
+
+        //         singles.forEach(cb => {
+        //             cb.checked = e.target.checked;
+        //         });
+        //     }
+
+        //     // SINGLE checkbox
+        //     if (e.target.matches('.singleCb')) {
+        //         const parent = e.target.closest('.modal') || document;
+        //         const allCb = parent.querySelector('.allCb');
+        //         const singles = parent.querySelectorAll('.singleCb');
+
+        //         const allChecked = [...singles].every(cb => cb.checked);
+
+        //         if (allCb) {
+        //             allCb.checked = allChecked;
+        //         }
+        //     }
+
+        // });
     </script>
+
+
 </body>
 
 </html>

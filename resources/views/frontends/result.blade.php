@@ -9,29 +9,41 @@
                     <tbody>
                         <tr>
                             <th class="bg-light w-50">Registration No.</th>
-                            <td class="text-primary fw-semibold">{{ $student->practitioner_registration ?? '' }}
+                            <td class="text-primary fw-semibold">
+                                {{ $student->registration_no ?? '' }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="bg-light">Registration Date</th>
+                            <td class="text-primary fw-semibold">
+                                {{ $student->registration_date ?? '' }}
                             </td>
                         </tr>
                         <tr>
                             <th class="bg-light">Name</th>
-                            <td class="text-primary fw-semibold">{{ $student->name ?? '' }}</td>
+                            <td class="text-primary fw-semibold">
+                                {{ $student->first_name ?? '' }}
+                            </td>
                         </tr>
                         <tr>
                             <th class="bg-light">Father/Husband Name</th>
-                            <td class="text-primary fw-semibold">{{ $student->father_name ?? '' }}</td>
+                            <td class="text-primary fw-semibold">
+                                {{ $student->father_name ?? '' }}
+                            </td>
                         </tr>
                         <tr>
                             <th class="bg-light">Address</th>
-                            <td class="text-primary fw-semibold">{{ $student->address ?? '' }}</td>
+                            <td class="text-primary fw-semibold">
+                                {{ $student->address ?? '' }}
+                            </td>
                         </tr>
                         <tr>
                             <th class="bg-light">Course</th>
-                            <td class="text-primary fw-semibold">{{ $student->qualification ?? '' }}</td>
+                            <td class="text-primary fw-semibold">
+                                {{ $student->course ?? '' }}
+                            </td>
                         </tr>
-                        <tr>
-                            <th class="bg-light">Registration Date</th>
-                            <td class="text-primary fw-semibold">{{ $student->registration_date ?? '' }}</td>
-                        </tr>
+
                     </tbody>
                 </table>
             </div>

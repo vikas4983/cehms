@@ -17,9 +17,8 @@
         }
 
         /* ✅ Mobile Responsive Table → Card Style */
-        
     </style>
- <section class="form-wrapper padding-sm">
+    <section class="form-wrapper padding-sm">
         <div class="container mt-4">
 
             <!-- ✅ Header (Fixed Mobile Issue) -->
@@ -44,13 +43,19 @@
                                     <tr>
                                         <th class="bg-light w-50">Registration No.</th>
                                         <td class="text-primary fw-semibold">
-                                            {{ $student->practitioner_registration ?? '' }}
+                                            {{ $student->registration_no ?? '' }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light">Registration Date</th>
+                                        <td class="text-primary fw-semibold">
+                                            {{ $student->registration_date ?? '' }}
                                         </td>
                                     </tr>
                                     <tr>
                                         <th class="bg-light">Name</th>
                                         <td class="text-primary fw-semibold">
-                                            {{ $student->name ?? '' }}
+                                            {{ $student->first_name ?? '' }}
                                         </td>
                                     </tr>
                                     <tr>
@@ -68,15 +73,10 @@
                                     <tr>
                                         <th class="bg-light">Course</th>
                                         <td class="text-primary fw-semibold">
-                                            {{ $student->qualification ?? '' }}
+                                            {{ $student->course ?? '' }}
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <th class="bg-light">Registration Date</th>
-                                        <td class="text-primary fw-semibold">
-                                            {{ $student->registration_date ?? '' }}
-                                        </td>
-                                    </tr>
+
                                 </tbody>
                             </table>
                         </div>
@@ -87,7 +87,7 @@
                                 Practitioner validity is overdue.
                             </div>
                         @else
-                            <div class="alert alert-success text-center mt-3 fw-bold" >
+                            <div class="alert alert-success text-center mt-3 fw-bold">
                                 Practitioner validity is valid.
                             </div>
                         @endif

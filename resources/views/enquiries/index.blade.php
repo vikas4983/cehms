@@ -289,6 +289,7 @@
     </div>
 
     <!-- Edit sidebar end -->
+    <x-button.confirm-delete-component />
 
 
     <!-- Modal Delete Event start -->

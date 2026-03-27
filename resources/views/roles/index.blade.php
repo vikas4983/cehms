@@ -6,7 +6,8 @@
             <div class="">
                 <h1 class="fw-semibold mb-4 h6 text-primary-light">Add Role </h1>
                 <div class="">
-                    <a href="{{route('dashboard')}}" class="text-secondary-light hover-text-primary hover-underline">Dashboard </a>
+                    <a href="{{ route('dashboard') }}"
+                        class="text-secondary-light hover-text-primary hover-underline">Dashboard </a>
                     <span class="text-secondary-light">/ Roles</span>
                 </div>
             </div>
@@ -85,7 +86,7 @@
                                 <tr>
                                     <th scope="col">
                                         <div class="form-check style-check d-flex align-items-center">
-                                            <input class="form-check-input roleCheckbox" type="checkbox" id="selectAll">
+                                            <input class="form-check-input " type="checkbox" id="selectAll">
                                             <label class="form-check-label">
                                                 S.L
                                             </label>
@@ -101,7 +102,7 @@
                                     <tr>
                                         <td>
                                             <div class="form-check style-check d-flex align-items-center">
-                                                <input class="form-check-input roleCheckbox" type="checkbox">
+                                                <input class="form-check-input " type="checkbox">
                                                 <label class="form-check-label">{{ $count + 1 }}</label>
                                             </div>
                                         </td>
@@ -190,9 +191,8 @@
                         </label>
 
                         <div class="form-check mb-2">
-                            <input class="form-check-input selectAllCb" name="permissions[]" type="checkbox" value="all"
-                                id="selectAllCb">
-                            <label class="form-check-label" for="selectAll">&nbsp;
+                            <input class="form-check-input allCb" name="permissions[]" type="checkbox">
+                            <label class="form-check-label">&nbsp;
                                 All Permissions
                             </label>
                         </div>
@@ -203,7 +203,7 @@
                                     <div class="d-flex flex-wrap gap-3">
                                         @foreach ($permissions as $permission)
                                             <div class="form-check">
-                                                <input type="checkbox" class="form-check-input permissionCheckbox mt-2"
+                                                <input type="checkbox" class="singleCb form-check-input  mt-2"
                                                     name="permissions[]" value="{{ $permission->name }}"> &nbsp;<label
                                                     class="form-check-label" for="permission{{ $permission->id }}">
                                                     {{ ucwords($permission->name) }}
@@ -283,9 +283,8 @@
                         </label>
 
                         <div class="form-check mb-2">
-                            <input class="form-check-input selectAllCb" name="permissions[]" type="checkbox"
-                                value="all" id="selectAllCb">
-                            <label class="form-check-label" for="selectAll">&nbsp;
+                            <input class="form-check-input allCb" name="permissions[]" type="checkbox">
+                            <label class="form-check-label ">&nbsp;
                                 All Permissions
                             </label>
                         </div>
@@ -297,7 +296,7 @@
                                     <div class="d-flex flex-wrap gap-3">
                                         @foreach ($permissions as $permission)
                                             <div class="form-check">
-                                                <input type="checkbox" class="form-check-input permissionCheckbox mt-2"
+                                                <input type="checkbox" class="singleCb form-check-input  mt-2"
                                                     id="permission{{ $permission->id }}" name="permissions[]"
                                                     value="{{ $permission->name }}"
                                                     {{ in_array($permission->name, old('permissions', $role->permissions->pluck('name')->toArray())) ? 'checked' : '' }}>
@@ -386,10 +385,11 @@
                 const id = editBtn.getAttribute('data-role-id');
                 const name = editBtn.getAttribute('data-role-name');
                 const status = editBtn.getAttribute('data-role-status');
+
                 let rolePermissions = editBtn.getAttribute('data-role-permissions');
                 let permissions = JSON.parse(rolePermissions);
 
-                document.querySelectorAll('.permissionCheckbox').forEach(function(checkbox) {
+                document.querySelectorAll('.singleCb').forEach(function(checkbox) {
 
                     checkbox.checked = false;
 
@@ -480,27 +480,33 @@
 
         });
     </script>
+
     <script>
-        const selectAll = document.querySelector('.selectAllCb')
-        const selectOne = document.querySelectorAll('.permissionCheckbox')
-        selectAll.addEventListener('change', function() {
-            if (selectAll.checked) {
-                selectOne.forEach(cb => {
-                    cb.checked = true;
-                });
-            } else {
-                selectOne.forEach(cb => {
-                    cb.checked = false;
+        document.addEventListener('change', function(e) {
+            // ALL checkbox
+            if (e.target.matches('.allCb')) {
+
+                const parent = e.target.closest('.modal') || document;
+                const singles = parent.querySelectorAll('.singleCb');
+
+                singles.forEach(cb => {
+                    cb.checked = e.target.checked;
                 });
             }
-        });
-        selectOne.forEach(cb => {
-            cb.addEventListener('change', function() {
-                if (!this.checked) {
-                    selectAll.checked = false;
-                }
 
-            });
+            // SINGLE checkbox
+            if (e.target.matches('.singleCb')) {
+                const parent = e.target.closest('.modal') || document;
+                const allCb = parent.querySelector('.allCb');
+                const singles = parent.querySelectorAll('.singleCb');
+
+                const allChecked = [...singles].every(cb => cb.checked);
+
+                if (allCb) {
+                    allCb.checked = allChecked;
+                }
+            }
+
         });
     </script>
 @endsection

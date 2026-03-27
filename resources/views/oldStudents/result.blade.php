@@ -4,37 +4,41 @@
               <tr>
                   <th>
                       <div class="form-check d-flex align-items-center">
-                          <input class="form-check-input enquiryCheckbox" type="checkbox" id="selectAll">
+                          <input class="form-check-input oldStudentCheckbox" type="checkbox" id="selectAll">
                           <label class="form-check-label ms-2">S.L</label>
                       </div>
                   </th>
-                  <th>Date</th>
-                  <th>Name</th>
-                  <th>Mobile</th>
-                  <th>Email</th>
+                  <th>Registration No</th>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Father name</th>
+                  <th>Registration Date</th>
+                  <th>Address</th>
+                  <th>Valid Form</th>
+                  <th>Course</th>
+                  <th>City</th>
                   <th>Action</th>
               </tr>
           </thead>
 
           <tbody>
-              @forelse ($data as $index => $enquiry)
+              @forelse ($data as $index => $oldStudent)
                   <tr>
                       <td>
                           <div class="form-check d-flex align-items-center">
-                              <input class="form-check-input enquiryCheckbox" type="checkbox">
+                              <input class="form-check-input oldStudentCheckbox" type="checkbox">
                               <label class="ms-2">{{ $index + 1 }}</label>
                           </div>
                       </td>
-                      <td>
-                          @if (!empty($enquiry->insertOn))
-                              {{ $enquiry->insertOn->format('d M Y') }}
-                          @else
-                              {{ $enquiry->created_at->format('d M Y') }}
-                          @endif
-                      </td>
-                      <td>{{ $enquiry->name }}</td>
-                      <td>{{ $enquiry->mobile }}</td>
-                      <td>{{ $enquiry->email }}</td>
+                      <td>{{ $oldStudent->registration_no }}</td>
+                      <td>{{ $oldStudent->first_name }}</td>
+                      <td>{{ $oldStudent->last_name }}</td>
+                      <td>{{ $oldStudent->father_name }}</td>
+                      <td>{{ \Carbon\Carbon::parse($oldStudent->registration_date)->format('d M Y') }}
+                      <td>{{ $oldStudent->address }}</td>
+                      <td>{{ \Carbon\Carbon::parse($oldStudent->valid_form)->format('d M Y') }}
+                      <td>{{ $oldStudent->course }}</td>
+                      <td>{{ $oldStudent->city }}</td>
                       <td>
                           <div class="btn-group">
                               <button type="button" class="text-primary-light text-xl" data-bs-toggle="dropdown"
@@ -43,28 +47,27 @@
                               </button>
                               <ul class="dropdown-menu dropdown-menu-lg-end border p-12">
                                   <li>
-                                      <x-button.edit-button-component :route="route('enquiries.edit', $enquiry->id)" />
+                                      <x-button.edit-button-component :route="route('oldStudents.edit', $oldStudent->id)" />
 
                                   </li>
                                   <li>
-                                      <x-button.delete-button-component :route="route('enquiries.destroy', $enquiry->id)" :id="$enquiry->id" />
+                                      <x-button.delete-button-component :route="route('oldStudents.destroy', $oldStudent->id)" :id="$oldStudent->id" />
                                   </li>
 
                               </ul>
-
-
+                          </div>
                       </td>
                   </tr>
-
               @empty
                   <tr>
                       <td colspan="6" class="text-center text-muted py-4">
-                          No enquiries found
+                          No students found
                       </td>
                   </tr>
               @endforelse
           </tbody>
       </table>
+
       <!-- Pagination -->
       <div class="d-flex justify-content-end mt-3">
           {{ $data->links() }}

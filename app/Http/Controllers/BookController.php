@@ -19,7 +19,11 @@ class BookController extends Controller
      */
     public static function middleware(): array
     {
-        return [new Middleware('permission:view book', only: ['index', 'show']), new Middleware('permission:create book', only: ['create', 'store']), new Middleware('permission:edit book', only: ['edit', 'update']), new Middleware('permission:delete book', only: ['destroy']), new Middleware('permission:view pdf', only: ['viewBook'])];
+        return [new Middleware('permission:view book', only: ['index', 'show']), 
+        new Middleware('permission:create book', only: ['create', 'store']),
+         new Middleware('permission:edit book', only: ['edit', 'update']),
+          new Middleware('permission:delete book', only: ['destroy']), 
+          new Middleware('permission:view pdf', only: ['viewBook'])];
     }
     public function index()
     {

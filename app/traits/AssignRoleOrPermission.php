@@ -28,6 +28,7 @@ trait AssignRoleOrPermission
         }
 
         $permissions = Permission::active()->whereIn('name', $requiredPermissions)->pluck('name')->toArray();
+
         $roles = Role::active()->whereIn('name', $requiredRoles)->pluck('name')->toArray();
         $user->syncRoles($roles);
         $user->syncPermissions($permissions);

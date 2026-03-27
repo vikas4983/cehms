@@ -67,7 +67,7 @@
                                         <label for="pdf"
                                             class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Upload Pdf
                                             Book
-                                            <span class="text-danger-600">*</span> </label>
+                                             </label>
                                         <input type="file" name="pdf"
                                             class="form-control @error('pdf') is-invalid @enderror" id="pdf">
                                         @error('pdf')
@@ -97,8 +97,8 @@
                                 <div class="col-sm-6">
                                     <div class="">
                                         <label for="status"
-                                            class="text-sm fw-semibold text-primary-light d-inline-block mb-8"><span
-                                                class="text-danger-600">*</span>Status</label>
+                                            class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Status</label> <span
+                                                class="text-danger-600">*</span>
                                         <select id="status" name="status"
                                             class="form-control form-select @error('status') is-invalid @enderror">
                                             <option value="Select section" disabled>Select Status</option>

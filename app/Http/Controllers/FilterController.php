@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use App\Models\Enquiry;
+use App\Models\OldStudent;
+use App\Models\Permission;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -30,6 +33,15 @@ class FilterController extends Controller
                 ->orWhere('mobile', $input)
                 ->paginate(20);
         }
+        if ($request->route == 'oldStudents.index') {
+            $data = OldStudent::where('first_name', 'LIKE', "%{$input}%")
+                ->orWhere('last_name', 'LIKE', "%{$input}%")
+                ->orWhere('father_name', 'LIKE', "%{$input}%")
+                ->orWhere('course', 'LIKE', "%{$input}%")
+                ->orWhere('city', 'LIKE', "%{$input}%")
+                ->orWhere('registration_no', $input)
+                ->paginate(20);
+        }
         if ($request->route == 'students.index') {
             $data = User::where('email', $input)
                 ->orWhere('name', 'LIKE', "%{$input}%")
@@ -45,13 +57,21 @@ class FilterController extends Controller
 
         if ($data->isNotEmpty()) {
             if ($request->route == 'students.index') {
-                $result = view('students.result', compact('data'))->render();
+                $roles = Role::active()->get();
+                $permissions = Permission::active()->get();
+                $groupedPermissions = $permissions->groupBy(function ($permission) {
+                    return explode(' ', $permission->name)[1];
+                });
+                $result = view('students.result', compact('data', 'groupedPermissions', 'roles'))->render();
             }
             if ($request->route == 'enquiries.index') {
                 $result = view('enquiries.result', compact('data'))->render();
             }
             if ($request->route == 'books.index') {
                 $result = view('books.result', compact('data'))->render();
+            }
+            if ($request->route == 'oldStudents.index') {
+                $result = view('oldStudents.result', compact('data'))->render();
             }
             return response()->json([
                 'status' => true,

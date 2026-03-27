@@ -12,6 +12,7 @@ use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\OldStudentController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisterController;
@@ -19,6 +20,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SiteSettingController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TestimonialController;
+
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [AuthController::class, 'home'])->name('/');
@@ -53,6 +55,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('medicines', MedicineController::class);
     Route::resource('testimonials', TestimonialController::class);
     Route::resource('cms', CmsController::class);
+    Route::resource('oldStudents', OldStudentController::class);
     Route::get('book-status', [BookController::class, 'bookStatus'])->name('book.status');
     Route::get('view-book/{path}', [BookController::class, 'viewBook'])
         ->where('path', '.*')

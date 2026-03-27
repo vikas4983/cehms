@@ -56,7 +56,7 @@
                                     <th scope="col">Book Name</th>
                                     <th scope="col">Publisher</th>
                                     <th scope="col">Image</th>
-                                    <th scope="col">View</th>
+                                    <th scope="col">Book</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Action</th>
                                 </tr>
@@ -72,8 +72,8 @@
                                                 </label>
                                             </div>
                                         </td>
-                                        <td>{{ $book?->name ?? '' }}</td>
-                                        <td>{{ Str::limit($book?->publisher ?? '', 20) }}</td>
+                                        <td>{{ $book->name }}</td>
+                                        <td>{{ Str::limit($book->publisher, 20) }}</td>
                                         <td>
                                             @if (!empty($book->image))
                                                 <a href="{{ asset('storage/' . $book->image) }}" target="_blank">
@@ -82,13 +82,10 @@
                                             @endif
                                         </td>
                                         <td>
-                                            @can('view pdf')
-                                                @if (!empty($book->pdf))
-                                                    <a href="{{ route('book.view', ['path' => $book->pdf]) }}"
-                                                        target="_blank">View
-                                                        Book</a>
-                                                @endif
-                                            @endcan
+                                            @if (!empty($book->pdf))
+                                                <a href="{{ route('book.view', ['path' => $book->pdf]) }}"
+                                                    target="_blank">Download</a>
+                                            @endif
                                         </td>
                                         <td>
                                             @if ($book?->status ?? '' == '1')
@@ -108,17 +105,15 @@
                                                 </button>
 
                                                 <ul class="dropdown-menu dropdown-menu-lg-end border p-12">
-                                                    @can('edit book')
                                                         <li>
                                                             <x-button.edit-button-component :route="route('books.edit', $book->id)" />
+
                                                         </li>
-                                                    @endcan
-                                                    @can('delete book')
                                                         <li>
-                                                            <x-button.delete-button-component :route="route('books.destroy', $book?->id ?? '')"
+                                                            <x-button.delete-button-component :route="route('books.destroy', $book->id)"
                                                                 :id="$book->id" />
                                                         </li>
-                                                    @endcan
+
                                                 </ul>
                                             </div>
                                         </td>
