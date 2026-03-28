@@ -31,7 +31,28 @@
                           </div>
                       </td>
                       <td>{{ $oldStudent->registration_no }}</td>
-                      <td>{{ $oldStudent->first_name }}</td>
+                      <td>
+                          <div class="btn-group">
+                              <button type="button" class="text-primary-light text-xl" data-bs-toggle="dropdown"
+                                  data-bs-display="static" aria-expanded="false">
+                                  <iconify-icon icon="tabler:dots-vertical"></iconify-icon>
+                              </button>
+                              <ul class="dropdown-menu dropdown-menu-lg-end border p-12">
+                                  @can('edit-student-old')
+                                      <li>
+                                          <x-button.edit-button-component :route="route('oldStudents.edit', $oldStudent->id)" />
+
+                                      </li>
+                                  @endcan
+                                  @can('delete-student-old')
+                                      <li>
+                                          <x-button.delete-button-component :route="route('oldStudents.destroy', $oldStudent->id)" :id="$oldStudent->id" />
+                                      </li>
+                                  @endcan
+
+                              </ul>
+                          </div> {{ $oldStudent->first_name }}
+                      </td>
                       <td>{{ $oldStudent->last_name }}</td>
                       <td>{{ $oldStudent->father_name }}</td>
                       <td>{{ \Carbon\Carbon::parse($oldStudent->registration_date)->format('d M Y') }}
@@ -46,13 +67,17 @@
                                   <iconify-icon icon="tabler:dots-vertical"></iconify-icon>
                               </button>
                               <ul class="dropdown-menu dropdown-menu-lg-end border p-12">
-                                  <li>
-                                      <x-button.edit-button-component :route="route('oldStudents.edit', $oldStudent->id)" />
+                                  @can('edit-student-old')
+                                      <li>
+                                          <x-button.edit-button-component :route="route('oldStudents.edit', $oldStudent->id)" />
 
-                                  </li>
-                                  <li>
-                                      <x-button.delete-button-component :route="route('oldStudents.destroy', $oldStudent->id)" :id="$oldStudent->id" />
-                                  </li>
+                                      </li>
+                                  @endcan
+                                  @can('delete-student-old')
+                                      <li>
+                                          <x-button.delete-button-component :route="route('oldStudents.destroy', $oldStudent->id)" :id="$oldStudent->id" />
+                                      </li>
+                                  @endcan
 
                               </ul>
                           </div>

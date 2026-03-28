@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\OldStudentCreateRequest;
 use App\Models\OldStudent;
+use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -12,6 +13,10 @@ class OldStudentController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public static function middleware(): array
+    {
+        return [new Middleware('permission:view-student-old', ['only' => ['index', 'show']]), new Middleware('permission:create-student-old', ['only' => ['create', 'store']]), new Middleware('permission:edit-student-old', ['only' => ['edit', 'update']]), new Middleware('permission:delete-student-old', ['only' => ['destroy']])];
+    }
     public function index()
     {
         $oldStudents = OldStudent::allStudents()->paginate(20);

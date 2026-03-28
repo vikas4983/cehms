@@ -1,21 +1,24 @@
 @extends('layouts.app')
-@section('title', 'Menu - Add')
+@section('title', 'Menus')
 @section('content')
     <div class="dashboard-main-body">
         <div class="breadcrumb d-flex flex-wrap align-items-center justify-content-between gap-3 mb-24">
             <div class="">
                 <h1 class="fw-semibold mb-4 h6 text-primary-light">Add Menu </h1>
                 <div class="">
-                    <a href="{{route('dashboard')}}" class="text-secondary-light hover-text-primary hover-underline">Dashboard </a>
+                    <a href="{{ route('dashboard') }}"
+                        class="text-secondary-light hover-text-primary hover-underline">Dashboard </a>
                     <span class="text-secondary-light">/ Menus</span>
                 </div>
             </div>
-            <button type="button" class="my-sidebar-btn btn btn-primary-600 d-flex align-items-center gap-6">
-                <span class="d-flex text-md">
-                    <i class="ri-add-large-line"></i>
-                </span>
-                Add Menu
-            </button>
+            @can('create-menu')
+                <button type="button" class="my-sidebar-btn btn btn-primary-600 d-flex align-items-center gap-6">
+                    <span class="d-flex text-md">
+                        <i class="ri-add-large-line"></i>
+                    </span>
+                    Add Menu
+                </button>
+            @endcan
         </div>
         @include('alerts.alert')
         <div class="mt-24">
@@ -24,37 +27,7 @@
                     <div
                         class="d-flex align-items-center justify-content-between flex-wrap gap-16 px-20 py-12 border-bottom border-neutral-200">
                         <div class="d-flex flex-wrap align-items-center gap-16">
-                            {{-- <div class="dropdown">
-                                <button type="button"
-                                    class="px-12 py-5-px border border-neutral-300 radius-8 d-flex align-items-center gap-20 "
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    <span class="d-flex align-items-center gap-1 text-secondary-light text-sm">
-                                        <i class="ri-file-upload-line text-md line-height-1"></i>
-                                        Export
-                                    </span>
-                                    <span class="">
-                                        <i class="ri-arrow-down-s-line"></i>
-                                    </span>
-                                </button>
-                                <ul class="dropdown-menu p-12 border bg-base shadow">
-                                    <li>
-                                        <button type="button"
-                                            class="dropdown-item px-16 py-8 rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-10"
-                                            data-bs-toggle="modal" data-bs-target="#exampleModalView">
-                                            <i class="ri-file-3-line"></i>
-                                            PDF
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button type="button"
-                                            class="dropdown-item px-16 py-8 rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-10"
-                                            data-bs-toggle="modal" data-bs-target="#exampleModalEdit">
-                                            <i class="ri-file-excel-line"></i>
-                                            Excel
-                                        </button>
-                                    </li>
-                                </ul>
-                            </div> --}}
+
                             <form class="navbar-search dt-search m-0">
                                 <input type="text" class="dt-input bg-transparent radius-4" aria-controls="dataTable"
                                     name="search" placeholder="Search...">
@@ -113,28 +86,34 @@
                                                     </button>
 
                                                     <ul class="dropdown-menu dropdown-menu-lg-end border p-12">
-                                                        <li>
+                                                        @can('edit-menu')
+                                                            <li>
 
-                                                            <button type="button"
-                                                                class="editHeaderBtn edit-sidebar-btn dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6"
-                                                                data-header-id="{{ $header->id }}"
-                                                                data-header-name="{{ $header->name }}"
-                                                                data-header-status="{{ $header->status }}"
-                                                                data-header-url="{{ $header->url }}"
-                                                                data-header-menu-type="{{ $header->menu_type }}"
-                                                                data-header-parent-id="{{ $header->parent_id }}">
-                                                                <i class="ri-edit-2-line"></i>Edit
-                                                            </button>
-                                                        </li>
-                                                        <li>
-                                                            <button
-                                                                class="dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6"
-                                                                type="button" data-bs-toggle="modal"
-                                                                data-header-id="{{ $header->id }}"
-                                                                data-bs-target="#headerDeleteModal">
-                                                                <i class="ri-delete-bin-6-line"></i> Delete
-                                                            </button>
-                                                        </li>
+                                                                <button type="button"
+                                                                    class="editHeaderBtn edit-sidebar-btn dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6"
+                                                                    data-header-id="{{ $header->id }}"
+                                                                    data-header-name="{{ $header->name }}"
+                                                                    data-header-status="{{ $header->status }}"
+                                                                    data-header-url="{{ $header->url }}"
+                                                                    data-header-menu-type="{{ $header->menu_type }}"
+                                                                    data-header-parent-id="{{ $header->parent_id }}">
+                                                                    <i class="ri-edit-2-line"></i>Edit
+                                                                </button>
+                                                            </li>
+                                                        @endcan
+                                                        @can('delete-menu')
+                                                            <li>
+                                                                <button
+                                                                    class="dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6"
+                                                                    type="button" data-bs-toggle="modal"
+                                                                    data-header-id="{{ $header->id }}"
+                                                                    data-bs-target="#headerDeleteModal">
+                                                                    <i class="ri-delete-bin-6-line"></i> Delete
+                                                                </button>
+                                                            </li>
+                                                        @endcan
+
+
                                                     </ul>
                                                 </div><span
                                                     style="padding:1px 2px;font-size:9px;border-radius:4px;color:white;margin-bottom:1px;background-color: {{ $header->status === 1 ? 'green' : 'red' }};">
@@ -156,14 +135,12 @@
                             </table>
                         </div>
                         <div class="col-sm-6">
-                            <table class="table bordered-table mb-0 data-table mt-3" id="dataTable"
-                                data-page-length='10'>
+                            <table class="table bordered-table mb-0 data-table mt-3" id="dataTable" data-page-length='10'>
                                 <thead>
                                     <tr>
                                         <th scope="col">
                                             <div class="form-check style-check d-flex align-items-center">
-                                                <input class="form-check-input menuCheckbox" type="checkbox"
-                                                    id="selectAll">
+                                                <input class="form-check-input menuCheckbox" type="checkbox" id="selectAll">
                                                 <label class="form-check-label">
                                                     S.L
                                                 </label>
@@ -190,34 +167,39 @@
                                                         <iconify-icon icon="tabler:dots-vertical"></iconify-icon>
                                                     </button>
                                                     <ul class="dropdown-menu dropdown-menu-lg-end border p-12">
-                                                        <li>
-                                                            <button type="button"
-                                                                class="editFooterBtn edit-sidebar-btn dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6"
-                                                                data-footer-id="{{ $footer->id }}"
-                                                                data-footer-name="{{ $footer->name }}"
-                                                                data-footer-status="{{ $footer->status }}"
-                                                                data-footer-url="{{ $footer->url }}"
-                                                                data-footer-menu-type="{{ $footer->menu_type }}"
-                                                                data-footer-parent-id="{{ $footer->parent_id }}">
-                                                                <i class="ri-edit-2-line"></i>Edit
-                                                            </button>
-                                                        </li>
-                                                        <li>
-                                                            <button
-                                                                class="dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6"
-                                                                type="button" data-bs-toggle="modal"
-                                                                data-footer-menu-id="{{ $footer->id }}"
-                                                                data-bs-target="#footerDeleteModal"
-                                                                id="bulkDeleteTrigger">
-                                                                <i class="ri-delete-bin-6-line"></i>Delete
-                                                            </button>
-                                                        </li>
+                                                        @can('edit-menu')
+                                                            <li>
+                                                                <button type="button"
+                                                                    class="editFooterBtn edit-sidebar-btn dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6"
+                                                                    data-footer-id="{{ $footer->id }}"
+                                                                    data-footer-name="{{ $footer->name }}"
+                                                                    data-footer-status="{{ $footer->status }}"
+                                                                    data-footer-url="{{ $footer->url }}"
+                                                                    data-footer-menu-type="{{ $footer->menu_type }}"
+                                                                    data-footer-parent-id="{{ $footer->parent_id }}">
+                                                                    <i class="ri-edit-2-line"></i>Edit
+                                                                </button>
+                                                            </li>
+                                                        @endcan
+                                                        @can('delete-menu')
+                                                            <li>
+                                                                <button
+                                                                    class="dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6"
+                                                                    type="button" data-bs-toggle="modal"
+                                                                    data-footer-menu-id="{{ $footer->id }}"
+                                                                    data-bs-target="#footerDeleteModal"
+                                                                    id="bulkDeleteTrigger">
+                                                                    <i class="ri-delete-bin-6-line"></i>Delete
+                                                                </button>
+                                                            </li>
+                                                        @endcan
+
                                                     </ul>
                                                 </div><span
                                                     style="padding:1px 2px;font-size:9px;border-radius:4px;color:white;margin-bottom:1px;background-color: {{ $footer->status === 1 ? 'green' : 'red' }};">
                                                     {{ $footer->status === 1 ? 'Active' : 'Inactive' }}
                                                 </span>
-                                               </span>
+                                                </span>
                                             </td>
                                             <td> {{ $footer->name }}
                                                 @foreach ($footer->children as $child)
@@ -277,18 +259,20 @@
                     </div>
                 </div>
 
-                <div class="col-sm-4">
-                    <div class="">
-                        <label for="headerStatus"
-                            class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Status
-                        </label>
-                        <select id="status" name="status" class="form-control form-select">
-                            <option value="" disabled>Select One</option>
-                            <option value="1">Active</option>
-                            <option value="0">Inactive</option>
-                        </select>
+                @can('change-menu-status')
+                    <div class="col-sm-4">
+                        <div class="">
+                            <label for="headerStatus"
+                                class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Status
+                            </label>
+                            <select id="status" name="status" class="form-control form-select">
+                                <option value="" disabled>Select One</option>
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
+                @endcan
                 <div class="col-sm-12">
                     <div class="">
                         <label for="parent" class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Parent
@@ -362,6 +346,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="col-sm-4">
                     <div class="">
                         <label for="editFooter" class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Menu
@@ -377,18 +362,20 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-4">
-                    <div class="">
-                        <label for="status" class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Status
-                        </label>
-                        <select id="editFooterStatus" name="status" class="form-control form-select">
-                            <option value="Select a Class" disabled>Select One</option>
-                            <option value="1">Active</option>
-                            <option value="0">Inactive</option>
-                        </select>
-                    </div>
-                </div>
 
+                @can('change-menu-status')
+                    <div class="col-sm-4">
+                        <div class="">
+                            <label for="status" class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Status
+                            </label>
+                            <select id="editFooterStatus" name="status" class="form-control form-select">
+                                <option value="Select a Class" disabled>Select One</option>
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
+                            </select>
+                        </div>
+                    </div>
+                @endcan
                 <div class="col-sm-12">
                     <div class="">
                         <label for="featuresEditClass"
@@ -478,17 +465,19 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-4">
-                    <div class="">
-                        <label for="status" class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Status
-                        </label>
-                        <select id="editHeaderStatus" name="status" class="form-control form-select">
-                            <option value="Select a Class" disabled>Select One</option>
-                            <option value="1">Active</option>
-                            <option value="0">Inactive</option>
-                        </select>
+                @can('change-menu-status')
+                    <div class="col-sm-4">
+                        <div class="">
+                            <label for="status" class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Status
+                            </label>
+                            <select id="editHeaderStatus" name="status" class="form-control form-select">
+                                <option value="Select a Class" disabled>Select One</option>
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
+                @endcan
 
                 <div class="col-sm-12">
                     <div class="">

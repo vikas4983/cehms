@@ -7,7 +7,7 @@ use Spatie\Permission\Models\Permission as SpatiePermission;
 class Permission extends SpatiePermission
 {
     protected $fillable = ['name', 'guard_name', 'status'];
-
+    protected $guard_name = 'web';
     public function scopeActive($query)
     {
         return $query->where('status', 1);

@@ -23,12 +23,7 @@
                     <span class="text-secondary-light">/ General</span>
                 </div>
             </div>
-            {{-- <button type="button" class="my-sidebar-btn btn btn-primary-600 d-flex align-items-center gap-6">
-                <span class="d-flex text-md">
-                    <i class="ri-add-large-line"></i>
-                </span>
-                Add General
-            </button> --}}
+
         </div>
         @include('alerts.alert')
         <div class="card h-100 p-0 radius-12 overflow-hidden">
@@ -248,7 +243,7 @@
                                     <div class="hover-zoom">
                                         @if (!empty($setting->favicon))
                                             <img src="{{ asset('storage/' . $setting->favicon) }}"
-                                            style="width:50px; height:50px;" alt="">
+                                                style="width:50px; height:50px;" alt="">
                                         @endif
                                     </div>
                                 </div>
@@ -268,7 +263,7 @@
                                     <div class="hover-zoom">
                                         @if (!empty($setting->logo))
                                             <img src="{{ asset('storage/' . $setting->logo) }}"
-                                            style="width:50px; height:50px;" alt="">
+                                                style="width:50px; height:50px;" alt="">
                                         @endif
                                     </div>
                                 </div>

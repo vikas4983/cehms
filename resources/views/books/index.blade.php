@@ -13,12 +13,10 @@
                 <div class="">
                     <a href="{{ route('dashboard') }}"
                         class="text-secondary-light hover-text-primary hover-underline">Dashboard </a>
-                    <a href="javascript:void(0)" class="text-secondary-light hover-text-primary hover-underline d-none"> /
-                        Book</a>
                     <span class="text-secondary-light">/ Book List</span>
                 </div>
             </div>
-            @can('create book')
+            @can('create-book')
                 <a href="{{ route('books.create') }}" class="btn btn-primary-600 d-flex align-items-center gap-6 ">
                     <span class="d-flex text-md">
                         <i class="ri-add-large-line"></i>
@@ -56,7 +54,11 @@
                                     <th scope="col">Book Name</th>
                                     <th scope="col">Publisher</th>
                                     <th scope="col">Image</th>
-                                    <th scope="col">Book</th>
+
+                                    <th scope="col"> @can('download-book')
+                                            Book
+                                        @endcan
+                                    </th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Action</th>
                                 </tr>
@@ -73,7 +75,32 @@
                                             </div>
                                         </td>
                                         <td>{{ $book->name }}</td>
-                                        <td>{{ Str::limit($book->publisher, 20) }}</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="text-primary-light text-xl"
+                                                    data-bs-toggle="dropdown" data-bs-display="static"
+                                                    aria-expanded="false">
+                                                    <iconify-icon icon="tabler:dots-vertical"></iconify-icon>
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-menu-lg-end border p-12">
+
+                                                    @can('edit-book')
+                                                        <li>
+                                                            <x-button.edit-button-component :route="route('books.edit', $book->id)" />
+
+                                                        </li>
+                                                    @endcan
+                                                    @can('delete-book')
+                                                        <li>
+                                                            <x-button.delete-button-component :route="route('books.destroy', $book->id)"
+                                                                :id="$book->id" />
+                                                        </li>
+                                                    @endcan
+
+                                                </ul>
+                                            </div>
+                                            {{ Str::limit($book->publisher, 20) }}
+                                        </td>
                                         <td>
                                             @if (!empty($book->image))
                                                 <a href="{{ asset('storage/' . $book->image) }}" target="_blank">
@@ -82,10 +109,13 @@
                                             @endif
                                         </td>
                                         <td>
-                                            @if (!empty($book->pdf))
-                                                <a href="{{ route('book.view', ['path' => $book->pdf]) }}"
-                                                    target="_blank">Download</a>
-                                            @endif
+
+                                            @can('download-book')
+                                                @if (!empty($book->pdf))
+                                                    <a href="{{ route('book.view', ['path' => $book->pdf]) }}"
+                                                        target="_blank">Download</a>
+                                                @endif
+                                            @endcan
                                         </td>
                                         <td>
                                             @if ($book?->status ?? '' == '1')
@@ -103,19 +133,24 @@
                                                     aria-expanded="false">
                                                     <iconify-icon icon="tabler:dots-vertical"></iconify-icon>
                                                 </button>
-
                                                 <ul class="dropdown-menu dropdown-menu-lg-end border p-12">
+
+                                                    @can('edit-book')
                                                         <li>
                                                             <x-button.edit-button-component :route="route('books.edit', $book->id)" />
 
                                                         </li>
+                                                    @endcan
+                                                    @can('delete-book')
                                                         <li>
                                                             <x-button.delete-button-component :route="route('books.destroy', $book->id)"
                                                                 :id="$book->id" />
                                                         </li>
+                                                    @endcan
 
                                                 </ul>
                                             </div>
+
                                         </td>
                                     </tr>
                                 @empty

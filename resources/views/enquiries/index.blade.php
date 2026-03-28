@@ -1,20 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Enquiries')
 @section('content')
-    <style>
-        .pagination {
-            margin: 0;
-        }
 
-        .pagination li {
-            margin: 0 4px;
-        }
-
-        .pagination .page-link {
-            border-radius: 6px;
-            padding: 6px 12px;
-        }
-    </style>
     <div class="dashboard-main-body">
         <div class="breadcrumb d-flex flex-wrap align-items-center justify-content-between gap-3 mb-24">
             <div class="">
@@ -25,12 +12,14 @@
                     <span class="text-secondary-light">/ Enquiries</span>
                 </div>
             </div>
-            <button type="button" class="my-sidebar-btn btn btn-primary-600 d-flex align-items-center gap-6">
-                <span class="d-flex text-md">
-                    <i class="ri-add-large-line"></i>
-                </span>
-                Add Enquiry
-            </button>
+            @can('create-enquiry')
+                <button type="button" class="my-sidebar-btn btn btn-primary-600 d-flex align-items-center gap-6">
+                    <span class="d-flex text-md">
+                        <i class="ri-add-large-line"></i>
+                    </span>
+                    Add Enquiry
+                </button>
+            @endcan
         </div>
 
         <div class="mt-24">
@@ -105,26 +94,32 @@
                                                     <iconify-icon icon="tabler:dots-vertical"></iconify-icon>
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-lg-end border p-12">
-                                                    <li>
-                                                        <button type="button"
-                                                            class="editBtn edit-sidebar-btn dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6"
-                                                            data-enquiry-id="{{ $enquiry->id }}"
-                                                            data-enquiry-name="{{ $enquiry->name }}"
-                                                            data-enquiry-mobile="{{ $enquiry->mobile }}"
-                                                            data-enquiry-email="{{ $enquiry->email }}">
+                                                    @can('edit-enquiry')
+                                                        <li>
+                                                            <button type="button"
+                                                                class="editBtn edit-sidebar-btn dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6"
+                                                                data-enquiry-id="{{ $enquiry->id }}"
+                                                                data-enquiry-name="{{ $enquiry->name }}"
+                                                                data-enquiry-mobile="{{ $enquiry->mobile }}"
+                                                                data-enquiry-email="{{ $enquiry->email }}">
 
-                                                            <i class="ri-edit-2-line"></i>Edit
-                                                        </button>
-                                                    </li>
-                                                    <li>
-                                                        <button
-                                                            class="dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6"
-                                                            type="button" data-bs-toggle="modal"
-                                                            data-enquiry-id="{{ $enquiry->id }}"
-                                                            data-bs-target="#exampleModalDelete" id="bulkDeleteTrigger">
-                                                            <i class="ri-delete-bin-6-line"></i>Delete
-                                                        </button>
-                                                    </li>
+                                                                <i class="ri-edit-2-line"></i>Edit
+                                                            </button>
+                                                        </li>
+                                                    @endcan
+                                                    @can('delete-enquiry')
+                                                        <li>
+                                                            <button
+                                                                class="dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6"
+                                                                type="button" data-bs-toggle="modal"
+                                                                data-enquiry-id="{{ $enquiry->id }}"
+                                                                data-bs-target="#exampleModalDelete" id="bulkDeleteTrigger">
+                                                                <i class="ri-delete-bin-6-line"></i>Delete
+                                                            </button>
+                                                        </li>
+                                                    @endcan
+
+
                                                 </ul>
                                             </div>
                                         </td>

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'oldStudents')
+@section('title', 'Old Students')
 @section('content')
     <style>
         .pagination {
@@ -18,19 +18,21 @@
     <div class="dashboard-main-body">
         <div class="breadcrumb d-flex flex-wrap align-items-center justify-content-between gap-3 mb-24">
             <div class="">
-                <h1 class="fw-semibold mb-4 h6 text-primary-light"> Old Students </h1>
+                <h1 class="fw-semibold mb-4 h6 text-primary-light">Students </h1>
                 <div class="">
                     <a href="{{ route('dashboard') }}"
                         class="text-secondary-light hover-text-primary hover-underline">Dashboard </a>
-                    <span class="text-secondary-light">/ Old Students</span>
+                    <span class="text-secondary-light">/ Students</span>
                 </div>
             </div>
-            <button type="button" class="my-sidebar-btn btn btn-primary-600 d-flex align-items-center gap-6">
-                <span class="d-flex text-md">
-                    <i class="ri-add-large-line"></i>
-                </span>
-                Add Student
-            </button>
+            @can('create-student-old')
+                <button type="button" class="my-sidebar-btn btn btn-primary-600 d-flex align-items-center gap-6">
+                    <span class="d-flex text-md">
+                        <i class="ri-add-large-line"></i>
+                    </span>
+                    Add Student
+                </button>
+            @endcan
         </div>
 
         <div class="mt-24">
@@ -79,8 +81,49 @@
                                                 <label class="ms-2">{{ $index + 1 }}</label>
                                             </div>
                                         </td>
-                                        <td>{{ $oldStudent->registration_no }}</td>
-                                        <td>{{ $oldStudent->first_name }}</td>
+                                        <td>{{ $oldStudent->registration_no }}
+                                        </td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="text-primary-light text-xl"
+                                                    data-bs-toggle="dropdown" data-bs-display="static"
+                                                    aria-expanded="false">
+                                                    <iconify-icon icon="tabler:dots-vertical"></iconify-icon>
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-menu-lg-end border p-12">
+                                                    @can('edit-student-old')
+                                                        <li>
+
+                                                            <button type="button"
+                                                                class="editBtn edit-sidebar-btn dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6"
+                                                                data-old-student-id="{{ $oldStudent->id }}"
+                                                                data-old-student-registration-no="{{ $oldStudent->registration_no }}"
+                                                                data-old-student-first-name="{{ $oldStudent->first_name }} "
+                                                                data-old-student-last-name="{{ $oldStudent->last_name }}"
+                                                                data-old-student-father-name="{{ $oldStudent->father_name }}"
+                                                                data-old-student-registration-date="{{ $oldStudent->registration_date }}"
+                                                                data-old-student-address="{{ $oldStudent->address }} "
+                                                                data-old-student-valid-form="{{ $oldStudent->valid_form }} "
+                                                                data-old-student-course="{{ $oldStudent->course }} "
+                                                                data-old-student-city="{{ $oldStudent->city }} ">
+                                                                <i class="ri-edit-2-line"></i>Edit
+                                                            </button>
+                                                        </li>
+                                                    @endcan
+                                                    <li>
+                                                        @can('delete-student-old')
+                                                            <button
+                                                                class="dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6"
+                                                                type="button" data-bs-toggle="modal"
+                                                                data-Student-id="{{ $oldStudent->id }}"
+                                                                data-bs-target="#exampleModalDelete" id="bulkDeleteTrigger">
+                                                                <i class="ri-delete-bin-6-line"></i>Delete
+                                                            </button>
+                                                        @endcan
+                                                    </li>
+                                                </ul>
+                                            </div> {{ $oldStudent->first_name }}
+                                        </td>
                                         <td>{{ $oldStudent->last_name }}</td>
                                         <td>{{ $oldStudent->father_name }}</td>
                                         <td>{{ \Carbon\Carbon::parse($oldStudent->registration_date)->format('d M Y') }}
@@ -97,31 +140,35 @@
                                                     <iconify-icon icon="tabler:dots-vertical"></iconify-icon>
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-lg-end border p-12">
-                                                    <li>
+                                                    @can('edit-student-old')
+                                                        <li>
 
-                                                        <button type="button"
-                                                            class="editBtn edit-sidebar-btn dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6"
-                                                            data-old-student-id="{{ $oldStudent->id }}"
-                                                            data-old-student-registration-no="{{ $oldStudent->registration_no }}"
-                                                            data-old-student-first-name="{{ $oldStudent->first_name }} "
-                                                            data-old-student-last-name="{{ $oldStudent->last_name }}"
-                                                            data-old-student-father-name="{{ $oldStudent->father_name }}"
-                                                            data-old-student-registration-date="{{ $oldStudent->registration_date }}"
-                                                            data-old-student-address="{{ $oldStudent->address }} "
-                                                            data-old-student-valid-form="{{ $oldStudent->valid_form }} "
-                                                            data-old-student-course="{{ $oldStudent->course }} "
-                                                            data-old-student-city="{{ $oldStudent->city }} ">
-                                                            <i class="ri-edit-2-line"></i>Edit
-                                                        </button>
-                                                    </li>
+                                                            <button type="button"
+                                                                class="editBtn edit-sidebar-btn dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6"
+                                                                data-old-student-id="{{ $oldStudent->id }}"
+                                                                data-old-student-registration-no="{{ $oldStudent->registration_no }}"
+                                                                data-old-student-first-name="{{ $oldStudent->first_name }} "
+                                                                data-old-student-last-name="{{ $oldStudent->last_name }}"
+                                                                data-old-student-father-name="{{ $oldStudent->father_name }}"
+                                                                data-old-student-registration-date="{{ $oldStudent->registration_date }}"
+                                                                data-old-student-address="{{ $oldStudent->address }} "
+                                                                data-old-student-valid-form="{{ $oldStudent->valid_form }} "
+                                                                data-old-student-course="{{ $oldStudent->course }} "
+                                                                data-old-student-city="{{ $oldStudent->city }} ">
+                                                                <i class="ri-edit-2-line"></i>Edit
+                                                            </button>
+                                                        </li>
+                                                    @endcan
                                                     <li>
-                                                        <button
-                                                            class="dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6"
-                                                            type="button" data-bs-toggle="modal"
-                                                            data-Student-id="{{ $oldStudent->id }}"
-                                                            data-bs-target="#exampleModalDelete" id="bulkDeleteTrigger">
-                                                            <i class="ri-delete-bin-6-line"></i>Delete
-                                                        </button>
+                                                        @can('delete-student-old')
+                                                            <button
+                                                                class="dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6"
+                                                                type="button" data-bs-toggle="modal"
+                                                                data-Student-id="{{ $oldStudent->id }}"
+                                                                data-bs-target="#exampleModalDelete" id="bulkDeleteTrigger">
+                                                                <i class="ri-delete-bin-6-line"></i>Delete
+                                                            </button>
+                                                        @endcan
                                                     </li>
                                                 </ul>
                                             </div>

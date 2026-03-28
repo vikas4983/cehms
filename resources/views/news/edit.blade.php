@@ -8,8 +8,10 @@
                 <div class="">
                     <a href="{{ route('dashboard') }}"
                         class="text-secondary-light hover-text-primary hover-underline">Dashboard </a>
-                    <a href="{{ route('news.index') }}" class="text-secondary-light hover-text-primary hover-underline "> /
-                        News</a>
+                    @can('view-news')
+                        <a href="{{ route('news.index') }}" class="text-secondary-light hover-text-primary hover-underline "> /
+                            News</a>
+                    @endcan
                     <span class="text-secondary-light">/ Edit News</span>
                 </div>
             </div>
@@ -48,29 +50,31 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-sm-3">
-                                    <div class="">
-                                        <label for="status"
-                                            class="text-sm fw-semibold text-primary-light d-inline-block mb-8"><span
-                                                class="text-danger-600">*</span>Status</label>
-                                        <select id="status" name="status"
-                                            class="form-control form-select @error('status') is-invalid @enderror">
-                                            <option value="Select section" disabled>Select Status</option>
-                                            <option value="1"
-                                                {{ old('status', $news->status ?? '') == '1' ? 'selected' : '' }}>Active
-                                            </option>
-                                            <option value="0"
-                                                {{ old('status', $news->status ?? '') == '0' ? 'selected' : '' }}>Inactive
-                                            </option>
+                                @can('change-news-status')
+                                    <div class="col-sm-3">
+                                        <div class="">
+                                            <label for="status"
+                                                class="text-sm fw-semibold text-primary-light d-inline-block mb-8"><span
+                                                    class="text-danger-600">*</span>Status</label>
+                                            <select id="status" name="status"
+                                                class="form-control form-select @error('status') is-invalid @enderror">
+                                                <option value="Select section" disabled>Select Status</option>
+                                                <option value="1"
+                                                    {{ old('status', $news->status ?? '') == '1' ? 'selected' : '' }}>Active
+                                                </option>
+                                                <option value="0"
+                                                    {{ old('status', $news->status ?? '') == '0' ? 'selected' : '' }}>Inactive
+                                                </option>
 
-                                        </select>
-                                        @error('status')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
+                                            </select>
+                                            @error('status')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
                                     </div>
-                                </div>
+                                @endcan
 
                                 <div class=" col-sm-9">
                                     <div class="">
@@ -92,7 +96,7 @@
                                     <div class="">
                                         <label for="file"
                                             class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Upload File
-                                        </label> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                        </label> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                                         &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                                         <a href="{{ asset('storage/' . $news->file) }}" target="_blank"
                                             class="text-sm fw-semibold text-primary-light d-inline-block mb-8">View News</a>

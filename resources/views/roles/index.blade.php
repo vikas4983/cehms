@@ -11,12 +11,14 @@
                     <span class="text-secondary-light">/ Roles</span>
                 </div>
             </div>
-            <button type="button" class="my-sidebar-btn btn btn-primary-600 d-flex align-items-center gap-6">
-                <span class="d-flex text-md">
-                    <i class="ri-add-large-line"></i>
-                </span>
-                Add Role
-            </button>
+            @can('create-role')
+                <button type="button" class="my-sidebar-btn btn btn-primary-600 d-flex align-items-center gap-6">
+                    <span class="d-flex text-md">
+                        <i class="ri-add-large-line"></i>
+                    </span>
+                    Add Role
+                </button>
+            @endcan
         </div>
 
         @include('alerts.alert')
@@ -26,37 +28,6 @@
                     <div
                         class="d-flex align-items-center justify-content-between flex-wrap gap-16 px-20 py-12 border-bottom border-neutral-200">
                         <div class="d-flex flex-wrap align-items-center gap-16">
-                            {{-- <div class="dropdown">
-                                <button type="button"
-                                    class="px-12 py-5-px border border-neutral-300 radius-8 d-flex align-items-center gap-20 "
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    <span class="d-flex align-items-center gap-1 text-secondary-light text-sm">
-                                        <i class="ri-file-upload-line text-md line-height-1"></i>
-                                        Export
-                                    </span>
-                                    <span class="">
-                                        <i class="ri-arrow-down-s-line"></i>
-                                    </span>
-                                </button>
-                                <ul class="dropdown-menu p-12 border bg-base shadow">
-                                    <li>
-                                        <button type="button"
-                                            class="dropdown-item px-16 py-8 rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-10"
-                                            data-bs-toggle="modal" data-bs-target="#exampleModalView">
-                                            <i class="ri-file-3-line"></i>
-                                            PDF
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button type="button"
-                                            class="dropdown-item px-16 py-8 rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-10"
-                                            data-bs-toggle="modal" data-bs-target="#exampleModalEdit">
-                                            <i class="ri-file-excel-line"></i>
-                                            Excel
-                                        </button>
-                                    </li>
-                                </ul>
-                            </div> --}}
                             <form class="navbar-search dt-search m-0">
                                 <input type="text" class="dt-input bg-transparent radius-4" aria-controls="dataTable"
                                     name="search" placeholder="Search...">
@@ -94,7 +65,9 @@
                                     </th>
                                     <th scope="col">Date</th>
                                     <th scope="col">Role Name</th>
-                                    <th scope="col">Permissions</th>
+                                    @can('view-role-permission')
+                                        <th scope="col">Permissions</th>
+                                    @endcan
                                 </tr>
                             </thead>
                             <tbody>
@@ -115,29 +88,36 @@
                                                     <iconify-icon icon="tabler:dots-vertical"></iconify-icon>
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-lg-end border p-12">
-                                                    <li>
-                                                        <button type="button"
-                                                            class="editBtn edit-sidebar-btn dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6"
-                                                            data-role-id="{{ $role->id }}"
-                                                            data-role-name="{{ $role->name }}"
-                                                            data-role-permissions="{{ $role->permissions->pluck('name') }}"
-                                                            data-role-status="{{ $role->status }}">
-                                                            <i class="ri-edit-2-line"></i>Edit
-                                                        </button>
-                                                    </li>
-                                                    <li>
-                                                        <button
-                                                            class="dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6"
-                                                            type="button" data-bs-toggle="modal"
-                                                            data-role-id="{{ $role->id }}"
-                                                            data-bs-target="#exampleModalDelete" id="bulkDeleteTrigger">
-                                                            <i class="ri-delete-bin-6-line"></i>Delete
-                                                        </button>
-                                                    </li>
+                                                    @can('edit-role')
+                                                        <li>
+                                                            <button type="button"
+                                                                class="editBtn edit-sidebar-btn dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6"
+                                                                data-role-id="{{ $role->id }}"
+                                                                data-role-name="{{ $role->name }}"
+                                                                data-role-permissions="{{ $role->permissions->pluck('name') }}"
+                                                                data-role-status="{{ $role->status }}">
+                                                                <i class="ri-edit-2-line"></i>Edit
+                                                            </button>
+                                                        </li>
+                                                    @endcan
+                                                    @can('delete-role')
+                                                        <li>
+                                                            <button
+                                                                class="dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6"
+                                                                type="button" data-bs-toggle="modal"
+                                                                data-role-id="{{ $role->id }}"
+                                                                data-bs-target="#exampleModalDelete" id="bulkDeleteTrigger">
+                                                                <i class="ri-delete-bin-6-line"></i>Delete
+                                                            </button>
+                                                        </li>
+                                                    @endcan
                                                 </ul>
                                             </div> {{ ucfirst($role->name) }}
                                         </td>
-                                        <td>{{ ucwords($role->permissions->pluck('name')->implode(' | ')) }}</td>
+                                        @can('view-role-permission')
+                                            <td>{{ ucwords(Str::limit($role->permissions->pluck('name')->implode(' | '), 100)) }}
+                                            </td>
+                                        @endcan
                                     </tr>
 
                                 @empty
@@ -172,52 +152,56 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6">
-                    <div class="">
-                        <label for="status" class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Status
-                        </label>
-                        <select id="status" name="status" class="form-control form-select">
-                            <option value="Select a Class" disabled>Select One</option>
-                            <option value="1">Active</option>
-                            <option value="0">Inactive</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-sm-12">
-                    <div>
-                        <label
-                            class=" d-flex justify-content-center text-sm fw-semibold text-primary-light d-inline-block mt-2">
-                            Permissions
-                        </label>
-
-                        <div class="form-check mb-2">
-                            <input class="form-check-input allCb" name="permissions[]" type="checkbox">
-                            <label class="form-check-label">&nbsp;
-                                All Permissions
+                @can('change-role-status')
+                    <div class="col-sm-6">
+                        <div class="">
+                            <label for="status" class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Status
                             </label>
+                            <select id="status" name="status" class="form-control form-select">
+                                <option value="Select a Class" disabled>Select One</option>
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
+                            </select>
                         </div>
-                        <div class="d-flex flex-wrap gap-3 mt-2">
-                            @foreach ($groupedPermissions as $group => $permissions)
-                                <div class="col-12 mb-2">
-                                    <span class="fw-bold text-primary">{{ ucfirst($group) }} Permissions</span>
-                                    <div class="d-flex flex-wrap gap-3">
-                                        @foreach ($permissions as $permission)
-                                            <div class="form-check">
-                                                <input type="checkbox" class="singleCb form-check-input  mt-2"
-                                                    name="permissions[]" value="{{ $permission->name }}"> &nbsp;<label
-                                                    class="form-check-label" for="permission{{ $permission->id }}">
-                                                    {{ ucwords($permission->name) }}
-                                                </label>
-                                            </div>
-                                        @endforeach
-
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-
                     </div>
-                </div>
+                @endcan
+                @can('view-role-permission')
+                    <div class="col-sm-12">
+                        <div>
+                            <label
+                                class=" d-flex justify-content-center text-sm fw-semibold text-primary-light d-inline-block mt-2">
+                                Permissions
+                            </label>
+
+                            <div class="form-check mb-2">
+                                <input class="form-check-input allCb" name="permissions[]" type="checkbox">
+                                <label class="form-check-label">&nbsp;
+                                    All Permissions
+                                </label>
+                            </div>
+                            <div class="d-flex flex-wrap gap-3 mt-2">
+                                @foreach ($groupedPermissions as $group => $permissions)
+                                    <div class="col-12 mb-2">
+                                        <span class="fw-bold text-primary">{{ ucfirst($group) }} Permissions</span>
+                                        <div class="d-flex flex-wrap gap-3">
+                                            @foreach ($permissions as $permission)
+                                                <div class="form-check">
+                                                    <input type="checkbox" class="singleCb form-check-input  mt-2"
+                                                        name="permissions[]" value="{{ $permission->name }}"> &nbsp;<label
+                                                        class="form-check-label" for="permission{{ $permission->id }}">
+                                                        {{ ucwords($permission->name) }}
+                                                    </label>
+                                                </div>
+                                            @endforeach
+
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+
+                        </div>
+                    </div>
+                @endcan
 
                 <div class="col-12">
                     <div class="d-flex align-items-center justify-content-center gap-3 mt-8">
@@ -260,63 +244,65 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6">
-                        <div class="">
-                            <label for="status"
-                                class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Status
-                            </label>
-                            <select id="editRoleStatus" name="status" class="form-control form-select">
-                                <option value="Select a Class" disabled>Select One</option>
-                                <option value="1">Active</option>
-                                <option value="0">Inactive</option>
-                            </select>
+                    @can('change-role-status')
+                        <div class="col-sm-6">
+                            <div class="">
+                                <label for="status"
+                                    class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Status
+                                </label>
+                                <select id="editRoleStatus" name="status" class="form-control form-select">
+                                    <option value="Select a Class" disabled>Select One</option>
+                                    <option value="1">Active</option>
+                                    <option value="0">Inactive</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
+                    @endcan
 
                 </div>
-
-                <div class="col-sm-12">
-                    <div>
-                        <label
-                            class=" d-flex justify-content-center text-sm fw-semibold text-primary-light d-inline-block mt-2">
-                            Permissions
-                        </label>
-
-                        <div class="form-check mb-2">
-                            <input class="form-check-input allCb" name="permissions[]" type="checkbox">
-                            <label class="form-check-label ">&nbsp;
-                                All Permissions
+                @can('view-role-permission')
+                    <div class="col-sm-12">
+                        <div>
+                            <label
+                                class=" d-flex justify-content-center text-sm fw-semibold text-primary-light d-inline-block mt-2">
+                                Permissions
                             </label>
-                        </div>
-                        <div class="d-flex flex-wrap gap-3 mt-2">
-                            @foreach ($groupedPermissions as $group => $permissions)
-                                <div class="col-12 mb-2">
-                                    <span class="fw-bold text-primary">{{ ucfirst($group) }} Permissions</span>
 
-                                    <div class="d-flex flex-wrap gap-3">
-                                        @foreach ($permissions as $permission)
-                                            <div class="form-check">
-                                                <input type="checkbox" class="singleCb form-check-input  mt-2"
-                                                    id="permission{{ $permission->id }}" name="permissions[]"
-                                                    value="{{ $permission->name }}"
-                                                    {{ in_array($permission->name, old('permissions', $role->permissions->pluck('name')->toArray())) ? 'checked' : '' }}>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input allCb" type="checkbox">
+                                <label class="form-check-label ">&nbsp;
+                                    All Permissions
+                                </label>
+                            </div>
+                            <div class="d-flex flex-wrap gap-3 mt-2">
+                                @foreach ($groupedPermissions as $group => $permissions)
+                                    <div class="col-12 mb-2">
+                                        <span class="fw-bold text-primary">{{ ucfirst($group) }} Permissions</span>
 
-                                                &nbsp;<label class="form-check-label"
-                                                    for="permission{{ $permission->id }}">
-                                                    {{ ucwords($permission->name) }}
-                                                </label>
+                                        <div class="d-flex flex-wrap gap-3">
+                                            @foreach ($permissions as $permission)
+                                                <div class="form-check">
+                                                    <input type="checkbox" class="singleCb form-check-input  mt-2"
+                                                        id="permission{{ $permission->id }}" name="permissions[]"
+                                                        value="{{ $permission->name }}"
+                                                        {{ in_array($permission->name, old('permissions', $role->permissions->pluck('name')->toArray())) ? 'checked' : '' }}>
 
-                                            </div>
-                                        @endforeach
+                                                    &nbsp;<label class="form-check-label"
+                                                        for="permission{{ $permission->id }}">
+                                                        {{ ucwords($permission->name) }}
+                                                    </label>
 
+                                                </div>
+                                            @endforeach
+
+                                        </div>
                                     </div>
-                                </div>
-                            @endforeach
+                                @endforeach
+                            </div>
+
                         </div>
-
                     </div>
-                </div>
-
+                @endcan
 
                 <div class="col-12">
                     <div class="d-flex align-items-center justify-content-center gap-3 mt-8">

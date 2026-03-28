@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Student - Add')
+@section('title', 'Profile')
 @section('content')
     <div class="dashboard-main-body">
         <div class="breadcrumb d-flex flex-wrap align-items-center justify-content-between gap-3 mb-24">
@@ -40,7 +40,7 @@
                             </p>
                             <p class="mb-0">Admission No: <span class="text-primary-light fw-semibold">10</span> </p> --}}
                             <div class="mt-32 d-flex gap-16 w-100">
-                                @can('change student status')
+                                @can('change-student-status')
                                     @if ($student->status == 1)
                                         <button type="button"
                                             class="btn btn-primary-600 btn border fw-medium   d-flex justify-content-center align-items-center gap-8 flex-grow-1 px-12 py-8 radius-8"
@@ -61,7 +61,7 @@
                                         </button>
                                     @endif
                                 @endcan
-                                @can('edit user')
+                                @can('edit-student')
                                     <a href="{{ auth()->user()->hasRole('admin') ? route('students.edit', $student->id) : route('profile.edit') }}"
                                         class="btn btn-primary-600 border fw-medium border-primary-600 text-md d-flex justify-content-center align-items-center gap-8 flex-grow-1 px-12 py-8 radius-8">
                                         <span class="d-flex text-lg">
@@ -70,7 +70,7 @@
                                         Edit
                                     </a>
                                 @endcan
-                                @can('delete user')
+                                @can('delete-student')
                                     <button type="button"
                                         class="btn btn-primary-600 btn btn-primary-600 border fw-medium border-primary-600 text-md d-flex justify-content-center align-items-center gap-8 flex-grow-1 px-12 py-8 radius-8  "
                                         data-bs-toggle="modal" data-url="{{ route('students.destroy', $student->id) }}"

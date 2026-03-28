@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\NewsCreateRequest;
 use App\Models\News;
+use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -12,6 +13,12 @@ class NewsController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    public static function middleware(): array
+    {
+        return [new Middleware('permission:view-news', ['only' => ['index', 'show']]), new Middleware('permission:create-news', ['only' => ['create', 'store']]), new Middleware('permission:edit-news', ['only' => ['edit', 'update']]), new Middleware('permission:delete-news', ['only' => ['destroy']])];
+    }
+
     public function index()
     {
         $news = News::allNews()->latest()->get();

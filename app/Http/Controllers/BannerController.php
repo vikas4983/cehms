@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\BannerCreateRequest;
 use App\Models\Banner;
 use App\traits\UploadTrait;
+use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
 
 class BannerController extends Controller
@@ -13,6 +14,10 @@ class BannerController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public static function middleware(): array
+    {
+        return [new Middleware('permission:view-banner', ['only' => ['index', 'show']]), new Middleware('permission:create-banner', ['only' => ['create', 'store']]), new Middleware('permission:edit-banner', ['only' => ['edit', 'update']]), new Middleware('permission:delete-banner', ['only' => ['destroy']]), new Middleware('permission:change-banner-status', ['only' => ['bannerStatus']])];
+    }
     public function index()
     {
         $banners = Banner::allBanners()->get();

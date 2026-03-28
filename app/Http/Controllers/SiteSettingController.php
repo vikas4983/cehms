@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\SiteSetting;
 use App\traits\UploadTrait;
+use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -13,6 +14,11 @@ class SiteSettingController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public static function middleware(): array
+    {
+        return [new Middleware('permission:create-siteSetting', ['only' => ['index', 'store']])];
+    }
+
     public function index()
     {
         $setting = SiteSetting::first();

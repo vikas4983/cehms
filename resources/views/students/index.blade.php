@@ -26,24 +26,23 @@
             <div class="">
                 <h1 class="fw-semibold mb-4 h6 text-primary-light">Student List</h1>
                 <div class="">
-                    <a href="index.html" class="text-secondary-light hover-text-primary hover-underline">Dashboard </a>
-                    <a href="javascript:void(0)" class="text-secondary-light hover-text-primary hover-underline d-none"> /
-                        Student</a>
+                    <a href="{{ route('dashboard') }}"
+                        class="text-secondary-light hover-text-primary hover-underline">Dashboard </a>
                     <span class="text-secondary-light">/ Student List</span>
                 </div>
             </div>
-            <a href="{{ route('students.create') }}" class="btn btn-primary-600 d-flex align-items-center gap-6 ">
-                <span class="d-flex text-md">
-                    <i class="ri-add-large-line"></i>
-                </span>
-                Add Student
-            </a>
+            @can('create-student')
+                <a href="{{ route('students.create') }}" class="btn btn-primary-600 d-flex align-items-center gap-6 ">
+                    <span class="d-flex text-md">
+                        <i class="ri-add-large-line"></i>
+                    </span>
+                    Add Student
+                </a>
+            @endcan
         </div>
-
         <div class="mt-24">
             <div class="card h-100">
                 <div class="card-body p-0 dataTable-wrapper">
-
                     <div
                         class="d-flex align-items-center justify-content-between flex-wrap gap-16 px-20 py-12 border-bottom border-neutral-200">
                         <div class="d-flex flex-wrap align-items-center gap-16">
@@ -59,57 +58,58 @@
                                         <i class="ri-arrow-down-s-line"></i>
                                     </span>
                                 </button>
-                                <ul class="dropdown-menu p-12 border bg-base shadow">
+                                @can('download-student-excel')
+                                    <ul class="dropdown-menu p-12 border bg-base shadow">
+                                        <!-- Excel Parent -->
+                                        <li class="dropdown-submenu position-relative">
+                                            <a href="#"
+                                                class="dropdown-item px-16 py-8 rounded d-flex align-items-center justify-content-between">
+                                                <span class="d-flex align-items-center gap-10">
+                                                    <i class="ri-file-excel-line text-success"></i> Excel
+                                                </span>
+                                                <i class="ri-arrow-right-s-line"></i>
+                                            </a>
 
-                                    <!-- Excel Parent -->
-                                    <li class="dropdown-submenu position-relative">
-                                        <a href="#"
-                                            class="dropdown-item px-16 py-8 rounded d-flex align-items-center justify-content-between">
-                                            <span class="d-flex align-items-center gap-10">
-                                                <i class="ri-file-excel-line text-success"></i> Excel
-                                            </span>
-                                            <i class="ri-arrow-right-s-line"></i>
-                                        </a>
+                                            <!-- Excel Submenu -->
+                                            <ul class="dropdown-menu excel-submenu">
+                                                <li>
+                                                    <a data-bs-toggle="modal" data-bs-target="#confirmDownloadModal"
+                                                        data-url="{{ route('inactive.students.export') }}"
+                                                        class="dropdown-item">Inactive Students</a>
+                                                </li>
 
-                                        <!-- Excel Submenu -->
-                                        <ul class="dropdown-menu excel-submenu">
-                                            <li>
-                                                <a data-bs-toggle="modal" data-bs-target="#confirmDownloadModal"
-                                                    data-url="{{ route('inactive.students.export') }}"
-                                                    class="dropdown-item">Inactive Students</a>
-                                            </li>
+                                                <li>
+                                                    <a data-bs-toggle="modal" data-bs-target="#confirmDownloadModal"
+                                                        data-url="{{ route('active.students.export') }}"
+                                                        class="dropdown-item">Active Students</a>
+                                                </li>
 
-                                            <li>
-                                                <a data-bs-toggle="modal" data-bs-target="#confirmDownloadModal"
-                                                    data-url="{{ route('active.students.export') }}"
-                                                    class="dropdown-item">Active Students</a>
-                                            </li>
+                                                <li>
+                                                    <a data-bs-toggle="modal" data-bs-target="#confirmDownloadModal"
+                                                        data-url="{{ route('today.students.export') }}"
+                                                        class="dropdown-item">Daily Students</a>
+                                                </li>
 
-                                            <li>
-                                                <a data-bs-toggle="modal" data-bs-target="#confirmDownloadModal"
-                                                    data-url="{{ route('today.students.export') }}"
-                                                    class="dropdown-item">Daily Students</a>
-                                            </li>
+                                                <li>
+                                                    <a data-bs-toggle="modal" data-bs-target="#confirmDownloadModal"
+                                                        data-url="{{ route('weekly.students.export') }}"
+                                                        class="dropdown-item">Weekly Students</a>
+                                                </li>
 
-                                            <li>
-                                                <a data-bs-toggle="modal" data-bs-target="#confirmDownloadModal"
-                                                    data-url="{{ route('weekly.students.export') }}"
-                                                    class="dropdown-item">Weekly Students</a>
-                                            </li>
+                                                <li>
+                                                    <a data-bs-toggle="modal" data-bs-target="#confirmDownloadModal"
+                                                        data-url="{{ route('monthly.students.export') }}"
+                                                        class="dropdown-item">Monthly Students</a>
+                                                </li>
 
-                                            <li>
-                                                <a data-bs-toggle="modal" data-bs-target="#confirmDownloadModal"
-                                                    data-url="{{ route('monthly.students.export') }}"
-                                                    class="dropdown-item">Monthly Students</a>
-                                            </li>
-
-                                            <li>
-                                                <a data-bs-toggle="modal" data-bs-target="#confirmDownloadModal"
-                                                    data-url="{{ route('yearly.students.export') }}"
-                                                    class="dropdown-item">Yearly Students</a>
-                                            </li>
-                                        </ul>
-                                    </li>
+                                                <li>
+                                                    <a data-bs-toggle="modal" data-bs-target="#confirmDownloadModal"
+                                                        data-url="{{ route('yearly.students.export') }}"
+                                                        class="dropdown-item">Yearly Students</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    @endcan
 
                                 </ul>
                             </div>
@@ -183,21 +183,29 @@
                                                 <iconify-icon icon="tabler:dots-vertical"></iconify-icon>
                                             </button>
                                             <ul class="dropdown-menu dropdown-menu-lg-end border p-12">
-                                                <li>
-                                                    <x-button.edit-button-component :route="route('students.edit', $student->id)" />
+                                                @can('edit-student')
+                                                    <li>
+                                                        <x-button.edit-button-component :route="route('students.edit', $student->id)" />
 
-                                                </li>
-                                                <li>
-                                                    <x-button.delete-button-component :route="route('students.destroy', $student->id)" :id="$student->id" />
-                                                </li>
-                                                <li>
-                                                    <button data-bs-toggle="modal" data-student="{{ $student }}"
-                                                        data-bs-target="#student{{ $student->id }}"
-                                                        class="dropdown-item rounded  text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6">
-                                                        <i class="ri-shield-keyhole-line"></i>
-                                                        Role & Permission
-                                                    </button>
-                                                </li>
+                                                    </li>
+                                                @endcan
+                                                @can('delete-student')
+                                                    <li>
+                                                        <x-button.delete-button-component :route="route('students.destroy', $student->id)" :id="$student->id" />
+                                                    </li>
+                                                @endcan
+                                                @can('permission-assign')
+                                                    <li>
+                                                        <button data-bs-toggle="modal" data-student="{{ $student }}"
+                                                            data-bs-target="#student{{ $student->id }}"
+                                                            class="dropdown-item rounded  text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6">
+                                                            <i class="ri-shield-keyhole-line"></i>
+                                                            Role & Permission
+                                                        </button>
+                                                    </li>
+                                                @endcan
+
+
                                             </ul>
                                         </div>
                                         {{ $student?->practitioner_registration ?? '' }}
@@ -220,21 +228,27 @@
                                                 <iconify-icon icon="tabler:dots-vertical"></iconify-icon>
                                             </button>
                                             <ul class="dropdown-menu dropdown-menu-lg-end border p-12">
-                                                <li>
-                                                    <x-button.edit-button-component :route="route('students.edit', $student->id)" />
+                                                @can('edit-student')
+                                                    <li>
+                                                        <x-button.edit-button-component :route="route('students.edit', $student->id)" />
 
-                                                </li>
-                                                <li>
-                                                    <x-button.delete-button-component :route="route('students.destroy', $student->id)" :id="$student->id" />
-                                                </li>
-                                                <li>
-                                                    <button data-bs-toggle="modal" data-student="{{ $student }}"
-                                                        data-bs-target="#student{{ $student->id }}"
-                                                        class="dropdown-item rounded  text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6">
-                                                        <i class="ri-shield-keyhole-line"></i>
-                                                        Role & Permission
-                                                    </button>
-                                                </li>
+                                                    </li>
+                                                @endcan
+                                                @can('delete-student')
+                                                    <li>
+                                                        <x-button.delete-button-component :route="route('students.destroy', $student->id)" :id="$student->id" />
+                                                    </li>
+                                                @endcan
+                                                @can('permission-assign')
+                                                    <li>
+                                                        <button data-bs-toggle="modal" data-student="{{ $student }}"
+                                                            data-bs-target="#student{{ $student->id }}"
+                                                            class="dropdown-item rounded  text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6">
+                                                            <i class="ri-shield-keyhole-line"></i>
+                                                            Role & Permission
+                                                        </button>
+                                                    </li>
+                                                @endcan
 
                                             </ul>
                                         </div>

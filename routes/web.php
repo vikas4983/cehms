@@ -60,6 +60,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('view-book/{path}', [BookController::class, 'viewBook'])
         ->where('path', '.*')
         ->name('book.view');
+
     Route::post('banner-status', [BannerController::class, 'bannerStatus'])->name('banner.status');
     Route::resource('news', NewsController::class);
     Route::resource('banners', BannerController::class);

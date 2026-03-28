@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CmsCreateRequest;
 use App\Models\Cms;
 use App\traits\UploadTrait;
+use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -14,6 +15,10 @@ class CmsController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public static function middleware(): array
+    {
+        return [new Middleware('permission:view-cms', ['only' => ['index']]), new Middleware('permission:create-cms', ['only' => ['store']]), new Middleware('permission:edit-cms', ['only' => ['update']]), new Middleware('permission:delete-cms', ['only' => ['destroy']])];
+    }
     public function index()
     {
         $cmsPages = Cms::allCms()->get();

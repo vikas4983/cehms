@@ -23,7 +23,7 @@ class StudentController extends Controller
 
     public static function middleware(): array
     {
-        return [new Middleware('permission:view user', only: ['index', 'show']), new Middleware('permission:create user', only: ['create', 'store']), new Middleware('permission:edit user', only: ['edit', 'update']), new Middleware('permission:delete user', only: ['destroy']), new Middleware('permission:change student status', only: ['studentStatus'])];
+        return [new Middleware('permission:view-student', ['only' => ['index', 'show']]), new Middleware('permission:create-student', ['only' => ['create', 'store']]), new Middleware('permission:edit-student', ['only' => ['edit', 'update']]), new Middleware('permission:delete-student', ['only' => ['destroy']]), new Middleware('permission:change-student student', ['only' => ['studentStatus']]), new Middleware('permission:export-student', ['only' => ['exportActiveStudents', 'exportInactiveStudents', 'exportTodayStudents', 'exportWeeklyStudents', 'exportMonthlyStudents', 'exportYearlyStudents']])];
     }
 
     /**
@@ -35,8 +35,9 @@ class StudentController extends Controller
         $permissions = Permission::active()->get();
         $roles = Role::active()->get();
         $groupedPermissions = $permissions->groupBy(function ($permission) {
-            return explode(' ', $permission->name)[1];
+            return explode('-', $permission->name)[1];
         });
+
         return view('students.index', compact('students', 'groupedPermissions', 'roles'));
     }
 
@@ -278,8 +279,9 @@ class StudentController extends Controller
         return Excel::download(new StudentExport($students), 'yearly-students.xlsx');
     }
 
-    public function adminProfile($id){
-         $admin = User::findOrFail($id);
-         return view('students.adminProfile', compact('admin'));
+    public function adminProfile($id)
+    {
+        $admin = User::findOrFail($id);
+        return view('students.adminProfile', compact('admin'));
     }
 }

@@ -153,32 +153,6 @@
         class="overlay bg-black bg-opacity-50 w-100 h-100 position-fixed z-9 visibility-hidden opacity-0 duration-300">
     </div>
     <aside class="sidebar">
-        <button type="button" class="sidebar-close-btn">
-            <iconify-icon icon="radix-icons:cross-2"></iconify-icon>
-        </button>
-        <div>
-            <div class="sidebar-logo d-flex flex-column align-items-center position-relative">
-
-                <a href="{{ route('dashboard') }}" class="text-center">
-                    <img src="{{ $setting->logo ? asset('storage/' . $setting->logo) : asset('assets/images/default-logo.png') }}"
-                        alt="site logo" class="light-logo img-fluid">
-
-                    <img src="{{ $setting->logo ? asset('storage/' . $setting->logo) : asset('assets/images/default-logo.png') }}"
-                        alt="site logo" class="dark-logo img-fluid">
-
-                    <img src="{{ $setting->logo ? asset('storage/' . $setting->logo) : asset('assets/images/default-logo.png') }}"
-                        alt="site logo" class="logo-icon img-fluid">
-                </a>
-
-                <button type="button"
-                    class="text-xxl d-xl-flex d-none line-height-1 sidebar-toggle text-neutral-500 position-absolute end-0 top-50 translate-middle-y"
-                    aria-label="Collapse Sidebar">
-                    <i class="ri-contract-left-line"></i>
-                </button>
-
-            </div>
-        </div>
-
         <!-- User Info start -->
         <div class="mx-16 py-12">
             <div class="dropdown profile-dropdown">
@@ -202,136 +176,110 @@
                         <i class="ri-arrow-right-s-line"></i>
                     </span>
                 </button>
-                @role('admin')
-                    <ul class="dropdown-menu dropdown-menu-lg-end border p-12">
-                        <li>
-                            <a href="{{ route('profile.admin', auth()->user()->id) }}"
-                                class="dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6">
-                                <i class="ri-user-3-line"></i>
-                                My Profile
-                            </a>
-                        </li>
-                        <li>
-                            <a id="logOut" style="cursor: pointer"
-                                class="dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6">
-                                <i class="ri-shut-down-line"></i>
-                                Log Out
-                            </a>
-                        </li>
-                    </ul>
-                @endrole
-                @role('user')
-                    <ul class="dropdown-menu dropdown-menu-lg-end border p-12">
-                        <li>
-                            <a href="{{ route('my.profile') }}"
-                                class="dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6">
-                                <i class="ri-user-3-line"></i>
-                                My Profile
-                            </a>
-                        </li>
-                        <li>
-                            <a id="logOut" style="cursor: pointer"
-                                class="dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6">
-                                <i class="ri-shut-down-line"></i>
-                                Log Out
-                            </a>
-                        </li>
-                    </ul>
-                @endrole
+
+                <!-- Dashboard -->
+                <ul class="dropdown-menu dropdown-menu-lg-end border p-12">
+                    <li>
+                        <a href="{{ auth()->user()->hasROle('user') ? route('my.profile') : route('profile.admin', auth()->user()->id) }}"
+                            class="dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6">
+                            <i class="ri-user-3-line"></i>
+                            My Profile
+                        </a>
+                    </li>
+                    <li>
+                        <a id="logOut" style="cursor: pointer"
+                            class="dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6">
+                            <i class="ri-shut-down-line"></i>
+                            Log Out
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
+
         <!-- User Info end -->
 
         <div class="sidebar-menu-area">
             <ul class="sidebar-menu" id="sidebar-menu">
-                @role('user')
-                    <li class="dropdown">
-                        @can('view user')
-                            <a href="#">
-                                <i class="ri-home-4-line"></i>
-                                <span>Dashboard </span>
-                            </a>
-                        @endcan
-                        <ul class="sidebar-submenu">
-                            @can('view user')
-                                <li>
-                                    <a href="{{ route('dashboard') }}">
-                                        <i class="ri-circle-fill circle-icon w-auto"></i>
-                                        Students
-                                    </a>
-                                </li>
-                            @endcan
-                        </ul>
-                    </li>
-                @endrole
-                @role('admin')
-                    <li class="dropdown">
-                        <a href="{{ route('dashboard') }}">
-                            <i class="ri-home-4-line"></i>
-                            <span>Dashboard </span>
-                        </a>
-                    </li>
+                <li>
+                    <a href="{{ route('dashboard') }}">
+                        <i class="ri-home-4-line"></i>
+                        <span>Dashboard </span>
+                    </a>
+                </li>
+                @if (!auth()->user()->hasRole('user'))
                     <li class="dropdown">
                         <a href="javascript:void(0)">
                             <i class="ri-graduation-cap-line"></i>
                             <span>Students</span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li>
-                                <a href="{{ route('students.create') }}">
-                                    <i class="ri-circle-fill circle-icon w-auto"></i>
-                                    Add New Student
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('students.index') }}">
-                                    <i class="ri-circle-fill circle-icon w-auto"></i>
-                                    Student List
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('inactive.students') }}">
-                                    <i class="ri-circle-fill circle-icon w-auto"></i>
-                                    Suspend Students
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('trash.students') }}">
-                                    <i class="ri-circle-fill circle-icon w-auto"></i> Trash Students
-                                </a>
-                            </li>
+                            @can('create-student')
+                                <li>
+                                    <a href="{{ route('students.create') }}">
+                                        <i class="ri-circle-fill circle-icon w-auto"></i>
+                                        Add New Student
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('view-student')
+                                <li>
+                                    <a href="{{ route('students.index') }}">
+                                        <i class="ri-circle-fill circle-icon w-auto"></i>
+                                        Student List
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('inactive.students') }}">
+                                        <i class="ri-circle-fill circle-icon w-auto"></i>
+                                        Suspend Students
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('delete-student')
+                                <li>
+                                    <a href="{{ route('trash.students') }}">
+                                        <i class="ri-circle-fill circle-icon w-auto"></i> Trash Students
+                                    </a>
+                                </li>
+                            @endcan
                         </ul>
                     </li>
-                    <li>
-                        <a href="{{ route('oldStudents.index') }}">
-                            <i class="ri-graduation-cap-line"></i> Old Students
-                        </a>
-                    </li>
+                    @can('view-student-old')
+                        <li>
+                            <a href="{{ route('oldStudents.index') }}">
+                                <i class="ri-graduation-cap-line"></i> Old Students
+                            </a>
+                        </li>
+                    @endcan
                     <li class="dropdown">
                         <a href="javascript:void(0)">
                             <i class="ri-book-line"></i>
                             <span>Books</span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li>
-                                <a href="{{ route('books.create') }}">
-                                    <i class="ri-circle-fill circle-icon w-auto"></i>
-                                    Add New Book
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('books.index') }}">
-                                    <i class="ri-circle-fill circle-icon w-auto"></i>
-                                    Book List
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('book.status') }}">
-                                    <i class="ri-circle-fill circle-icon w-auto"></i>
-                                    Unpublish Book
-                                </a>
-                            </li>
-
+                            @can('create-book')
+                                <li>
+                                    <a href="{{ route('books.create') }}">
+                                        <i class="ri-circle-fill circle-icon w-auto"></i>
+                                        Add New Book
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('view-book')
+                                <li>
+                                    <a href="{{ route('books.index') }}">
+                                        <i class="ri-circle-fill circle-icon w-auto"></i>
+                                        Book List
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('book.status') }}">
+                                        <i class="ri-circle-fill circle-icon w-auto"></i>
+                                        Unpublish Book
+                                    </a>
+                                </li>
+                            @endcan
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -340,55 +288,71 @@
                             <span>News</span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li>
-                                <a href="{{ route('news.create') }}">
-                                    <i class="ri-circle-fill circle-icon w-auto"></i>
-                                    Add New News
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('news.index') }}">
-                                    <i class="ri-circle-fill circle-icon w-auto"></i>
-                                    News List
-                                </a>
-                            </li>
+                            @can('create-news')
+                                <li>
+                                    <a href="{{ route('news.create') }}">
+                                        <i class="ri-circle-fill circle-icon w-auto"></i>
+                                        Add New News
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('view-news')
+                                <li>
+                                    <a href="{{ route('news.index') }}">
+                                        <i class="ri-circle-fill circle-icon w-auto"></i>
+                                        News List
+                                    </a>
+                                </li>
+                            @endcan
                         </ul>
                     </li>
                     <li>
-                        <a href="{{ route('medicines.index') }}">
-                            <i class="ri-capsule-line"></i>
-                            <span>Medicines</span>
-                        </a>
+                        @can('view-medicine')
+                            <a href="{{ route('medicines.index') }}">
+                                <i class="ri-capsule-line"></i>
+                                <span>Medicines</span>
+                            </a>
+                        @endcan
                     </li>
                     <li>
-                        <a href="{{ route('testimonials.index') }}">
-                            <i class="ri-chat-quote-line"></i>
-                            <span>Testimonials</span>
-                        </a>
+                        @can('view-testimonial')
+                            <a href="{{ route('testimonials.index') }}">
+                                <i class="ri-chat-quote-line"></i>
+                                <span>Testimonials</span>
+                            </a>
+                        @endcan
                     </li>
                     <li>
-                        <a href="{{ route('enquiries.index') }}">
-                            <i class="ri-file-list-line"></i>
-                            <span>Enquiries</span>
-                        </a>
+                        @can('view-enquiry')
+                            <a href="{{ route('enquiries.index') }}">
+                                <i class="ri-file-list-line"></i>
+                                <span>Enquiries</span>
+                            </a>
+                        @endcan
                     </li>
                     <li>
-                        <a href="{{ route('roles.index') }}">
-                            <i class="ri-user-follow-line"></i>
-                            <span>Roles</span>
-                        </a>
+                        @can('view-role')
+                            <a href="{{ route('roles.index') }}">
+                                <i class="ri-user-follow-line"></i>
+                                <span>Roles</span>
+                            </a>
+                        @endcan
                     </li>
                     <li>
-                        <a href="{{ route('permissions.index') }}">
-                            <i class="ri-macbook-line"></i>
-                            <span>Permissions</span>
-                        </a>
+                        @can('view-permission')
+                            <a href="{{ route('permissions.index') }}">
+                                <i class="ri-macbook-line"></i>
+                                <span>Permissions</span>
+                            </a>
+                        @endcan
                     </li>
                     <li>
-                        <a href="{{ route('menus.index') }}">
-                            <i class="ri-menu-line"></i>
-                            <span>Menus</span>
-                        </a>
+                        @can('view-menu')
+                            <a href="{{ route('menus.index') }}">
+                                <i class="ri-menu-line"></i>
+                                <span>Menus</span>
+                            </a>
+                        @endcan
                     </li>
                     <li class="dropdown">
                         <a href="javascript:void(0)">
@@ -396,28 +360,34 @@
                             <span>Settings</span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li>
-                                <a href="{{ route('siteSettings.index') }}">
-                                    <i class="ri-circle-fill circle-icon w-auto"></i>
-                                    General
-                                </a>
-                            </li>
+                            @can('create-sitesetting')
+                                <li>
+                                    <a href="{{ route('siteSettings.index') }}">
+                                        <i class="ri-circle-fill circle-icon w-auto"></i>
+                                        General
+                                    </a>
+                                </li>
+                            @endcan
 
-                            <li>
-                                <a href="{{ route('banners.index') }}">
-                                    <i class="ri-circle-fill circle-icon w-auto"></i>
-                                    Banners
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('cms.index') }}">
-                                    <i class="ri-circle-fill circle-icon w-auto"></i>
-                                    Cms
-                                </a>
-                            </li>
+                            @can('view-banner')
+                                <li>
+                                    <a href="{{ route('banners.index') }}">
+                                        <i class="ri-circle-fill circle-icon w-auto"></i>
+                                        Banners
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('view-cms')
+                                <li>
+                                    <a href="{{ route('cms.index') }}">
+                                        <i class="ri-circle-fill circle-icon w-auto"></i>
+                                        Cms
+                                    </a>
+                                </li>
+                            @endcan
                         </ul>
                     </li>
-                @endrole('admin')
+                @endif
             </ul>
         </div>
     </aside>
@@ -454,7 +424,7 @@
                                 <div class="max-h-400-px overflow-y-auto scroll-sm pe-8">
 
                                     <li>
-                                        <a href="{{ route('profile.admin', auth()->user()->id) }}"
+                                        <a href="{{ auth()->user()->hasROle('user') ? route('my.profile') : route('profile.admin', auth()->user()->id) }}"
                                             class="dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6">
                                             <i class="ri-user-3-line"></i>
                                             My Profile
@@ -966,36 +936,6 @@
             });
         });
     </script> --}}
-
-    <script>
-        // document.addEventListener('change', function(e) {
-        //     // ALL checkbox
-        //     if (e.target.matches('.allCb')) {
-
-        //         const parent = e.target.closest('.modal') || document;
-        //         const singles = parent.querySelectorAll('.singleCb');
-
-        //         singles.forEach(cb => {
-        //             cb.checked = e.target.checked;
-        //         });
-        //     }
-
-        //     // SINGLE checkbox
-        //     if (e.target.matches('.singleCb')) {
-        //         const parent = e.target.closest('.modal') || document;
-        //         const allCb = parent.querySelector('.allCb');
-        //         const singles = parent.querySelectorAll('.singleCb');
-
-        //         const allChecked = [...singles].every(cb => cb.checked);
-
-        //         if (allCb) {
-        //             allCb.checked = allChecked;
-        //         }
-        //     }
-
-        // });
-    </script>
-
 
 </body>
 

@@ -1,4 +1,3 @@
-
 <div class="p-0 result table-responsive">
     <table class="table bordered-table mb-0 " id="dataTable" data-page-length='10'>
         <thead>
@@ -48,21 +47,27 @@
                             <iconify-icon icon="tabler:dots-vertical"></iconify-icon>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-lg-end border p-12">
-                            <li>
-                                <x-button.edit-button-component :route="route('students.edit', $student->id)" />
+                            @can('edit-student')
+                                <li>
+                                    <x-button.edit-button-component :route="route('students.edit', $student->id)" />
 
-                            </li>
-                            <li>
-                                <x-button.delete-button-component :route="route('students.destroy', $student->id)" :id="$student->id" />
-                            </li>
-                            <li>
-                                <button data-bs-toggle="modal" data-student="{{ $student }}"
-                                    data-bs-target="#student{{ $student->id }}"
-                                    class="dropdown-item rounded  text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6">
-                                    <i class="ri-shield-keyhole-line"></i>
-                                    Role & Permission
-                                </button>
-                            </li>
+                                </li>
+                            @endcan
+                            @can('delete-student')
+                                <li>
+                                    <x-button.delete-button-component :route="route('students.destroy', $student->id)" :id="$student->id" />
+                                </li>
+                            @endcan
+                            @can('permission-assign')
+                                <li>
+                                    <button data-bs-toggle="modal" data-student="{{ $student }}"
+                                        data-bs-target="#student{{ $student->id }}"
+                                        class="dropdown-item rounded  text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6">
+                                        <i class="ri-shield-keyhole-line"></i>
+                                        Role & Permission
+                                    </button>
+                                </li>
+                            @endcan
                         </ul>
                     </div>
                     {{ $student?->practitioner_registration ?? '' }}
@@ -85,22 +90,28 @@
                             <iconify-icon icon="tabler:dots-vertical"></iconify-icon>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-lg-end border p-12">
-                            <li>
-                                <x-button.edit-button-component :route="route('students.edit', $student->id)" />
+                            @can('edit-student')
+                                <li>
+                                    <x-button.edit-button-component :route="route('students.edit', $student->id)" />
 
-                            </li>
-                            <li>
-                                <x-button.delete-button-component :route="route('students.destroy', $student->id)" :id="$student->id" />
-                            </li>
-                            <li>
-                                <button data-bs-toggle="modal" data-student="{{ $student }}"
-                                    data-bs-target="#student{{ $student->id }}"
-                                    class="dropdown-item rounded  text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6">
-                                    <i class="ri-shield-keyhole-line"></i>
-                                    Role & Permission
-                                </button>
-                            </li>
- </ul>
+                                </li>
+                            @endcan
+                            @can('delete-student')
+                                <li>
+                                    <x-button.delete-button-component :route="route('students.destroy', $student->id)" :id="$student->id" />
+                                </li>
+                            @endcan
+                            @can('permission-assign')
+                                <li>
+                                    <button data-bs-toggle="modal" data-student="{{ $student }}"
+                                        data-bs-target="#student{{ $student->id }}"
+                                        class="dropdown-item rounded  text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6">
+                                        <i class="ri-shield-keyhole-line"></i>
+                                        Role & Permission
+                                    </button>
+                                </li>
+                            @endcan
+                        </ul>
                         <x-assign-permission-component :groupedPermissions="$groupedPermissions" :student="$student" :roles="$roles" />
                     </div>
                 </td>

@@ -48,50 +48,55 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class=" col-sm-3">
-                                    <div class="">
-                                        <label for="image"
-                                            class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Book Image
-                                        </label> &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
-                                        <label class="text-end">
-                                            @if (!empty($book->image))
-                                                <a href="{{ asset('storage/' . $book->image) }}" target="_blank"
-                                                    class="text-sm fw-semibold text-primary-light d-inline-block mb-2">
-                                                    View
-                                                </a>
+                                @can('change-book-image')
+                                    <div class=" col-sm-3">
+                                        <div class="">
+                                            <label for="image"
+                                                class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Book Image
+                                            </label> &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                                            &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <label class="text-end">
+                                                @if (!empty($book->image))
+                                                    <a href="{{ asset('storage/' . $book->image) }}" target="_blank"
+                                                        class="text-sm fw-semibold text-primary-light d-inline-block mb-2">
+                                                        View
+                                                    </a>
                                                 @endif
-                                       </label>
-                                        <input type="file" name="image" value="{{ old('image') }}"
-                                            class="form-control @error('image') is-invalid @enderror" id="image"
-                                            placeholder="Enter book image" >
-                                        @error('image')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
+                                            </label>
+                                            <input type="file" name="image" value="{{ old('image') }}"
+                                                class="form-control @error('image') is-invalid @enderror" id="image"
+                                                placeholder="Enter book image">
+                                            @error('image')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
                                     </div>
-                                </div>
-                                <div class=" col-sm-3">
-                                    <div class="">
-                                        <label for="pdf"
-                                            class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Upload Pdf
-                                            Book
-                                            <span class="text-danger-600">*</span> </label>
-                                        <input type="file" name="pdf"
-                                            class="form-control @error('pdf') is-invalid @enderror" id="pdf">
-                                        @error('pdf')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
+                                @endcan
+                                @can('upload-book')
+                                    <div class=" col-sm-3">
+                                        <div class="">
+                                            <label for="pdf"
+                                                class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Upload Pdf
+                                                Book
+                                                <span class="text-danger-600">*</span> </label>
+                                            <input type="file" name="pdf"
+                                                class="form-control @error('pdf') is-invalid @enderror" id="pdf">
+                                            @error('pdf')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
                                     </div>
-                                </div>
+                                @endcan
                                 <div class=" col-sm-6">
                                     <div class="">
                                         <label for="publisher"
                                             class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Publisher
                                             <span class="text-danger-600">*</span> </label>
-                                        <input type="text" name="publisher" value="{{ $book?->publisher ?? '' }}"
+                                        <input type="text" name="publisher" value="{{ $book->publisher }}"
                                             class="form-control @error('publisher') is-invalid @enderror"
                                             placeholder="Enter publisher">
                                         @error('publisher')
@@ -101,29 +106,29 @@
                                         @enderror
                                     </div>
                                 </div>
+                                @can('change-book-status')
+                                    <div class="col-sm-6">
+                                        <div class="">
+                                            <label for="status"
+                                                class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Status</label>
+                                            <span class="text-danger-600">*</span>
+                                            <select id="status" name="status"
+                                                class="form-control form-select @error('status') is-invalid @enderror">
+                                                @php $status = old('status', $book->status); @endphp
+                                                <option value="Select section" disabled>Select Status</option>
+                                                <option value="1" {{ $status == 1 ? 'selected' : '' }}>Active</option>
+                                                <option value="0" {{ $status == 0 ? 'selected' : '' }}>Inactive</option>
 
-                                <div class="col-sm-6">
-                                    <div class="">
-                                        <label for="status"
-                                            class="text-sm fw-semibold text-primary-light d-inline-block mb-8"><span
-                                                class="text-danger-600">*</span>Status</label>
-                                        <select id="status" name="status"
-                                            class="form-control form-select @error('status') is-invalid @enderror">
-                                            <option value="Select section" disabled>Select Status</option>
-                                            <option value="1"
-                                                {{ old('status', $book->status ?? '') == 1 ? 'selected' : '' }}>Active
-                                            </option>
-                                            <option value="0"
-                                                {{ old('status', $book->status ?? '') == 0 ? 'selected' : '' }}>Inactive
-                                            </option>
-                                        </select>
-                                        @error('status')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
+                                            </select>
+                                            @error('status')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
                                     </div>
-                                </div>
+                                @endcan
+
                                 <div class="col-12">
                                     <div class="d-flex align-items-center justify-content-center gap-3 mt-8">
                                         <button type="reset"

@@ -26,12 +26,10 @@ trait AssignRoleOrPermission
             $requiredRoles = $data['roles'] ?? [];
             $user = User::findOrFail($data['studentId']);
         }
-
         $permissions = Permission::active()->whereIn('name', $requiredPermissions)->pluck('name')->toArray();
-
         $roles = Role::active()->whereIn('name', $requiredRoles)->pluck('name')->toArray();
-        $user->syncRoles($roles);
         $user->syncPermissions($permissions);
+        $user->syncRoles($roles);
         return;
     }
 }

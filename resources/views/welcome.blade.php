@@ -29,10 +29,9 @@
                                                 : asset('assets/images/male-avtar.png')) }}"
                                             alt="User Image" class="rounded-circle object-fit-cover">
                                     </span>
-                                    <h6 class="text-white">{{ auth()->user()->name ?? '' }}</h6>
+                                    <h6 class="text-white">{{ auth()->user() ? ucfirst(auth()->user()->name) : '' }}</h6>
                                     <span
                                         class="text-white text-lg d-block">{{ ucfirst($user->getRoleNames()->first()) ?? '' }}</span>
-
                                     @can('edit user')
                                         <div class="mt-12">
                                             <a href="{{ route('profile.edit') }}"

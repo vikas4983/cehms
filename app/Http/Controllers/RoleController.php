@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Permission;
 use App\Models\Permission as ModelsPermission;
 use App\Models\Role;
+use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -15,12 +16,16 @@ class RoleController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public static function middleware(): array
+    {
+        return [new Middleware('permission:view-role', ['only' => ['index', 'show']]), new Middleware('permission:create-role', ['only' => ['create', 'store']]), new Middleware('permission:edit-role', ['only' => ['edit', 'update']]), new Middleware('permission:delete-role', ['only' => ['destroy']])];
+    }
     public function index()
     {
         $roles = Role::active()->get();
         $permissions = Permission::active()->get();
         $groupedPermissions = $permissions->groupBy(function ($permission) {
-            return explode(' ', $permission->name)[1];
+            return explode('-', $permission->name)[1];
         });
 
         return view('roles.index', compact('roles', 'groupedPermissions', 'permissions'));
@@ -86,19 +91,9 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
-         $permissions = array_filter((array) $request->permissions);
-        if (empty($permissions)) {
-            $role->update($request->all());
-            return redirect()->back()->with('success', 'Role name & status has been updated successfully');
-        } else {
-            if (in_array('all', $permissions)) {
-                $role->syncPermissions(Permission::all());
-            } else {
-                $role->syncPermissions($permissions);
-            }
-            $role->update($request->all());
-        }
-
+        $permissions = collect((array) $request->permissions)->filter();
+        $role->syncPermissions($permissions);
+        $role->update(['name' => $request->name, 'status' => $request->status, 'guard_name' => 'web']);
         return redirect()->back()->with('success', 'Role has been updated successfully');
     }
 

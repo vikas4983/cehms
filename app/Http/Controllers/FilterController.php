@@ -60,7 +60,7 @@ class FilterController extends Controller
                 $roles = Role::active()->get();
                 $permissions = Permission::active()->get();
                 $groupedPermissions = $permissions->groupBy(function ($permission) {
-                    return explode(' ', $permission->name)[1];
+                    return explode('-', $permission->name)[1];
                 });
                 $result = view('students.result', compact('data', 'groupedPermissions', 'roles'))->render();
             }

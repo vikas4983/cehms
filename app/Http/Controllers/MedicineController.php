@@ -4,10 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\MedicineCreateRequest;
 use App\Models\Medicine;
+use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
 
 class MedicineController extends Controller
 {
+    public static function middleware(): array
+    {
+        return [new Middleware('permission:view-medicine', ['only' => ['index', 'show']]), new Middleware('permission:create-medicine', ['only' => ['create', 'store']]), new Middleware('permission:edit-medicine', ['only' => ['edit', 'update']]), new Middleware('permission:delete-medicine', ['only' => ['destroy']])];
+    }
+
     /**
      * Display a listing of the resource.
      */

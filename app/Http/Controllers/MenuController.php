@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Menu;
 use App\Models\SiteSetting;
+use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
 
 class MenuController extends Controller
@@ -11,6 +12,10 @@ class MenuController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public static function middleware(): array
+    {
+        return [new Middleware('permission:view-menu', ['only' => ['index', 'show']]), new Middleware('permission:create-menu', ['only' => ['create', 'store']]), new Middleware('permission:edit-menu', ['only' => ['edit', 'update']]), new Middleware('permission:delete-menu', ['only' => ['destroy']])];
+    }
     public function index()
     {
         $headers = Menu::header()->orderByDesc('status')->get();

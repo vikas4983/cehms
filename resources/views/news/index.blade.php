@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Add - News')
+@section('title', 'News')
 @section('content')
     <style>
         table.dataTable {
@@ -17,12 +17,14 @@
                     <span class="text-secondary-light">/ News List</span>
                 </div>
             </div>
-            <a href="{{ route('news.create') }}" class="btn btn-primary-600 d-flex align-items-center gap-6 ">
-                <span class="d-flex text-md">
-                    <i class="ri-add-large-line"></i>
-                </span>
-                Add News
-            </a>
+            @can('create-news')
+                <a href="{{ route('news.create') }}" class="btn btn-primary-600 d-flex align-items-center gap-6 ">
+                    <span class="d-flex text-md">
+                        <i class="ri-add-large-line"></i>
+                    </span>
+                    Add News
+                </a>
+            @endcan
         </div>
 
         <div class="mt-24">
@@ -206,16 +208,18 @@
                                                     aria-expanded="false">
                                                     <iconify-icon icon="tabler:dots-vertical"></iconify-icon>
                                                 </button>
-
                                                 <ul class="dropdown-menu dropdown-menu-lg-end border p-12">
-                                                    <li>
-                                                        <x-button.edit-button-component :route="route('news.edit', $item->id)" />
-                                                    </li>
-                                                    <li>
-                                                        <x-button.delete-button-component :route="route('news.destroy', $item?->id ?? '')"
-                                                            :id="$item->id" />
-                                                    </li>
-
+                                                    @can('edit-news')
+                                                        <li>
+                                                            <x-button.edit-button-component :route="route('news.edit', $item->id)" />
+                                                        </li>
+                                                    @endcan
+                                                    @can('delete-news')
+                                                        <li>
+                                                            <x-button.delete-button-component :route="route('news.destroy', $item?->id ?? '')"
+                                                                :id="$item->id" />
+                                                        </li>
+                                                    @endcan
                                                 </ul>
                                             </div>
                                         </td>

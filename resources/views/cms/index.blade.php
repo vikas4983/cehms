@@ -34,27 +34,33 @@
                                                 <iconify-icon icon="tabler:dots-vertical"></iconify-icon>
                                             </button>
                                             <ul class="dropdown-menu dropdown-menu-lg-end border p-12">
-                                                <li>
-                                                    <button type="button"
-                                                        class="editBtn edit-sidebar-btn dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6"
-                                                        data-cms-id="{{ $cms->id }}"
-                                                        data-cms-title="{{ $cms->title }}"
-                                                        data-cms-content="{{ $cms->content }}"
-                                                        data-cms-meta-title="{{ $cms->meta_title }}"
-                                                        data-cms-meta-description="{{ $cms->meta_description }}"
-                                                        data-cms-status="{{ $cms->status }}">
-                                                        <i class="ri-edit-2-line"></i>Edit
-                                                    </button>
-                                                </li>
-                                                <li>
-                                                    <button
-                                                        class="dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6"
-                                                        type="button" data-bs-toggle="modal"
-                                                        data-cms-id="{{ $cms->id }}"
-                                                        data-bs-target="#exampleModalDelete" id="bulkDeleteTrigger">
-                                                        <i class="ri-delete-bin-6-line"></i>Delete
-                                                    </button>
-                                                </li>
+                                                @can('edit-cms')
+                                                    <li>
+                                                        <button type="button"
+                                                            class="editBtn edit-sidebar-btn dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6"
+                                                            data-cms-id="{{ $cms->id }}"
+                                                            data-cms-title="{{ $cms->title }}"
+                                                            data-cms-content="{{ $cms->content }}"
+                                                            data-cms-meta-title="{{ $cms->meta_title }}"
+                                                            data-cms-meta-description="{{ $cms->meta_description }}"
+                                                            data-cms-status="{{ $cms->status }}">
+                                                            <i class="ri-edit-2-line"></i>Edit
+                                                        </button>
+                                                    </li>
+                                                @endcan
+                                                @can('delete-cms')
+                                                    <li>
+                                                        <button
+                                                            class="dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6"
+                                                            type="button" data-bs-toggle="modal"
+                                                            data-cms-id="{{ $cms->id }}"
+                                                            data-bs-target="#exampleModalDelete" id="bulkDeleteTrigger">
+                                                            <i class="ri-delete-bin-6-line"></i>Delete
+                                                        </button>
+                                                    </li>
+                                                @endcan
+
+
                                             </ul>
                                         </div>
                                     </div>
@@ -128,17 +134,19 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-4">
-                        <div class="">
-                            <label for="status" class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Status
-                            </label>
-                            <select id="status" name="status" class="form-control form-select">
-                                <option value="Select a Class" disabled>Select One</option>
-                                <option value="1" selected>Active</option>
-                                <option value="0">Inactive</option>
-                            </select>
+                    @can('change-cms-status')
+                        <div class="col-sm-4">
+                            <div class="">
+                                <label for="status" class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Status
+                                </label>
+                                <select id="status" name="status" class="form-control form-select">
+                                    <option value="Select a Class" disabled>Select One</option>
+                                    <option value="1" selected>Active</option>
+                                    <option value="0">Inactive</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
+                    @endcan
                     <div class="col-sm-12">
                         <div class="">
                             <label for="cmsContent"
@@ -224,18 +232,20 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-4">
-                        <div class="">
-                            <label for="status"
-                                class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Status
-                            </label>
-                            <select id="status" name="status" class="form-control form-select">
-                                <option value="Select a Class" disabled>Select One</option>
-                                <option value="1" selected>Active</option>
-                                <option value="0">Inactive</option>
-                            </select>
+                    @can('change-cms-status')
+                        <div class="col-sm-4">
+                            <div class="">
+                                <label for="status"
+                                    class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Status
+                                </label>
+                                <select id="status" name="status" class="form-control form-select">
+                                    <option value="Select a Class" disabled>Select One</option>
+                                    <option value="1" selected>Active</option>
+                                    <option value="0">Inactive</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
+                    @endcan
                     <div class="col-sm-12">
                         <div class="">
                             <label for="editcmsContent"

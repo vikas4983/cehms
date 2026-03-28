@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\TestimonialCreateRequest;
 use App\Models\Testimonial;
 use App\traits\UploadTrait;
+use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
 
 class TestimonialController extends Controller
@@ -13,6 +14,10 @@ class TestimonialController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public static function middleware(): array
+    {
+        return [new Middleware('permission:view-testimonial', ['only' => ['index', 'show']]), new Middleware('permission:create-testimonial', ['only' => ['create', 'store']]), new Middleware('permission:edit-testimonial', ['only' => ['edit', 'update']]), new Middleware('permission:delete-testimonial', ['only' => ['destroy']])];
+    }
     public function index()
     {
         $testimonials = Testimonial::allTestimonials()->get();

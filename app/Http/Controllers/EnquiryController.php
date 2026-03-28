@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\EnquiryCreateRequest;
 use App\Models\Enquiry;
+use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
@@ -13,6 +14,13 @@ class EnquiryController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public static function middleware() : array
+    {
+        return [new Middleware('permission:view-enquiry', ['only' =>['index', 'show']]), 
+        new Middleware('permission:create-enquiry', ['only'=> ['create', 'store']]), 
+        new Middleware('permission:edit-enquiry', ['only'=> ['edit', 'update']]), 
+        new Middleware('permission:delete-enquiry', ['only'=> ['destroy']])];
+    }
     public function index()
     {
         $enquiries = Enquiry::allEnquiries()->paginate(20);

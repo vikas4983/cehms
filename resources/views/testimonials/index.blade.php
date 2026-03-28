@@ -11,12 +11,14 @@
                     <span class="text-secondary-light">/ Testimonials</span>
                 </div>
             </div>
-            <button type="button" class="my-sidebar-btn btn btn-primary-600 d-flex align-items-center gap-6">
-                <span class="d-flex text-md">
-                    <i class="ri-add-large-line"></i>
-                </span>
-                Add Testimonial
-            </button>
+            @can('create-testimonial')
+                <button type="button" class="my-sidebar-btn btn btn-primary-600 d-flex align-items-center gap-6">
+                    <span class="d-flex text-md">
+                        <i class="ri-add-large-line"></i>
+                    </span>
+                    Add Testimonial
+                </button>
+            @endcan
         </div>
         @include('alerts.alert')
         <div class="mt-24">
@@ -38,26 +40,32 @@
                                                 <iconify-icon icon="tabler:dots-vertical"></iconify-icon>
                                             </button>
                                             <ul class="dropdown-menu dropdown-menu-lg-end border p-12">
-                                                <li>
-                                                    <button type="button"
-                                                        class="editBtn edit-sidebar-btn dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6"
-                                                        data-testimonial-id="{{ $testimonial->id }}"
-                                                        data-testimonial-name="{{ $testimonial->name }}"
-                                                        data-testimonial-content="{{ $testimonial->content }}"
-                                                        data-testimonial-image="{{ $testimonial->image }}"
-                                                        data-testimonial-status="{{ $testimonial->status }}">
-                                                        <i class="ri-edit-2-line"></i>Edit
-                                                    </button>
-                                                </li>
-                                                <li>
-                                                    <button
-                                                        class="dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6"
-                                                        type="button" data-bs-toggle="modal"
-                                                        data-testimonial-id="{{ $testimonial->id }}"
-                                                        data-bs-target="#exampleModalDelete" id="bulkDeleteTrigger">
-                                                        <i class="ri-delete-bin-6-line"></i>Delete
-                                                    </button>
-                                                </li>
+                                                @can('edit-testimonial')
+                                                    <li>
+                                                        <button type="button"
+                                                            class="editBtn edit-sidebar-btn dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6"
+                                                            data-testimonial-id="{{ $testimonial->id }}"
+                                                            data-testimonial-name="{{ $testimonial->name }}"
+                                                            data-testimonial-content="{{ $testimonial->content }}"
+                                                            data-testimonial-image="{{ $testimonial->image }}"
+                                                            data-testimonial-status="{{ $testimonial->status }}">
+                                                            <i class="ri-edit-2-line"></i>Edit
+                                                        </button>
+                                                    </li>
+                                                @endcan
+                                                @can('delete-testimonial')
+                                                    <li>
+                                                        <button
+                                                            class="dropdown-item rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2 py-6"
+                                                            type="button" data-bs-toggle="modal"
+                                                            data-testimonial-id="{{ $testimonial->id }}"
+                                                            data-bs-target="#exampleModalDelete" id="bulkDeleteTrigger">
+                                                            <i class="ri-delete-bin-6-line"></i>Delete
+                                                        </button>
+                                                    </li>
+                                                @endcan
+
+
                                             </ul>
                                         </div>
                                     </div>
@@ -118,17 +126,19 @@
                         <input type="file" name="image" class="form-control" id="testimonialImage">
                     </div>
                 </div>
-                <div class="col-sm-4">
-                    <div class="">
-                        <label for="status" class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Status
-                        </label>
-                        <select id="status" name="status" class="form-control form-select">
-                            <option value="Select a Class" disabled>Select One</option>
-                            <option value="1" selected>Active</option>
-                            <option value="0">Inactive</option>
-                        </select>
+                @can('change-testimonial-status')
+                    <div class="col-sm-4">
+                        <div class="">
+                            <label for="status" class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Status
+                            </label>
+                            <select id="status" name="status" class="form-control form-select">
+                                <option value="Select a Class" disabled>Select One</option>
+                                <option value="1" selected>Active</option>
+                                <option value="0">Inactive</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
+                @endcan
                 <div class="col-sm-12">
                     <div class="">
                         <label for="testimonialContent"
@@ -190,18 +200,20 @@
                             <input type="file" name="image" class="form-control" id="editTestimonialImage">
                         </div>
                     </div>
-                    <div class="col-sm-4">
-                        <div class="">
-                            <label for="status"
-                                class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Status
-                            </label>
-                            <select id="editTestimonialStatus" name="status" class="form-control form-select">
-                                <option value="Select a Class" disabled>Select One</option>
-                                <option value="1">Active</option>
-                                <option value="0">Inactive</option>
-                            </select>
+                    @can('change-testimonial-status')
+                        <div class="col-sm-4">
+                            <div class="">
+                                <label for="status"
+                                    class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Status
+                                </label>
+                                <select id="editTestimonialStatus" name="status" class="form-control form-select">
+                                    <option value="Select a Class" disabled>Select One</option>
+                                    <option value="1">Active</option>
+                                    <option value="0">Inactive</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
+                    @endcan
                     <div class="col-sm-12">
                         <div class="">
                             <label for="editTestimonialContent"

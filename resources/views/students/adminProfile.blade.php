@@ -1,23 +1,16 @@
 @extends('layouts.app')
-@section('title', 'Admin - Profile')
+@section('title', 'Profile')
 @section('content')
     <div class="dashboard-main-body">
         <div class="breadcrumb d-flex flex-wrap align-items-center justify-content-between gap-3 mb-24">
             <div class="">
-                <h1 class="fw-semibold mb-4 h6 text-primary-light">Edit Admin</h1>
+                <h1 class="fw-semibold mb-4 h6 text-primary-light">Edit {{ucfirst(auth()->user()->name) ?? ''}}</h1>
                 <div class="">
                     <a href="{{ route('dashboard') }}"
-                        class="text-secondary-light hover-text-primary hover-underline">Dashboard </a> /
-                        admin</a>
-                    <span class="text-secondary-light">/ Edit Admin</span>
+                        class="text-secondary-light hover-text-primary hover-underline">Dashboard </a>
+                    <span class="text-secondary-light"> / Edit Admin</span>
                 </div>
             </div>
-            <a href="add-new-admin.html" class="btn btn-primary-600 d-flex align-items-center gap-6 d-none">
-                <span class="d-flex text-md">
-                    <i class="ri-add-large-line"></i>
-                </span>
-                Edit admin
-            </a>
         </div>
         @include('alerts.alert')
         <form

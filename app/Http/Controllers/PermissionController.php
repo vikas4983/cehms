@@ -6,6 +6,7 @@ use App\Models\Permission;
 use App\Models\User;
 use App\traits\AssignRoleOrPermission;
 use App\traits\RevokeRoleOrPermission;
+use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
 
 use function PHPUnit\Framework\isEmpty;
@@ -17,9 +18,15 @@ class PermissionController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    public static function middleware(): array
+    {
+        return [new Middleware('permission:permission-assign', ['only' => ['assignPermission']]), new Middleware('permission:view-role', ['only' => ['index', 'show']]), new Middleware('permission:create-role', ['only' => ['create', 'store']]), new Middleware('permission:edit-role', ['only' => ['edit', 'update']]), new Middleware('permission:delete-role', ['only' => ['destroy']])];
+    }
+
     public function index()
     {
-        $permissions = permission::allPermissions()->latest()->get();
+        $permissions = permission::allPermissions()->paginate(20);
         return view('permissions.index', compact('permissions'));
     }
 
@@ -79,6 +86,7 @@ class PermissionController extends Controller
         if (!$request->studentId) {
             return redirect()->back()->with('error', 'Something went wrong');
         }
+
         $this->assignPermissionForUser($request->all());
         return redirect()->route('students.index')->with('success', 'Permission has been assign successfully.');
     }

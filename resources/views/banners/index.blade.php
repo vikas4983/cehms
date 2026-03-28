@@ -13,12 +13,14 @@
                     <span class="text-secondary-light">/ Add Banner</span>
                 </div>
             </div>
-            <button type="button" class="my-sidebar-btn btn btn-primary-600 d-flex align-items-center gap-6">
-                <span class="d-flex text-md">
-                    <i class="ri-add-large-line"></i>
-                </span>
-                Add Banner
-            </button>
+            @can('create-banner')
+                <button type="button" class="my-sidebar-btn btn btn-primary-600 d-flex align-items-center gap-6">
+                    <span class="d-flex text-md">
+                        <i class="ri-add-large-line"></i>
+                    </span>
+                    Add Banner
+                </button>
+            @endcan
         </div>
         @include('alerts.alert')
         <div class="row">
@@ -38,28 +40,34 @@
                             </figure>
 
                             <div class="d-flex justify-content-center gap-2">
-                                <a href="{{ route('banners.edit', $banner->id) }}" class="btn btn-primary">
-                                    <i class="ri-edit-line"></i>
-                                </a>
-
-                                @if ($banner->status == 0)
-                                    <button class="btn btn-success" data-bs-toggle="modal"
-                                        data-bs-target="#changeStatusModal" data-url="{{ route('banner.status') }}"
-                                        data-id="{{ $banner->id }}">
-                                        Active
-                                    </button>
-                                @elseif($banner->status == 1)
-                                    <a href="#" class="btn btn-warning" data-bs-toggle="modal"
-                                        data-bs-target="#changeStatusModal" data-url="{{ route('banner.status') }}"
-                                        data-id="{{ $banner->id }}">
-                                        Inactive
+                                @can('edit-banner')
+                                    <a href="{{ route('banners.edit', $banner->id) }}" class="btn btn-primary">
+                                        <i class="ri-edit-line"></i>
                                     </a>
-                                @endif
+                                @endcan
 
-                                <a href="#" class="btn btn-danger" data-bs-toggle="modal"
-                                    data-bs-target="#deleteModal" data-url="{{ route('banners.destroy', $banner->id) }}">
-                                    <i class="ri-delete-bin-line"></i>
-                                </a>
+                                @can('change-banner-status')
+                                    @if ($banner->status == 0)
+                                        <button class="btn btn-success" data-bs-toggle="modal"
+                                            data-bs-target="#changeStatusModal" data-url="{{ route('banner.status') }}"
+                                            data-id="{{ $banner->id }}">
+                                            Active
+                                        </button>
+                                    @elseif($banner->status == 1)
+                                        <a href="#" class="btn btn-warning" data-bs-toggle="modal"
+                                            data-bs-target="#changeStatusModal" data-url="{{ route('banner.status') }}"
+                                            data-id="{{ $banner->id }}">
+                                            Inactive
+                                        </a>
+                                    @endif
+                                @endcan
+
+                                @can('delete-banner')
+                                    <a href="#" class="btn btn-danger" data-bs-toggle="modal"
+                                        data-bs-target="#deleteModal" data-url="{{ route('banners.destroy', $banner->id) }}">
+                                        <i class="ri-delete-bin-line"></i>
+                                    </a>
+                                @endcan
                             </div>
                         </div>
                     </div>
@@ -73,61 +81,6 @@
     <x-button.change-status-modal-component />
     <!-- Add sidebar end -->
     <x-button.add-modal-component />
-    <!-- Edit sidebar start -->
-    <div
-        class="edit-sidebar bg-white position-fixed end-0 top-0 h-100vh overflow-y-auto z-99 max-w-700-px w-100 translate-x-full duration-300 active-translate-0">
-        <div class="px-20 py-12 border-bottom d-flex align-items-center justify-content-between gap-20">
-            <h5 class="text-lg mb-0">Edit Role </h5>
-            <button type="button" class="close-edit-sidebar text-danger-600 text-lg d-flex">
-                <i class="ri-close-large-line"></i>
-            </button>
-        </div>
-        <form id="editRoleForm" method="POST" class="d-flex flex-column p-20">
-            <input type="hidden" name="id" id="editRoleId">
-            @csrf
-            @method('PATCH')
-            <div class="row g-3">
-                <div class="col-sm-4">
-                    <div class="">
-                        <label for="editRoleForm" class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Role
-                            Name
-                        </label>
-                        <input type="text" id="editRoleName" name="name" class="form-control"
-                            placeholder="Enter Role Name">
-                        <div class="invalid-feedback">
-                            Role name is required
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-sm-4">
-                    <div class="">
-                        <label for="status" class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Features
-                        </label>
-                        <select id="editRoleStatus" name="status" class="form-control form-select">
-                            <option value="Select a Class" disabled>Select One</option>
-                            <option value="1">Active</option>
-                            <option value="0">Inactive</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-12">
-                    <div class="d-flex align-items-center justify-content-center gap-3 mt-8">
-                        {{-- <button type="reset"
-                            class="border border-danger-600 bg-hover-danger-200 text-danger-600 text-md px-50 py-11 radius-8">
-                            Cancel
-                        </button> --}}
-                        <button type="submit"
-                            class="btn btn-primary-600 border border-primary-600 text-md px-28 py-12 radius-8 max-w-156-px w-100">
-                            Update
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-
-
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
