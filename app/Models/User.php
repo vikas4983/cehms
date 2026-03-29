@@ -79,7 +79,7 @@ class User extends Authenticatable
     }
     public function scopeInactive($query)
     {
-        return $query->where('status', 0)->latest();;
+        return $query->where('status', 0)->latest();
     }
     public function scopeActiveStudents($query)
     {
@@ -97,7 +97,7 @@ class User extends Authenticatable
     public function scopeTodayStudents($query)
     {
         return $query
-            ->select('id','image','name', 'email', 'dob', 'practitioner_registration', 'mobile', 'gender', 'qualification')
+            ->select('id', 'image', 'name', 'email', 'dob', 'practitioner_registration', 'mobile', 'gender', 'qualification')
 
             ->where('status', 1)
             ->whereDate('created_at', today())
@@ -106,7 +106,7 @@ class User extends Authenticatable
     public function scopeWeeklyStudents($query)
     {
         return $query
-            ->select('id','image','name', 'email', 'dob', 'practitioner_registration', 'mobile', 'gender', 'qualification')
+            ->select('id', 'image', 'name', 'email', 'dob', 'practitioner_registration', 'mobile', 'gender', 'qualification')
             ->where('status', 1)
             ->where('created_at', '>=', now()->subDays(7))
             ->latest();
@@ -114,7 +114,7 @@ class User extends Authenticatable
     public function scopeMonthlyStudents($query)
     {
         return $query
-            ->select('id','image','name', 'email', 'dob', 'practitioner_registration', 'mobile', 'gender', 'qualification')
+            ->select('id', 'image', 'name', 'email', 'dob', 'practitioner_registration', 'mobile', 'gender', 'qualification')
             ->where('status', 1)
             ->where('created_at', '>=', now()->subDays(30))
             ->latest();

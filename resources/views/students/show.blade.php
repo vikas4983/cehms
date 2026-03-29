@@ -151,7 +151,7 @@
                                         class="bg-danger-100 text-danger-600 px-24 py-4 radius-4 fw-medium text-sm">Inactive</span>
                                 @endif
                             </div>
-                            @can('view document')
+                            @can('view-student-document')
                                 <div class="mt-16 d-flex flex-column gap-8">
                                     @if (!empty($student->{'10th_marksheet'}))
                                         <div class="d-flex gap-4">

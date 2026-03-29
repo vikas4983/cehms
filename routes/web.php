@@ -24,13 +24,16 @@ use App\Http\Controllers\TestimonialController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [AuthController::class, 'home'])->name('/');
+
 Route::get('user-dashboard', [DashboardController::class, 'userDashboard'])
     ->name('user.dashboard')
-    ->middleware(['auth', 'role:admin|user']);
+    ->middleware(['auth', 'permission:user-dashboard']);
+
 Route::get('dashboard', [DashboardController::class, 'dashboard'])
     ->name('dashboard')
     ->middleware(['auth', 'validate_role']);
-Route::middleware(['auth', 'role:admin'])->group(function () {
+
+Route::middleware(['auth', 'permission:admin-dashboard'])->group(function () {
     Route::get('admin-dashboard', [DashboardController::class, 'adminDashboard'])->name('admin.dashboard');
     Route::resource('roles', RoleController::class);
     Route::resource('permissions', PermissionController::class);
@@ -60,10 +63,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('view-book/{path}', [BookController::class, 'viewBook'])
         ->where('path', '.*')
         ->name('book.view');
-
     Route::post('banner-status', [BannerController::class, 'bannerStatus'])->name('banner.status');
     Route::resource('news', NewsController::class);
     Route::resource('banners', BannerController::class);
+    Route::resource('enquiries', EnquiryController::class);
     Route::view('recursive', 'recursive');
     Route::get('filter-input/input', [FilterController::class, 'filter'])->name('input.filter');
 });
@@ -71,12 +74,20 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 // FRONTEND
 Route::get('register', [RegisterController::class, 'register'])->name('student.register');
 Route::post('student-store', [RegisterController::class, 'storeStudent'])->name('student.store');
-Route::get('my-profile', [ProfileController::class, 'myProfile'])->name('my.profile');
-Route::get('edit-profile', [ProfileController::class, 'editProfile'])->name('profile.edit');
-Route::post('update-profile', [ProfileController::class, 'updateProfile'])->name('profile.update');
-Route::get('view-document/{path}', [DocumentController::class, 'view'])
-    ->where('path', '.*')
-    ->name('view.document');
+Route::middleware(['auth'])->group(function () {
+    Route::get('my-profile', [ProfileController::class, 'myProfile'])
+        ->name('my.profile')
+        ->middleware('permission:view-student');
+    Route::get('edit-profile', [ProfileController::class, 'editProfile'])
+        ->name('profile.edit')
+        ->middleware('permission:edit-student');
+    Route::post('update-profile', [ProfileController::class, 'updateProfile'])
+        ->name('profile.update')
+        ->middleware('permission:edit-student');
+    Route::get('view-document/{path}', [DocumentController::class, 'view'])
+        ->where('path', '.*')
+        ->name('view.document');
+});
 
 // Download
 Route::get('download/{path}', [FrontendController::class, 'download'])
@@ -84,7 +95,6 @@ Route::get('download/{path}', [FrontendController::class, 'download'])
     ->name('download');
 
 // Filter
-Route::resource('enquiries', EnquiryController::class);
 
 // Search Practitioner
 Route::get('search-practitioner/input', [FrontendController::class, 'searchPractitioner'])->name('search.practitioner');

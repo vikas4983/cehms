@@ -14,22 +14,41 @@ trait AssignRoleOrPermission
     }
     public function assignPermissionForRole() {}
 
-    public function assignPermissionForUser($data)
+    public function assignPermissionByAdmin($data)
+    {
+        if (!auth()->check() || !auth()->user()->can('permission-assign')) {
+            abort(403);
+        } else {
+            if (is_object($data)) {
+                $user = $data;
+                $requiredPermissions = ['view-profile', 'edit-profile'];
+                $requiredRoles = ['user'];
+            } else {
+                $requiredPermissions = !empty($data['permissions']) ? $data['permissions'] : ['view-profile', 'edit-profile'];
+                $requiredRoles = !empty($data['roles']) ? $data['roles'] : ['user'];
+                $user = User::findOrFail($data['studentId']);
+            }
+
+            $permissions = Permission::active()->whereIn('name', $requiredPermissions)->pluck('name')->toArray();
+            $roles = Role::active()->whereIn('name', $requiredRoles)->pluck('name')->toArray();
+            $user->syncPermissions($permissions);
+            $user->syncRoles($roles);
+            return;
+        }
+    }
+
+    public function assignPermissionByRegistration($data)
     {
         if (is_object($data)) {
             // Default permission for student
             $user = $data;
-            $requiredPermissions = ['create user', 'edit user', 'view user'];
+            $requiredPermissions = ['view-profile', 'edit-profile','user-dashboard'];
             $requiredRoles = ['user'];
-        } else {
-            $requiredPermissions = $data['permissions'] ?? [];
-            $requiredRoles = $data['roles'] ?? [];
-            $user = User::findOrFail($data['studentId']);
+            $permissions = Permission::active()->whereIn('name', $requiredPermissions)->pluck('name')->toArray();
+            $roles = Role::active()->whereIn('name', $requiredRoles)->pluck('name')->toArray();
+            $user->syncPermissions($permissions);
+            $user->syncRoles($roles);
+            return;
         }
-        $permissions = Permission::active()->whereIn('name', $requiredPermissions)->pluck('name')->toArray();
-        $roles = Role::active()->whereIn('name', $requiredRoles)->pluck('name')->toArray();
-        $user->syncPermissions($permissions);
-        $user->syncRoles($roles);
-        return;
     }
 }

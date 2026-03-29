@@ -37,7 +37,7 @@ class StudentCreateRequest extends FormRequest
             'mobile' => ['required', 'numeric', 'regex:/^[6789]\d{9,11}$/', Rule::unique('users', 'mobile')->ignore($userId)],
             'address' => ['nullable', 'string'],
             'qualification' => ['nullable', 'string'],
-            'practitioner_registration' => ['nullable', 'string'],
+            'practitioner_registration' => ['nullable', 'string', Rule::unique('users', 'practitioner_registration')->ignore($userId)],
             '10th_marksheet' => ['nullable', 'file', 'mimes:pdf', 'max:4096'],
             '12th_marksheet' => ['nullable', 'file', 'mimes:pdf', 'max:4096'],
         ];

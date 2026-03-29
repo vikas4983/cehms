@@ -57,8 +57,8 @@
                                             class="form-control form-select @error('gender') is-invalid @enderror "
                                             min-length="10" max-length="12">
                                             <option value="" disabled>Select Gender</option>
-                                            <option value="Male">Male</option>
-                                            <option value="Female">Female</option>
+                                            <option value="male">Male</option>
+                                            <option value="female">Female</option>
                                         </select>
                                         @error('gender')
                                             <div class="invalid-feedback">
@@ -127,23 +127,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-xxl-3 col-xl-4 col-sm-6">
-                                    <div class="">
-                                        <label for="practitioner_registration"
-                                            class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Practitioner
-                                            Registration No.
-                                        </label>
-                                        <input type="text" name="practitioner_registration"
-                                            class="form-control @error('practitioner_registration') is-invalid @enderror"
-                                            id="practitioner_registration"
-                                            placeholder="Enter your practitioner registration no.">
-                                        @error('practitioner_registration')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                </div>
+
                                 <div class="col-sm-3">
                                     <div class="">
                                         <label for="status"

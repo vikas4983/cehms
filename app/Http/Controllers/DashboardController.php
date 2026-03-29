@@ -27,8 +27,7 @@ class DashboardController extends Controller
         $weeklyStudents = User::weeklyStudents()->take(7)->get();
         $books = Book::active()->take(7)->get();
         $medicines = Medicine::activeMedicine()->take(7)->get();
-     
 
-        return view('dashboard',compact('todayStudents', 'weeklyStudents','books','medicines'));
+        return view('dashboard', compact('todayStudents', 'weeklyStudents', 'books', 'medicines'));
     }
 }

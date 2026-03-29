@@ -87,7 +87,7 @@ class PermissionController extends Controller
             return redirect()->back()->with('error', 'Something went wrong');
         }
 
-        $this->assignPermissionForUser($request->all());
+        $this->assignPermissionByAdmin($request->all());
         return redirect()->route('students.index')->with('success', 'Permission has been assign successfully.');
     }
 }

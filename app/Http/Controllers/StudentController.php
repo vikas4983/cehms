@@ -68,8 +68,8 @@ class StudentController extends Controller
                 $validatedData['12th_marksheet'] = $request->file('12th_marksheet')->store('marksheets/twelfth', 'public');
             }
             $user = User::create($validatedData);
-            $this->assignRole($user);
-            $this->assignPermissionForUser($user);
+            $user->update(['practitioner_registration' => 'CEHMS' . str_pad($user->id, 3, '0', STR_PAD_LEFT)]);
+            $this->assignPermissionByAdmin($user);
             DB::commit();
             return redirect()->back()->with('success', 'Student has been created successfully');
         } catch (\Exception $e) {
@@ -197,7 +197,7 @@ class StudentController extends Controller
         $permissions = Permission::active()->get();
         $roles = Role::active()->get();
         $groupedPermissions = $permissions->groupBy(function ($permission) {
-            return explode(' ', $permission->name)[1];
+            return explode('-', $permission->name)[1];
         });
         return view('students.index', compact('students', 'permissions', 'roles', 'groupedPermissions'));
     }

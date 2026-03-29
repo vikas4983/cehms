@@ -14,12 +14,9 @@ class EnquiryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public static function middleware() : array
+    public static function middleware(): array
     {
-        return [new Middleware('permission:view-enquiry', ['only' =>['index', 'show']]), 
-        new Middleware('permission:create-enquiry', ['only'=> ['create', 'store']]), 
-        new Middleware('permission:edit-enquiry', ['only'=> ['edit', 'update']]), 
-        new Middleware('permission:delete-enquiry', ['only'=> ['destroy']])];
+        return [new Middleware('permission:view-enquiry', ['only' => ['index', 'show']]), new Middleware('permission:edit-enquiry', ['only' => ['edit', 'update']]), new Middleware('permission:delete-enquiry', ['only' => ['destroy']])];
     }
     public function index()
     {

@@ -16,7 +16,7 @@ class ValidateRoleMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         $user = auth()->user();
-        if ($user->hasRole('admin')) {
+        if ($user->can('admin-dashboard')) {
             return redirect()->route('admin.dashboard');
         }
         return $next($request);

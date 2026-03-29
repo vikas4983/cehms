@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Psy\Util\Str;
 
 class RegisterController extends Controller
 {
@@ -42,8 +43,8 @@ class RegisterController extends Controller
                 $validatedData['12th_marksheet'] = $request->file('12th_marksheet')->store('marksheets/twelfth', 'public');
             }
             $user = User::create($validatedData);
-            $this->assignRole($user);
-            $this->assignPermissionForUser($user);
+            $user->update(['practitioner_registration' => 'CEHMS' . str_pad($user->id, 3, '0', STR_PAD_LEFT)]);
+            $this->assignPermissionByRegistration($user);
             Auth::login($user);
             DB::commit();
             return redirect()->route('dashboard');

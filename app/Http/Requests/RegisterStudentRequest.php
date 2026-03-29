@@ -26,6 +26,7 @@ class RegisterStudentRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($id)],
+            'practitioner_registration' => ['nullable', 'string', Rule::unique('users', 'practitioner_registration')->ignore($id)],
             'password' => ['required', 'confirmed', 'min:6'],
             'gender' => ['required', 'string', 'in:male,female'],
             'dob' => ['required', 'date'],
