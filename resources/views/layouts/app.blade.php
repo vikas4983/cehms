@@ -207,6 +207,14 @@
                         <span>Dashboard </span>
                     </a>
                 </li>
+                <li>
+                    @can('view-medicine')
+                        <a href="{{ route('admin') }}">
+                            <i class="ri-admin-line"></i>
+                            <span>Admins</span>
+                        </a>
+                    @endcan
+                </li>
                 @if (!auth()->user()->hasRole('user'))
                     <li class="dropdown">
                         <a href="javascript:void(0)">

@@ -42,7 +42,7 @@ trait AssignRoleOrPermission
         if (is_object($data)) {
             // Default permission for student
             $user = $data;
-            $requiredPermissions = ['view-profile', 'edit-profile','user-dashboard'];
+            $requiredPermissions = ['view-profile', 'edit-profile', 'user-dashboard'];
             $requiredRoles = ['user'];
             $permissions = Permission::active()->whereIn('name', $requiredPermissions)->pluck('name')->toArray();
             $roles = Role::active()->whereIn('name', $requiredRoles)->pluck('name')->toArray();

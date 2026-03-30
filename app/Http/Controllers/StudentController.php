@@ -284,4 +284,18 @@ class StudentController extends Controller
         $admin = User::findOrFail($id);
         return view('students.adminProfile', compact('admin'));
     }
+
+    public function admin()
+    {
+        $students = User::whereHas('roles', function ($query) {
+            $query->where('name', '!=', 'user');
+        })->paginate(20);
+        $permissions = Permission::active()->get();
+        $roles = Role::active()->get();
+        $groupedPermissions = $permissions->groupBy(function ($permission) {
+            return explode('-', $permission->name)[1];
+        });
+
+        return view('students.index', compact('students', 'groupedPermissions', 'roles'));
+    }
 }

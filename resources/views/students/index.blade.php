@@ -24,11 +24,22 @@
     <div class="dashboard-main-body">
         <div class="breadcrumb d-flex flex-wrap align-items-center justify-content-between gap-3 mb-24">
             <div class="">
-                <h1 class="fw-semibold mb-4 h6 text-primary-light">Student List</h1>
+
+                @if (Route::currentRouteName() == 'admin')
+                    <h1 class="fw-semibold mb-4 h6 text-primary-light">Admin List</h1>
+                @else
+                    <h1 class="fw-semibold mb-4 h6 text-primary-light">Student List</h1>
+                @endif
+
                 <div class="">
                     <a href="{{ route('dashboard') }}"
                         class="text-secondary-light hover-text-primary hover-underline">Dashboard </a>
-                    <span class="text-secondary-light">/ Student List</span>
+                    @if (Route::currentRouteName() == 'admin')
+                        <span class="text-secondary-light">/ Admins</span>
+                    @else
+                        <span class="text-secondary-light">/ Students</span>
+                    @endif
+
                 </div>
             </div>
             @can('create-student')
