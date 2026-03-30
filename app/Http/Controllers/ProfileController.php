@@ -6,10 +6,15 @@ use App\Http\Requests\RegisterStudentRequest;
 use App\Http\Requests\StudentCreateRequest;
 use App\Models\User;
 use App\traits\UploadTrait;
+use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
+    public static function middleware(): array
+    {
+        return [new Middleware('permission:view-student', ['only' => ['myProfile']]), new Middleware('permission:edit-student', ['only' => ['editProfile']]), new Middleware('permission:edit-student', ['only' => ['updateProfile']])];
+    }
     use UploadTrait;
     public function myProfile(Request $request)
     {

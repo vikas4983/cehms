@@ -21,10 +21,10 @@ trait AssignRoleOrPermission
         } else {
             if (is_object($data)) {
                 $user = $data;
-                $requiredPermissions = ['view-profile', 'edit-profile'];
+                $requiredPermissions = ['view-student', 'edit-student', 'user-dashboard'];
                 $requiredRoles = ['user'];
             } else {
-                $requiredPermissions = !empty($data['permissions']) ? $data['permissions'] : ['view-profile', 'edit-profile'];
+                $requiredPermissions = !empty($data['permissions']) ? $data['permissions'] : ['view-student', 'edit-student', 'user-dashboard'];
                 $requiredRoles = !empty($data['roles']) ? $data['roles'] : ['user'];
                 $user = User::findOrFail($data['studentId']);
             }
@@ -42,7 +42,7 @@ trait AssignRoleOrPermission
         if (is_object($data)) {
             // Default permission for student
             $user = $data;
-            $requiredPermissions = ['view-profile', 'edit-profile', 'user-dashboard'];
+            $requiredPermissions = ['view-student', 'edit-student', 'user-dashboard'];
             $requiredRoles = ['user'];
             $permissions = Permission::active()->whereIn('name', $requiredPermissions)->pluck('name')->toArray();
             $roles = Role::active()->whereIn('name', $requiredRoles)->pluck('name')->toArray();

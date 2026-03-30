@@ -69,7 +69,7 @@ Route::middleware(['auth', 'permission:admin-dashboard'])->group(function () {
     Route::resource('enquiries', EnquiryController::class);
     Route::view('recursive', 'recursive');
     Route::get('filter-input/input', [FilterController::class, 'filter'])->name('input.filter');
-    Route::get('admin',[StudentController::class,'admin'])->name('admin');
+    Route::get('admin', [StudentController::class, 'admin'])->name('admin');
 });
 
 // FRONTEND

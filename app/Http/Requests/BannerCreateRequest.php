@@ -24,7 +24,7 @@ class BannerCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'banner' => ['required', 'file', 'mimes:jpg,jpeg,png,gif',],
+            'banner' => ['required', 'file', 'mimes:jpg,jpeg,png,gif,webp', 'max:2048'],
             'order' => ['nullable', 'numeric', Rule::unique('banners', 'order')->ignore($this->route('banner'))],
             'status' => ['required', 'in:1,0'],
         ];

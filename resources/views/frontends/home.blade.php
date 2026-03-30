@@ -111,7 +111,7 @@
         </div>
     </section>
     <!-- ==============================================
-                                                                                                                                                            =================================================== -->
+                                                                                                                                                                    =================================================== -->
     <section class="our-cources padding-lg">
         <div class="container">
             <h2><span>Our Books Collection</span> What do you want to read?</h2>
@@ -168,8 +168,8 @@
         </div>
     </section>
     <!-- ==============================================
-                                                                                                                                                            ** Testimonials **
-                                                                                                                                                            =================================================== -->
+                                                                                                                                                                    ** Testimonials **
+                                                                                                                                                                    =================================================== -->
     <section class="testimonial padding-lg">
         <div class="container">
 

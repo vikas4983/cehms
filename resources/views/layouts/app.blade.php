@@ -15,7 +15,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Title -->
     <title>@yield('title', 'Edudash - School, College & LMS Admin Dashboard Template | Bootstrap 5')</title>
-    <link rel="icon" type="image/png" href="{{ asset('storage/' . $setting?->favicon ?? '') }}" sizes="16x16">
+    <link rel="icon" type="image/png"
+        href="{{ $setting->favicon ? asset('storage/' . $setting->favicon) : asset('assets-frontend/images/default-favicon.png') }}"
+        sizes="16x16">
     <!-- remix icon font css  -->
     <link rel="stylesheet" href="{{ asset('assets/css/remixicon.css') }}">
     <!-- BootStrap css -->
@@ -467,24 +469,24 @@
     </main>
 
     <!-- jQuery library js -->
-    <script src="{{ asset('assets/js/jquery-3.7.1.min.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery-3.7.1.min.js') }}" defer></script>
     <!-- Bootstrap js -->
-    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}" defer></script>
     <!-- Apex Chart js -->
-    <script src="{{ asset('assets/js/apexcharts.min.js') }}"></script>
+    <script src="{{ asset('assets/js/apexcharts.min.js') }}" defer></script>
     <!-- Iconify Font js -->
-    <script src="{{ asset('assets/js/iconify-icon.min.js') }}"></script>
+    <script src="{{ asset('assets/js/iconify-icon.min.js') }}" defer></script>
     <!-- Data Table js -->
-    <script src="{{ asset('assets/js/dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/js/dataTables.min.js') }}" defer></script>
     <!-- jQuery UI js -->
-    <script src="{{ asset('assets/js/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery-ui.min.js') }}" defer></script>
     <!-- main js -->
-    <script src="{{ asset('assets/js/app.js') }}"></script>
+    <script src="{{ asset('assets/js/app.js') }}" defer></script>
     {{-- <script src="{{ asset('assets/js/apexcharts.min.js') }}"></script> --}}
 
     <!-- Custom js -->
     <script src="{{ asset('assets/js/custom-js/data-table-assign-role.js') }}"></script>
-    <script src="{{ asset('assets/js/custom-js/action-button.js') }}"></script>
+
 
     <script>
         // ============================ Revenue Statistics Chart start ===============================

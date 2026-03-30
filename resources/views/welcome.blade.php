@@ -32,7 +32,7 @@
                                     <h6 class="text-white">{{ auth()->user() ? ucfirst(auth()->user()->name) : '' }}</h6>
                                     <span
                                         class="text-white text-lg d-block">{{ ucfirst($user->getRoleNames()->first()) ?? '' }}</span>
-                                    @can('edit user')
+                                    @can('edit-student')
                                         <div class="mt-12">
                                             <a href="{{ route('profile.edit') }}"
                                                 class="px-20 py-8 text-white bg-white bg-opacity-10 radius-6 fw-medium text-lg">Edit
