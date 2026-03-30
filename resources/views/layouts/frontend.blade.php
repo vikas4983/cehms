@@ -383,7 +383,104 @@
             </div>
         </div>
 
-
+        <!-- End Footer Top -->
+        <!-- Start Footer Bottom -->
+        {{-- <div class="bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="connect-us">
+                            <h3>Connect with Us</h3>
+                            <ul class="follow-us clearfix">
+                                @if (!empty($setting->facebook))
+                                    <li><a href="{{ $setting->facebook }}"><i class="fa fa-facebook"
+                                                aria-hidden="true"></i></a></li>
+                                @endif
+                                @if (!empty($setting->twitter))
+                                    <li><a href="{{ $setting->twitter }}"><i class="fa fa-twitter"
+                                                aria-hidden="true"></i></a></li>
+                                @endif
+                                @if (!empty($setting->linkedin))
+                                    <li><a href="{{ $setting->linkedin }}"><i class="fa fa-linkedin"
+                                                aria-hidden="true"></i></a></li>
+                                @endif
+                                @if (!empty($setting->google))
+                                    <li><a href="{{ $setting->google }}"><i class="fa fa-google-plus"
+                                                aria-hidden="true"></i></a></li>
+                                @endif
+                                @if (!empty($setting->youtube))
+                                    <li><a href="{{ $setting->youtube }}"><i class="fa fa-youtube-play"
+                                                aria-hidden="true"></i></a></li>
+                                @endif
+                                @if (!empty($setting->instagram))
+                                    <li><a href="{{ $setting->instagram }}"><i class="fa fa-instagram"
+                                                aria-hidden="true"></i></a></li>
+                                @endif
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="subscribe">
+                            <h3>Subscribe with Us</h3>
+                            <!-- Begin MailChimp Signup Form -->
+                            <div id="mc_embed_signup">
+                                <form
+                                    action="//protechtheme.us16.list-manage.com/subscribe/post?u=cd5f66d2922f9e808f57e7d42&amp;id=ec6767feee"
+                                    method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form"
+                                    class="validate" target="_blank" novalidate>
+                                    <div id="mc_embed_signup_scroll">
+                                        <input type="email" value="" name="EMAIL" class="email"
+                                            id="mce-EMAIL" placeholder="enter your email address" required>
+                                        <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                                        <div style="position: absolute; left: -5000px;" aria-hidden="true">
+                                            <input type="text" name="b_cd5f66d2922f9e808f57e7d42_ec6767feee"
+                                                tabindex="-1" value="">
+                                        </div>
+                                        <div class="clear">
+                                            <input type="submit" value="Subscribe" name="subscribe"
+                                                id="mc-embedded-subscribe" class="button">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <!--End mc_embed_signup-->
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="instagram">
+                            <h3>@INSTAGRAM</h3>
+                            <ul class="clearfix">
+                                <li><a href="#">
+                                        <figure><img src="{{ asset('assets-frontend/images/insta-img1.jpg') }}"
+                                                class="img-responsive" alt=""></figure>
+                                    </a></li>
+                                <li><a href="#">
+                                        <figure><img src="{{ asset('assets-frontend/images/insta-img2.jpg') }}"
+                                                class="img-responsive" alt=""></figure>
+                                    </a></li>
+                                <li><a href="#">
+                                        <figure><img src="{{ asset('assets-frontend/images/insta-img3.jpg') }}"
+                                                class="img-responsive" alt=""></figure>
+                                    </a></li>
+                                <li><a href="#">
+                                        <figure><img src="{{ asset('assets-frontend/images/insta-img4.jpg') }}"
+                                                class="img-responsive" alt=""></figure>
+                                    </a></li>
+                                <li><a href="#">
+                                        <figure><img src="{{ asset('assets-frontend/images/insta-img5.jpg') }}"
+                                                class="img-responsive" alt=""></figure>
+                                    </a></li>
+                                <li><a href="#">
+                                        <figure><img src="{{ asset('assets-frontend/images/insta-img6.jpg') }}"
+                                                class="img-responsive" alt=""></figure>
+                                    </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> --}}
+        <!-- End Footer Bottom -->
     </footer>
 
     <!-- Scroll to top -->
@@ -391,18 +488,18 @@
 
     <!-- Optional JavaScript
 -->
-    <script src="{{ asset('assets-frontend/js/jquery.min.js') }}" defer></script>
-    <script src="{{ asset('assets-frontend/js/bootstrap.min.js') }}" defer></script>
-    <script src="{{ asset('assets-frontend/js/select2.min.js') }}" defer></script>
-    <script src="{{ asset('assets-frontend/js/matchHeight-min.js') }}" defer></script>
-    <script src="{{ asset('assets-frontend/js/bxslider.min.js') }}" defer></script>
-    <script src="{{ asset('assets-frontend/js/waypoints.min.js') }}" defer></script>
-    <script src="{{ asset('assets-frontend/js/counterup.min.js') }}" defer></script>
-    <script src="{{ asset('assets-frontend/js/magnific-popup.min.js') }}" defer></script>
-    <script src="{{ asset('assets-frontend/js/owl.carousel.min.js') }}" defer></script>
-    <script src="{{ asset('assets-frontend/js/modernizr.custom.js') }}" defer></script>
-    <script src="{{ asset('assets-frontend/js/custom.js') }}" defer></script>
-    <script src="{{ asset('assets-frontend/js/datepicker.js') }}" defer></script>
+    <script src="{{ asset('assets-frontend/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets-frontend/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets-frontend/js/select2.min.js') }}"></script>
+    <script src="{{ asset('assets-frontend/js/matchHeight-min.js') }}"></script>
+    <script src="{{ asset('assets-frontend/js/bxslider.min.js') }}"></script>
+    <script src="{{ asset('assets-frontend/js/waypoints.min.js') }}"></script>
+    <script src="{{ asset('assets-frontend/js/counterup.min.js') }}"></script>
+    <script src="{{ asset('assets-frontend/js/magnific-popup.min.js') }}"></script>
+    <script src="{{ asset('assets-frontend/js/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('assets-frontend/js/modernizr.custom.js') }}"></script>
+    <script src="{{ asset('assets-frontend/js/custom.js') }}"></script>
+    <script src="{{ asset('assets-frontend/js/datepicker.js') }}"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

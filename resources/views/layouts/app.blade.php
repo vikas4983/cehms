@@ -3,7 +3,7 @@
 <html lang="en" data-theme="light">
 
 <head>
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+    {{-- <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet"> --}}
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -469,19 +469,19 @@
     </main>
 
     <!-- jQuery library js -->
-    <script src="{{ asset('assets/js/jquery-3.7.1.min.js') }}" defer></script>
+    <script src="{{ asset('assets/js/jquery-3.7.1.min.js') }}" ></script>
     <!-- Bootstrap js -->
-    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}" defer></script>
+    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}" ></script>
     <!-- Apex Chart js -->
-    <script src="{{ asset('assets/js/apexcharts.min.js') }}" defer></script>
+    <script src="{{ asset('assets/js/apexcharts.min.js') }}" ></script>
     <!-- Iconify Font js -->
-    <script src="{{ asset('assets/js/iconify-icon.min.js') }}" defer></script>
+    <script src="{{ asset('assets/js/iconify-icon.min.js') }}" ></script>
     <!-- Data Table js -->
-    <script src="{{ asset('assets/js/dataTables.min.js') }}" defer></script>
+    <script src="{{ asset('assets/js/dataTables.min.js') }}" ></script>
     <!-- jQuery UI js -->
-    <script src="{{ asset('assets/js/jquery-ui.min.js') }}" defer></script>
+    <script src="{{ asset('assets/js/jquery-ui.min.js') }}" ></script>
     <!-- main js -->
-    <script src="{{ asset('assets/js/app.js') }}" defer></script>
+    <script src="{{ asset('assets/js/app.js') }}" ></script>
     {{-- <script src="{{ asset('assets/js/apexcharts.min.js') }}"></script> --}}
 
     <!-- Custom js -->
