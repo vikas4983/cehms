@@ -35,112 +35,13 @@
                     <div
                         class="d-flex align-items-center justify-content-between flex-wrap gap-16 px-20 py-12 border-bottom border-neutral-200">
                         <div class="d-flex flex-wrap align-items-center gap-16">
-                            {{-- <div class="dropdown">
-                                <button type="button"
-                                    class="px-12 py-5-px border border-neutral-300 radius-8 d-flex align-items-center gap-20 "
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    <span class="d-flex align-items-center gap-1 text-secondary-light text-sm">
-                                        <i class="ri-file-upload-line text-md line-height-1"></i>
-                                        Export
-                                    </span>
-                                    <span class="">
-                                        <i class="ri-arrow-down-s-line"></i>
-                                    </span>
-                                </button>
-                                <ul class="dropdown-menu p-12 border bg-base shadow">
-                                    <li>
-                                        <button type="button"
-                                            class="dropdown-item px-16 py-8 rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-10"
-                                            data-bs-toggle="modal" data-bs-target="#exampleModalView">
-                                            <i class="ri-file-3-line"></i>
-                                            PDF
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button type="button"
-                                            class="dropdown-item px-16 py-8 rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-10"
-                                            data-bs-toggle="modal" data-bs-target="#exampleModalEdit">
-                                            <i class="ri-file-excel-line"></i>
-                                            Excel
-                                        </button>
-                                    </li>
-                                </ul>
-                            </div> --}}
+                           
                             <form class="navbar-search dt-search m-0">
                                 <input type="text" class="dt-input bg-transparent radius-4" aria-controls="dataTable"
                                     name="search" placeholder="Search...">
                                 <iconify-icon icon="ion:search-outline" class="icon"></iconify-icon>
                             </form>
-                            {{-- <div class="dropdown">
-                                <button type="button"
-                                    class="px-12 py-5-px border border-neutral-300 radius-8 d-flex align-items-center gap-20"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    <span class="d-flex align-items-center gap-1 text-secondary-light text-sm">
-                                        Filter
-                                    </span>
-                                    <span class="">
-                                        <i class="ri-arrow-down-s-line"></i>
-                                    </span>
-                                </button>
-                                <div class="dropdown-menu border bg-base shadow dropdown-menu-lg p-0">
-                                    <div class="d-flex align-items-center justify-content-between border-bottom py-8 px-16">
-                                        <span class="fw-semibold text-lg text-primary-light">Filter</span>
-                                        <button type="button">
-                                            <i class="ri-close-large-line"></i>
-                                        </button>
-                                    </div>
-
-                                    <form action="#" class="p-16 d-grid grid-cols-2 gap-16">
-                                        <div class="">
-                                            <label for="class"
-                                                class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Class</label>
-                                            <select id="class" class="form-control form-select">
-                                                <option value="Select" disabled>Select Class</option>
-                                                <option value="Primary">Primary</option>
-                                                <option value="SSC">SSC</option>
-                                                <option value="HSC">HSC</option>
-                                                <option value="Hons">Hons</option>
-                                                <option value="Masters">Masters</option>
-                                            </select>
-                                        </div>
-                                        <div class="">
-                                            <label for="section"
-                                                class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Section</label>
-                                            <select id="section" class="form-control form-select">
-                                                <option value="Select">Select Section</option>
-                                                <option value="Arts">Arts</option>
-                                                <option value="Science">Science</option>
-                                                <option value="Commerce">Commerce</option>
-                                            </select>
-                                        </div>
-                                        <div class="">
-                                            <label for="gender"
-                                                class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Gender</label>
-                                            <select id="gender" class="form-control form-select">
-                                                <option value="Select">Select Gender</option>
-                                                <option value="Male">Male</option>
-                                                <option value="Female">Female</option>
-                                            </select>
-                                        </div>
-                                        <div class="">
-                                            <label for="status"
-                                                class="text-sm fw-semibold text-primary-light d-inline-block mb-8">Status</label>
-                                            <select id="status" class="form-control form-select">
-                                                <option value="Select">Select Status</option>
-                                                <option value="Active">Active</option>
-                                                <option value="Inactive">Inactive</option>
-                                            </select>
-                                        </div>
-                                        <div class="">
-                                            <button type="reset"
-                                                class="btn btn-danger-200 text-danger-600 w-100">Reset</button>
-                                        </div>
-                                        <div class="">
-                                            <button type="submit" class="btn btn-primary-600 w-100">Apply</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div> --}}
+                           
                         </div>
                         <div class="d-flex align-items-center gap-8 text-secondary-light">
                             <span class="">
@@ -192,7 +93,7 @@
                                         <td>{{ $book?->name ?? '' }}</td>
                                         <td>{{ $book?->publisher ?? '' }}</td>
                                         <td>
-                                            @can('view pdf')
+                                            @can('view-book')
                                                 @if (!empty($book->pdf))
                                                     <a href="{{ route('book.view', ['path' => $book->pdf]) }}"
                                                         target="_blank">View
@@ -218,12 +119,12 @@
                                                 </button>
 
                                                 <ul class="dropdown-menu dropdown-menu-lg-end border p-12">
-                                                    @can('edit book')
+                                                    @can('edit-book')
                                                         <li>
                                                             <x-button.edit-button-component :route="route('books.edit', $book->id)" />
                                                         </li>
                                                     @endcan
-                                                    @can('Delete book')
+                                                    @can('delete-book')
                                                         <li>
                                                             <x-button.delete-button-component :route="route('books.destroy', $book?->id ?? '')"
                                                                 :id="$book->id" />
