@@ -7,19 +7,18 @@
     style="display:flex; justify-content:center; align-items:center; gap:15px; flex-wrap:wrap;">
 
     <label style="font-weight:500; color:#333;">
-        Registration Number
+        {{ __('messages.registration_label') }}
     </label>
 
-    <input type="text" id="input" name="input" placeholder="Enter Registration No."
+    <input type="text" id="input" name="input" placeholder="{{ __('messages.registration_placeholder') }}"
         style="padding:10px 15px; border:1px solid #ccc; border-radius:6px; width:220px; outline:none;">
 
     <button class="searchPractitionerBtn"
         style="background:#1a73e8; color:#fff; border:none; padding:10px 20px; border-radius:6px; cursor:pointer;">
-        Search
+        {{ __('messages.search_button') }}
     </button>
 
 </form>
-
 <div class="result">
 </div>
 
@@ -29,6 +28,8 @@
         if (filterBtn) {
             filterBtn.addEventListener('click', function(e) {
                 e.preventDefault();
+                filterBtn.innerHTML = 'Searching';
+                filterBtn.disabled = true;
                 const input = document.querySelector('#input').value;
                 if (!input) {
                     alert('Enter input value');
@@ -52,8 +53,14 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.status) {
+                        filterBtn.innerText = 'Search';
+                        filterBtn.disabled = false;
                         document.querySelector('.result').innerHTML = data.data;
+                        input.value = '';
                     } else {
+                        filterBtn.innerText = 'Search';
+                        filterBtn.disabled = false;
+                        input.value = '';
                         document.querySelector('.result').innerHTML = '';
                         const errorMessage = document.querySelector('.errorMessage');
                         if (errorMessage) {

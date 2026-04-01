@@ -10,7 +10,7 @@ return [
     'Student form' => 'छात्र फॉर्म',
     'Register' => 'पंजीकरण',
     'Login' => 'लॉगिन',
-    'Home' => 'होम ',
+    'Home' => 'होम',
     'About us' => 'परिचय ',
     'Academics' => 'शैक्षणिक',
     'Update' => 'अपडेट',

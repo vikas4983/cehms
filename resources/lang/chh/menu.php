@@ -9,7 +9,7 @@ return [
     'Student form' => 'विद्यार्थी फॉर्म',
     'Register' => 'पंजीयन',
     'Login' => 'लॉगिन',
-    'Home' => 'घर',
+    'Home' => 'होम',
     'About us' => 'हमन बारे मं',
     'Academics' => 'पढ़ई-लिखई',
     'Update' => 'अपडेट',
