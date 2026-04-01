@@ -33,6 +33,9 @@ class FilterController extends Controller
                 ->orWhere('mobile', $input)
                 ->paginate(20);
         }
+        if ($request->route == 'permissions.index') {
+            $data = Permission::where('name', 'LIKE', "%{$input}%")->paginate(20);
+        }
         if ($request->route == 'oldStudents.index') {
             $data = OldStudent::where('first_name', 'LIKE', "%{$input}%")
                 ->orWhere('last_name', 'LIKE', "%{$input}%")
@@ -63,6 +66,9 @@ class FilterController extends Controller
                     return explode('-', $permission->name)[1];
                 });
                 $result = view('students.result', compact('data', 'groupedPermissions', 'roles'))->render();
+            }
+            if ($request->route == 'permissions.index') {
+                $result = view('permissions.result', compact('data'))->render();
             }
             if ($request->route == 'enquiries.index') {
                 $result = view('enquiries.result', compact('data'))->render();

@@ -19,8 +19,6 @@ class Permission extends SpatiePermission
 
     protected function name(): Attribute
     {
-        return Attribute::make(
-            set: fn ($value) => strtolower($value)
-        );
+        return Attribute::make(set: fn($value) => strtolower($value));
     }
 }

@@ -60,7 +60,7 @@ class PermissionController extends Controller
      */
     public function edit(Permission $permission)
     {
-        //
+        return view('permissions.edit', compact('permission'));
     }
 
     /**
@@ -69,7 +69,7 @@ class PermissionController extends Controller
     public function update(Request $request, Permission $permission)
     {
         $permission->update($request->all());
-        return redirect()->back()->with('success', 'permission has been updated successfully');
+        return redirect()->route('permissions.index')->with('success', 'permission has been updated successfully');
     }
 
     /**

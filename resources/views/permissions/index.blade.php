@@ -27,32 +27,16 @@
                 <div class="card-body p-0 dataTable-wrapper">
                     <div
                         class="d-flex align-items-center justify-content-between flex-wrap gap-16 px-20 py-12 border-bottom border-neutral-200">
-                        <div class="d-flex flex-wrap align-items-center gap-16">
-                            <form class="navbar-search dt-search m-0">
-                                <input type="text" class="dt-input bg-transparent radius-4" aria-controls="dataTable"
-                                    name="search" placeholder="Search...">
-                                <iconify-icon icon="ion:search-outline" class="icon"></iconify-icon>
-                            </form>
-                        </div>
-                        <div class="d-flex align-items-center gap-8 text-secondary-light">
-                            <span class="">
-                                Rows per page:
-                            </span>
-                            <div class="dt-length">
-                                <select name="dataTable_length" aria-controls="dataTable"
-                                    class="dt-input form-control form-select">
-                                    <option value="5">5</option>
-                                    <option value="10" selected>10</option>
-                                    <option value="25">25</option>
-                                    <option value="50">50</option>
-                                    <option value="100">100</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+                        <x-filter-from-component :url="route('input.filter')" :currentRoute="Route::currentRouteName()" />
 
-                    <div class="p-0">
-                        <table class="table bordered-table mb-0 data-table" id="dataTable" data-page-length='10'>
+                    </div>
+                    @include('alerts.alert')
+                    <span class="successMessage  alert alert-success" style="width: 100%; display:none;">
+                    </span>
+                    <span class="errorMessage  alert alert-danger" style="width: 100%; display:none;">
+                    </span>
+                    <div class="p-0 result">
+                        <table class="table bordered-table mb-0">
                             <thead>
                                 <tr>
                                     <th scope="col">
@@ -130,6 +114,9 @@
                             </tbody>
 
                         </table>
+                        <div class="row text-right">
+                            {{ $permissions->links() }}
+                        </div>
                     </div>
                 </div>
             </div>
