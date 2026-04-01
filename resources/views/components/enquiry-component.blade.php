@@ -80,17 +80,17 @@
     <button type="button" class="close-btn" id="closeBtn">×</button>
 
     <div class="inner">
-        <h3>Enquire now</h3>
+        <h3>{{ __('ENQUIRY.HEADING') }}</h3>
         @include('alerts.alert')
         <form action="{{ route('enquiries.store') }}" data-url="" method="post">
             @csrf
             <div class="row1">
-                <input name="name" id="name" placeholder="Name" type="text" required>
+                <input name="name" id="name" placeholder="{{ __('ENQUIRY.NAME') }}" type="text" required>
             </div>
             <div class="row1 ">
                 <input name="email" id="email" value="{{ old('email') }}" style="color: #fff"
-                    class="form-control @error('email') is-invalid @enderror" placeholder="Email" type="email"
-                    required>
+                    class="form-control @error('email') is-invalid @enderror" placeholder="{{ __('ENQUIRY.EMAIL') }}"
+                    type="email" required>
                 @error('email')
                     <div class="invalid-feedback" style="color: #ffffff">
                         {{ $message }}
@@ -99,9 +99,9 @@
             </div>
             <div class="row1 ">
                 <input name="mobile" id="mobile" type="text" style="color: #fff"
-                    class="form-control @error('mobile') is-invalid @enderror" placeholder="Enter 10 digit mobile"
-                    value="{{ old('mobile') }}" maxlength="10" inputmode="numeric"
-                    oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0,10)" required>
+                    class="form-control @error('mobile') is-invalid @enderror"
+                    placeholder="{{ __('ENQUIRY.ENTER 10 DIGIT MOBILE') }}" value="{{ old('mobile') }}" maxlength="10"
+                    inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0,10)" required>
                 @error('mobile')
                     <div class="invalid-feedback" style="color: #ffffff">
                         {{ $message }}
@@ -110,7 +110,7 @@
             </div>
     </div>
     <button type="submit" class="enquire-btn" id="submitBtn">
-        Enquire now &nbsp;
+        {{ __('ENQUIRY.BUTTON') }} &nbsp;
         <i class="fa fa-play-circle"></i>
     </button>
     </form>

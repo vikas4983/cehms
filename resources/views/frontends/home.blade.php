@@ -59,8 +59,8 @@
                     <div class="icon"><img src="{{ asset('assets-frontend/images/apply-online-ico.png') }}"
                             class="img-responsive" alt=""></div>
                     <div class="detail">
-                        <h3>Apply Online</h3>
-                        <p>Join certified electro homeopathy network for trusted holistic healthcare.</p>
+                        <h3>{{ __('messages.apply_online') }}</h3>
+                        <p>{{ __('messages.join_network') }}</p>
                         <a href="{{ route('student.register') }}" class="more"><i class="fa fa-angle-right"
                                 aria-hidden="true"></i></a>
                     </div>
@@ -69,8 +69,8 @@
                     <div class="icon"><img src="{{ asset('assets-frontend/images/prospects-ico.png') }}"
                             class="img-responsive" alt=""></div>
                     <div class="detail">
-                        <h3><span>Search</span>Practitioners</h3>
-                        <p>Find certified electro homeopathy practitioners for safe natural treatment.</p>
+                        <h3><span>{{ __('messages.search') }}</span>{{ __('messages.practitioners') }}</h3>
+                        <p>{{ __('messages.find_practitioners') }}</p>
                         <a href="{{ url('practitioner') }}" class="more"><i class="fa fa-angle-right"
                                 aria-hidden="true"></i></a>
                     </div>
@@ -79,8 +79,8 @@
                     <div class="icon"><img src="{{ asset('assets-frontend/images/certification-ico.png') }}"
                             class="img-responsive" alt=""></div>
                     <div class="detail">
-                        <h3>Cources</h3>
-                        <p>Learn electro homeopathy through structured courses for practical professional growth.</p>
+                        <h3>{{ __('messages.courses') }}</h3>
+                        <p>{{ __('messages.learn_courses') }}</p>
                         <a href="{{ url('book') }}" class="more"><i class="fa fa-angle-right"
                                 aria-hidden="true"></i></a>
                     </div>
@@ -89,32 +89,27 @@
         </div>
         <div class="container">
             <div class="row">
-                <div class="col-sm-7 col-sm-push-5 left-block"> <span class="sm-head">Our Healthcare Vision</span>
-                    <h2>CEHSM Online</h2>
-                    <p>"Our vision is to revolutionize healthcare by integrating the principles of Electro Homeopathy with
-                        modern medical awareness, creating a Faster, Smoother, Stable, Scalable, Efficient, and Reliable
-                        healthcare ecosystem. We aim to empower individuals with natural treatment options, promote
-                        preventive care, and build a trusted medical network that serves humanity with compassion,
-                        innovation, and excellence."</p>
-                    {{-- <div class="know-more-wrapper"> <a href="about.html" class="know-more">Know More <span
-                                class="icon-more-icon"></span></a> </div> --}}
+                <div class="col-sm-7 col-sm-push-5 left-block"> <span
+                        class="sm-head">{{ __('messages.healthcare_vision') }}</span>
+                    <h2>{{ __('messages.cehsm_online') }}</h2>
+                    <p>{{ __('messages.vision_quote') }}</p>
+
                 </div>
                 <div class="col-sm-5 col-sm-pull-7">
                     <div class="video-block">
                         <div id="thumbnail_container"> <img src="{{ asset('assets-frontend/images/about-video.jpeg') }}"
                                 id="thumbnail" class="img-responsive" alt=""> </div>
-                        {{-- <a href="https://www.youtube.com/watch?v=i11RXCJVEnw" class="start-video video"><img
-                                src="{{ asset('assets-frontend/images/play-btn.png') }}" alt=""></a> --}}
+
                     </div>
                 </div>
             </div>
         </div>
     </section>
     <!-- ==============================================
-                                                                                                                                                                    =================================================== -->
+                                                                                                                                                                                        =================================================== -->
     <section class="our-cources padding-lg">
         <div class="container">
-            <h2><span>Our Books Collection</span> What do you want to read?</h2>
+            <h2><span>{{ __('messages.books_collection') }}</span>{{ __('messages.what_read') }}</h2>
             <ul class="course-list owl-carousel">
                 @foreach ($books as $book)
                     <li>
@@ -129,12 +124,12 @@
                             <p>{{ Str::limit($book->publisher, 30) }}</p>
                             <div class="bottom-txt clearfix">
                                 <div class="duration">
-                                    <h4>{{ $book->pages ?? '2 YEAR' }}</h4>
-                                    <span> COURSES</span>
+                                    <h4>{{ $book->pages ?? '' }}</h4>
+                                    <span> {{ __('messages.courses') }}</span>
                                 </div>
 
                                 <a href="{{ url('book') }}" style="color: white">
-                                    View
+                                    {{ __('messages.view') }}
                                 </a>
                             </div>
 
@@ -147,36 +142,36 @@
     </section>
     <section class="why-choose padding-lg">
         <div class="container">
-            <h2><span>The Numbers Say it All</span>Why Choose Us</h2>
+            <h2><span>{{ __('messages.numbers_say') }}</span>{{ __('messages.why_choose_us') }}</h2>
             <ul class="our-strength">
                 <li>
                     {{-- <div class="icon"><i class="fa fa-graduation-cap"></i></div> --}}
                     <span class="counter">{{ $counts['books'] ?? '' }}</span>
-                    <div class="title">Certified Courses</div>
+                    <div class="title">{{ __('messages.certified_courses') }}</div>
                 </li>
                 <li>
                     {{-- <div class="icon"><span class="fa fa-graduation-cap"></span></div> --}}
                     <span class="counter">{{ $counts['AllStudents'] ?? '' }}</span>
-                    <div class="title">Students Enrolled </div>
+                    <div class="title">{{ __('messages.students_enrolled') }} </div>
                 </li>
                 <li>
                     {{-- <div class="icon"><span class="fa fa-graduation-cap">456</span></div> --}}
                     <span class="counter">{{ $counts['medicines'] ?? '' }}</span>
-                    <div class="title">Tested Medicines</div>
+                    <div class="title">{{ __('messages.tested_medicines') }}</div>
                 </li>
             </ul>
         </div>
     </section>
     <!-- ==============================================
-                                                                                                                                                                    ** Testimonials **
-                                                                                                                                                                    =================================================== -->
+                                                                                                                                                                                        ** Testimonials **
+                                                                                                                                                                                        =================================================== -->
     <section class="testimonial padding-lg">
         <div class="container">
 
             <span class="mt-3 d-inline-block" style="color: #FFC107; font-size:6rem;">
                 ❝
             </span>
-            <h2>Voices of Electro Homeopathy
+            <h2>{{ __('messages.voices') }}
             </h2>
             <ul class="testimonial-slide">
                 @foreach ($testimonials as $testimonial)

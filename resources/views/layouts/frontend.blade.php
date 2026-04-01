@@ -196,8 +196,9 @@
                     <ul class="top-nav">
                         @if ($headers->isNotEmpty())
                             @forelse ($headers->where('name','Register') as $header)
-                                <li><a href="{{ route($header->url ?? '#') }}"
-                                        style="color: #fff">{{ $header?->name ?? 'REGISTER' }}</a>
+                                <li><a href="{{ route($header->url ?? '#') }}" style="color: #fff">
+                                        {{ __('menu.' . str_replace('menu.', '', $header?->name ?? '')) }}
+                                    </a>
                                 </li>
                             @empty
                             @endforelse
@@ -205,27 +206,31 @@
                     </ul>
 
                     <div class="lang-wrapper">
-                        {{-- <div class="select-lang">
-                            <select id="currency_select">
-                                <option value="usd">USD</option>
-                                <option value="aud">AUD</option>
-                                <option value="gbp">GBP</option>
-                            </select>
-                        </div> --}}
                         <div class="select-lang2">
-                            <select class="custom_select">
-                                <option value="en">English</option>
-                                <option value="fr">French</option>
-                                <option value="de">German</option>
+                            <select class="custom_select" onchange="changeLanguage(this.value)">
+                                <option value="en" {{ app()->getLocale() == 'en' ? 'selected disabled' : '' }}>
+                                    English</option>
+                                <option value="hi" {{ app()->getLocale() == 'hi' ? 'selected disabled' : '' }}>
+                                    {{ __('messages.hindi') }}</option>
+                                <option value="mr" {{ app()->getLocale() == 'mr' ? 'selected disabled' : '' }}>
+                                    {{ __('messages.marathi') }}</option>
+                                <option value="chh" {{ app()->getLocale() == 'chh' ? 'selected disabled' : '' }}>
+                                    {{ __('messages.Chhattisgarh') }}</option>
                             </select>
                         </div>
                     </div>
                 </div>
+                <script>
+                    function changeLanguage(locale) {
+                        window.location.href = "/lang/" + locale;
+                    }
+                </script>
             </div>
         </div>
         <!-- End Header top Bar -->
         <!-- Start Header Middle -->
         <div class="container header-middle">
+
             <div class="row"> <span class="col-xs-6 col-sm-3"><a href="{{ route('/') }}"><img
                             src="{{ asset('storage/' . $setting?->logo ?? '') }}" class="img-responsive" alt=""
                             width="200px" style="width: 7rem"></a></span>
@@ -233,15 +238,16 @@
                 <div class="col-xs-6 col-sm-9">
                     <div class="contact clearfix">
                         <ul class="hidden-xs">
-                            <li> <span>Email</span> <a
+                            <li> <span>{{ __('messages.contact_email') }}</span> <a
                                     href="mailto:{{ $setting?->email }}">{{ $setting?->email ?? '' }}</a> </li>
-                            <li> <span>Toll Free</span>
+                            <li> <span>{{ __('messages.toll_free') }}</span>
                                 <a href="tel:{{ $setting?->primary_numberl ?? '' }}">
                                     {{ substr($setting?->landline, 0, 4) . '-' . substr($setting?->primary_number, 4) }}</a>
                             </li>
                         </ul>
                         @forelse ($headers->where('name', 'Login') as $header)
-                            <a href="{{ route($header->url ?? '#') }}" class="login">{{ $header?->name ?? 'Login' }}
+                            <a href="{{ route($header->url ?? '#') }}"
+                                class="login">{{ __('menu.' . str_replace('menu.', '', $header?->name ?? '')) }}
                                 &nbsp;&nbsp;&nbsp;<i class="fa fa-play-circle"></i></span></a>
                         @empty
                         @endforelse
@@ -255,45 +261,47 @@
             <div class="container">
                 <div class="navbar-header">
                     <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse"
-                        class="navbar-toggle collapsed" type="button"> <span class="sr-only">Toggle navigation</span>
+                        class="navbar-toggle collapsed" type="button"> <span class="sr-only">Toggle
+                            navigation</span>
                         <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
                     </button>
                 </div>
                 <div class="navbar-collapse collapse" id="navbar">
                     <form action="{{ route('search.practitioner') }}" method="get"
                         class="navbar-form navbar-right">
-                        <input type="text" name="input" placeholder="Enter Practitioner ID"
-                            class="form-control">
+                        <input type="text" name="input"
+                            placeholder="{{ __('messages.enter_practitioner_id') }}" class="form-control">
                         <button type="submit" class="search-btn"><i class="fa fa-search"></i></span></button>
                     </form>
                     <ul class="nav navbar-nav">
                         @forelse ($headers as $header)
                             @if ($header->name == 'Home')
                                 <li class="{{ request()->is($header->url) ? 'active' : '' }}"> <a
-                                        href="{{ route($header->url ?? '#') }}">{{ $header?->name ?? '' }}</a></li>
+                                        href="{{ route($header->url ?? '#') }}">
+                                        {{ __('menu.' . str_replace('menu.', '', $header?->name ?? '')) }}</a></li>
                             @elseif($header->name == 'About us')
                                 <li class="{{ request()->is($header->url) ? 'active' : '' }}"> <a
-                                        href="{{ url($header->url ?? '#') }}">{{ $header?->name ?? '' }}</a></li>
+                                        href="{{ url($header->url ?? '#') }}">{{ __('menu.' . str_replace('menu.', '', $header?->name ?? '')) }}</a>
+                                </li>
                             @elseif($header->name == 'Academics')
                                 @if ($header->children->count())
                                     <li class="dropdown" class="{{ request()->is($header->url) ? 'active' : '' }}">
                                         <a data-toggle="dropdown"
-                                            href="{{ $header->url ?? '#' }}">{{ $header?->name ?? '' }} <i
-                                                class="{{ request()->is($header->url) ? 'active' : '' }}"
+                                            href="{{ $header->url ?? '#' }}">{{ __('menu.' . str_replace('menu.', '', $header?->name ?? '')) }}
+                                            <i class="{{ request()->is($header->url) ? 'active' : '' }}"
                                                 class="fa fa-angle-down" aria-hidden="true"></i></a>
                                         <ul class="dropdown-menu">
                                             @forelse ($header->children as $subMenu)
                                                 <li class="{{ request()->is($header->url) ? 'active' : '' }}">
                                                     <a
-                                                        href="{{ url($subMenu->url ?? '#') }}">{{ $subMenu->name ?? '' }}</a>
+                                                        href="{{ url($subMenu->url ?? '#') }}">{{ __('menu.' . str_replace('menu.', '', $subMenu?->name ?? '')) }}</a>
                                                 </li>
                                             @empty
                                             @endforelse
                                             @if (!empty($setting->admission_form))
                                                 <li class="{{ request()->is($header->url) ? 'active' : '' }}">
                                                     <a href="{{ route('download', ['path' => $setting->admission_form]) }}"
-                                                        target="_blank">Student
-                                                        Form</a>
+                                                        target="_blank">{{ __('menu.Student form') }}</a>
                                                 </li>
                                             @endif
                                         </ul>
@@ -301,14 +309,16 @@
                                 @endif
                             @elseif($header->name == 'Update')
                                 <li class="{{ request()->is($header->url) ? 'active' : '' }}"> <a
-                                        href="{{ url($header->url ?? '#') }}">{{ $header?->name ?? '' }}</a>
+                                        href="{{ url($header->url ?? '#') }}">{{ __('menu.' . str_replace('menu.', '', $header?->name ?? '')) }}</a>
                                 </li>
                             @elseif($header->name == 'Practitioners')
                                 <li class="{{ request()->is($header->url) ? 'active' : '' }}"> <a
-                                        href="{{ url($header->url ?? '#') }}">{{ $header?->name ?? '' }}</a></li>
+                                        href="{{ url($header->url ?? '#') }}">{{ __('menu.' . str_replace('menu.', '', $header?->name ?? '')) }}</a>
+                                </li>
                             @elseif($header->name == 'Contact')
                                 <li class="{{ request()->is($header->url) ? 'active' : '' }}"> <a
-                                        href="{{ url($header->url ?? '#') }}">{{ $header?->name ?? '' }}</a></li>
+                                        href="{{ url($header->url ?? '#') }}">{{ __('menu.' . str_replace('menu.', '', $header?->name ?? '')) }}</a>
+                                </li>
                             @endif
                         @empty
                         @endforelse
@@ -334,7 +344,7 @@
                 <div class="foot-nav foot-50">
                     <h3>
                         @if (!empty($setting->name))
-                            {{ $setting->name }}
+                            {{ __('menu.' . str_replace('menu.', '', $setting?->name ?? '')) }}
                         @endif
                     </h3>
 
@@ -346,10 +356,10 @@
                 </div>
 
                 <div class="foot-nav foot-25">
-                    <h3>Address</h3>
+                    <h3>{{ __('messages.address') }}</h3>
                     <ul>
                         @if (!empty($setting->address))
-                            <li>{{ $setting->address }}</li>
+                            <li> {{ __('menu.' . str_replace('menu.', '', $setting?->address ?? '')) }}</li>
                         @endif
 
                         @if (!empty($setting->landline))
@@ -368,12 +378,12 @@
                 </div>
 
                 <div class="foot-nav foot-25">
-                    <h3>Useful Links</h3>
+                    <h3>{{ __('messages.useful_links') }}</h3>
                     <ul>
                         @foreach ($footers as $footer)
                             <li>
                                 <a href="{{ url($footer->url ?? '') }}">
-                                    {{ $footer->name ?? '' }}
+                                    {{ __('menu.' . str_replace('menu.', '', $footer?->name ?? '')) }}
                                 </a>
                             </li>
                         @endforeach
@@ -382,105 +392,6 @@
 
             </div>
         </div>
-
-        <!-- End Footer Top -->
-        <!-- Start Footer Bottom -->
-        {{-- <div class="bottom">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-4">
-                        <div class="connect-us">
-                            <h3>Connect with Us</h3>
-                            <ul class="follow-us clearfix">
-                                @if (!empty($setting->facebook))
-                                    <li><a href="{{ $setting->facebook }}"><i class="fa fa-facebook"
-                                                aria-hidden="true"></i></a></li>
-                                @endif
-                                @if (!empty($setting->twitter))
-                                    <li><a href="{{ $setting->twitter }}"><i class="fa fa-twitter"
-                                                aria-hidden="true"></i></a></li>
-                                @endif
-                                @if (!empty($setting->linkedin))
-                                    <li><a href="{{ $setting->linkedin }}"><i class="fa fa-linkedin"
-                                                aria-hidden="true"></i></a></li>
-                                @endif
-                                @if (!empty($setting->google))
-                                    <li><a href="{{ $setting->google }}"><i class="fa fa-google-plus"
-                                                aria-hidden="true"></i></a></li>
-                                @endif
-                                @if (!empty($setting->youtube))
-                                    <li><a href="{{ $setting->youtube }}"><i class="fa fa-youtube-play"
-                                                aria-hidden="true"></i></a></li>
-                                @endif
-                                @if (!empty($setting->instagram))
-                                    <li><a href="{{ $setting->instagram }}"><i class="fa fa-instagram"
-                                                aria-hidden="true"></i></a></li>
-                                @endif
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="subscribe">
-                            <h3>Subscribe with Us</h3>
-                            <!-- Begin MailChimp Signup Form -->
-                            <div id="mc_embed_signup">
-                                <form
-                                    action="//protechtheme.us16.list-manage.com/subscribe/post?u=cd5f66d2922f9e808f57e7d42&amp;id=ec6767feee"
-                                    method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form"
-                                    class="validate" target="_blank" novalidate>
-                                    <div id="mc_embed_signup_scroll">
-                                        <input type="email" value="" name="EMAIL" class="email"
-                                            id="mce-EMAIL" placeholder="enter your email address" required>
-                                        <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-                                        <div style="position: absolute; left: -5000px;" aria-hidden="true">
-                                            <input type="text" name="b_cd5f66d2922f9e808f57e7d42_ec6767feee"
-                                                tabindex="-1" value="">
-                                        </div>
-                                        <div class="clear">
-                                            <input type="submit" value="Subscribe" name="subscribe"
-                                                id="mc-embedded-subscribe" class="button">
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <!--End mc_embed_signup-->
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="instagram">
-                            <h3>@INSTAGRAM</h3>
-                            <ul class="clearfix">
-                                <li><a href="#">
-                                        <figure><img src="{{ asset('assets-frontend/images/insta-img1.jpg') }}"
-                                                class="img-responsive" alt=""></figure>
-                                    </a></li>
-                                <li><a href="#">
-                                        <figure><img src="{{ asset('assets-frontend/images/insta-img2.jpg') }}"
-                                                class="img-responsive" alt=""></figure>
-                                    </a></li>
-                                <li><a href="#">
-                                        <figure><img src="{{ asset('assets-frontend/images/insta-img3.jpg') }}"
-                                                class="img-responsive" alt=""></figure>
-                                    </a></li>
-                                <li><a href="#">
-                                        <figure><img src="{{ asset('assets-frontend/images/insta-img4.jpg') }}"
-                                                class="img-responsive" alt=""></figure>
-                                    </a></li>
-                                <li><a href="#">
-                                        <figure><img src="{{ asset('assets-frontend/images/insta-img5.jpg') }}"
-                                                class="img-responsive" alt=""></figure>
-                                    </a></li>
-                                <li><a href="#">
-                                        <figure><img src="{{ asset('assets-frontend/images/insta-img6.jpg') }}"
-                                                class="img-responsive" alt=""></figure>
-                                    </a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
-        <!-- End Footer Bottom -->
     </footer>
 
     <!-- Scroll to top -->

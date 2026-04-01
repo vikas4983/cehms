@@ -74,4 +74,17 @@ class RegisterController extends Controller
         $testimonials = Testimonial::ActiveTetimonials()->paginate(20);
         return view('testimonial', compact('testimonials'));
     }
+
+    public function locale($locale)
+    {
+        if (in_array($locale, ['en', 'hi', 'mr', 'chh'])) {
+            session()->put('locale', $locale);
+        }
+        if (auth()->check()) {
+            auth()
+                ->user()
+                ->update(['locale' => $locale]);
+        }
+        return redirect()->back();
+    }
 }

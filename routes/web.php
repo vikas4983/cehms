@@ -106,5 +106,7 @@ Route::get('testi-monials', [RegisterController::class, 'testimonial'])->name('t
 // Forgot password
 Route::get('forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot.password');
 
+Route::get('lang/{locale}', [RegisterController::class, 'locale'])->name('lang');
+
 // CMS pages
 Route::get('{slug}', [FrontendController::class, 'page']);
