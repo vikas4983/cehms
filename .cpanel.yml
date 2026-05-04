@@ -1,4 +1,4 @@
 deployment:
   tasks:
-    - export DEPLOYPATH=/home1/ashis940/cehms.ashishwedskalyani.com/
+    - export DEPLOYPATH=/home/sk7yjv94kzq4/councilofelectrohomeopathy.com/
     - /bin/cp -R * $DEPLOYPATH
