@@ -1,4 +1,4 @@
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/sk7yjv94kzq4/councilofelectrohomeopathy.com/
+    - export DEPLOYPATH=/home/sk7yjv94kzq4/public_html/councilofelectrohomeopathy.com/
     - /bin/cp -R * $DEPLOYPATH
