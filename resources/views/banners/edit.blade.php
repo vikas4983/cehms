@@ -10,8 +10,11 @@
                 <div>
                     <a href="{{ route('dashboard') }}" class="text-secondary-light hover-text-primary hover-underline">
                         Dashboard
+                    </a> /
+                    <a href="{{ route('banners.index') }}" class="text-secondary-light hover-text-primary hover-underline">
+                        Banners
                     </a>
-                    <span class="text-secondary-light"> / Banner / Edit Banner</span>
+                    <span class="text-secondary-light">/ Edit Banner</span>
                 </div>
             </div>
         </div>

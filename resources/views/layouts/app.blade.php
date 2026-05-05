@@ -210,7 +210,7 @@
                     </a>
                 </li>
                 <li>
-                    @can('view-medicine')
+                    @can('view-admin')
                         <a href="{{ route('admin') }}">
                             <i class="ri-admin-line"></i>
                             <span>Admins</span>
