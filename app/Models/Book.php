@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Book extends Model
 {
-    protected $fillable = ['name', 'publisher', 'pdf','image', 'status'];
+    protected $fillable = ['name', 'publisher', 'pdf', 'image', 'status'];
 
     public function name(): Attribute
     {
@@ -20,14 +20,18 @@ class Book extends Model
 
     public function scopeActive($query)
     {
-        return $query->where('status', 1)->latest()->orderBydesc('pdf');
+        return $query->select('id', 'name', 'pdf', 'publisher', 'image', 'created_at', 'status')->where('status', 1)->latest();
     }
     public function scopeInactive($query)
     {
-        return $query->where('status', 0);
+        return $query->select('id', 'name', 'pdf', 'publisher', 'image', 'created_at', 'status')->where('status', 0)->latest();
     }
     public function scopeAllBook($query)
     {
-        return $query->orderbyDesc('status')->latest();
+        return $query
+            ->select('id', 'name', 'pdf', 'publisher', 'image', 'created_at', 'status')
+            ->orderByDesc('pdf')
+            ->orderByDesc('status')
+            ->latest();
     }
 }

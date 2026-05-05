@@ -473,11 +473,11 @@
     <!-- Bootstrap js -->
     <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
     <!-- Apex Chart js -->
-    <script src="{{ asset('assets/js/apexcharts.min.js') }}"></script>
+    {{-- <script src="{{ asset('assets/js/apexcharts.min.js') }}"></script> --}}
     <!-- Iconify Font js -->
     <script src="{{ asset('assets/js/iconify-icon.min.js') }}"></script>
     <!-- Data Table js -->
-    <script src="{{ asset('assets/js/dataTables.min.js') }}"></script>
+    {{-- <script src="{{ asset('assets/js/dataTables.min.js') }}"></script> --}}
     <!-- jQuery UI js -->
     <script src="{{ asset('assets/js/jquery-ui.min.js') }}"></script>
     <!-- main js -->
@@ -485,10 +485,10 @@
     {{-- <script src="{{ asset('assets/js/apexcharts.min.js') }}"></script> --}}
 
     <!-- Custom js -->
-    <script src="{{ asset('assets/js/custom-js/data-table-assign-role.js') }}"></script>
+    {{-- <script src="{{ asset('assets/js/custom-js/data-table-assign-role.js') }}"></script> --}}
 
 
-    <script>
+    {{-- <script>
         // ============================ Revenue Statistics Chart start ===============================
         var options = {
             series: [{
@@ -540,184 +540,184 @@
             }
         };
 
-        var chart = new ApexCharts(document.querySelector("#revenueStatistic"), options);
-        chart.render()
+        //    var chart = new ApexCharts(document.querySelector("#revenueStatistic"), options);
+        //    chart.render()
         // ============================ Revenue Statistics Chart End ===============================
 
         // ===================== Income Vs Expense Start =============================== 
-        function createChartThree(chartId, color1, color2) {
-            var options = {
-                series: [{
-                    name: 'Income',
-                    data: [48, 35, 55, 32, 48, 30, 15, 50, 57]
-                }, {
-                    name: 'Expense',
-                    data: [12, 20, 15, 26, 22, 60, 40, 32, 25]
-                }],
-                legend: {
-                    show: false
-                },
-                chart: {
-                    type: 'area',
-                    width: '100%',
-                    height: 260,
-                    toolbar: {
-                        show: false
-                    },
-                    padding: {
-                        left: 0,
-                        right: 0,
-                        top: 0,
-                        bottom: 0
-                    }
-                },
-                dataLabels: {
-                    enabled: false
-                },
-                stroke: {
-                    curve: 'stepline',
-                    width: 2,
-                    colors: [color1, color2],
-                    lineCap: 'round'
-                },
-                grid: {
-                    show: true,
-                    borderColor: '#D1D5DB',
-                    strokeDashArray: 1,
-                    position: 'back',
-                    xaxis: {
-                        lines: {
-                            show: false
-                        }
-                    },
-                    yaxis: {
-                        lines: {
-                            show: true
-                        }
-                    },
-                    row: {
-                        colors: undefined,
-                        opacity: 0.2
-                    },
-                    column: {
-                        colors: undefined,
-                        opacity: 0.2
-                    },
-                    padding: {
-                        top: -20,
-                        right: 0,
-                        bottom: -10,
-                        left: 0
-                    },
-                },
-                colors: [color1, color2],
-                markers: {
-                    colors: [color1, color2],
-                    strokeWidth: 1,
-                    size: 0,
-                    hover: {
-                        size: 10
-                    }
-                },
-                xaxis: {
-                    labels: {
-                        show: false
-                    },
-                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                    tooltip: {
-                        enabled: false
-                    },
-                    labels: {
-                        formatter: function(value) {
-                            return value;
-                        },
-                        style: {
-                            fontSize: "14px"
-                        }
-                    }
-                },
-                yaxis: {
-                    labels: {
-                        formatter: function(value) {
-                            return "$" + value + "k";
-                        },
-                        style: {
-                            fontSize: "14px"
-                        }
-                    },
-                },
-                tooltip: {
-                    x: {
-                        format: 'dd/MM/yy HH:mm'
-                    }
-                },
-                fill: {
-                    type: "gradient",
-                    gradient: {
-                        shade: "light",
-                        type: "vertical",
-                        opacityFrom: 0.4,
-                        opacityTo: 0.05,
-                        stops: [0, 100]
-                    }
-                }
-            };
+        // function createChartThree(chartId, color1, color2) {
+        //     var options = {
+        //         series: [{
+        //             name: 'Income',
+        //             data: [48, 35, 55, 32, 48, 30, 15, 50, 57]
+        //         }, {
+        //             name: 'Expense',
+        //             data: [12, 20, 15, 26, 22, 60, 40, 32, 25]
+        //         }],
+        //         legend: {
+        //             show: false
+        //         },
+        //         chart: {
+        //             type: 'area',
+        //             width: '100%',
+        //             height: 260,
+        //             toolbar: {
+        //                 show: false
+        //             },
+        //             padding: {
+        //                 left: 0,
+        //                 right: 0,
+        //                 top: 0,
+        //                 bottom: 0
+        //             }
+        //         },
+        //         dataLabels: {
+        //             enabled: false
+        //         },
+        //         stroke: {
+        //             curve: 'stepline',
+        //             width: 2,
+        //             colors: [color1, color2],
+        //             lineCap: 'round'
+        //         },
+        //         grid: {
+        //             show: true,
+        //             borderColor: '#D1D5DB',
+        //             strokeDashArray: 1,
+        //             position: 'back',
+        //             xaxis: {
+        //                 lines: {
+        //                     show: false
+        //                 }
+        //             },
+        //             yaxis: {
+        //                 lines: {
+        //                     show: true
+        //                 }
+        //             },
+        //             row: {
+        //                 colors: undefined,
+        //                 opacity: 0.2
+        //             },
+        //             column: {
+        //                 colors: undefined,
+        //                 opacity: 0.2
+        //             },
+        //             padding: {
+        //                 top: -20,
+        //                 right: 0,
+        //                 bottom: -10,
+        //                 left: 0
+        //             },
+        //         },
+        //         colors: [color1, color2],
+        //         markers: {
+        //             colors: [color1, color2],
+        //             strokeWidth: 1,
+        //             size: 0,
+        //             hover: {
+        //                 size: 10
+        //             }
+        //         },
+        //         xaxis: {
+        //             labels: {
+        //                 show: false
+        //             },
+        //             categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        //             tooltip: {
+        //                 enabled: false
+        //             },
+        //             labels: {
+        //                 formatter: function(value) {
+        //                     return value;
+        //                 },
+        //                 style: {
+        //                     fontSize: "14px"
+        //                 }
+        //             }
+        //         },
+        //         yaxis: {
+        //             labels: {
+        //                 formatter: function(value) {
+        //                     return "$" + value + "k";
+        //                 },
+        //                 style: {
+        //                     fontSize: "14px"
+        //                 }
+        //             },
+        //         },
+        //         tooltip: {
+        //             x: {
+        //                 format: 'dd/MM/yy HH:mm'
+        //             }
+        //         },
+        //         fill: {
+        //             type: "gradient",
+        //             gradient: {
+        //                 shade: "light",
+        //                 type: "vertical",
+        //                 opacityFrom: 0.4,
+        //                 opacityTo: 0.05,
+        //                 stops: [0, 100]
+        //             }
+        //         }
+        //     };
 
-            var chart = new ApexCharts(document.querySelector(`#${chartId}`), options);
-            chart.render();
-        }
+        //     var chart = new ApexCharts(document.querySelector(`#${chartId}`), options);
+        //     chart.render();
+        // }
 
-        createChartThree('incomeExpense', '#16a34a', '#FF9F29');
+        // createChartThree('incomeExpense', '#16a34a', '#FF9F29');
         // ===================== Income Vs Expense End =============================== 
 
         // ================================ New Admissions Chart Start ================================ 
-        var options = {
-            series: [40, 87, 87, 30],
-            colors: ['#0A51CE', '#25A194', '#FF7A2C', '#009F5E'],
-            labels: ['Health', 'Business', 'Lifestyle', 'Entertainment'],
-            legend: {
-                show: false
-            },
-            chart: {
-                type: 'donut',
-                height: 270,
-                sparkline: {
-                    enabled: true // Remove whitespace
-                },
-                margin: {
-                    top: 0,
-                    right: 0,
-                    bottom: 0,
-                    left: 0
-                },
-                padding: {
-                    top: 0,
-                    right: 0,
-                    bottom: 0,
-                    left: 0
-                }
-            },
-            stroke: {
-                width: 2,
-            },
-            dataLabels: {
-                enabled: false
-            },
-            responsive: [{
-                breakpoint: 480,
-                options: {
-                    chart: {
-                        width: 200
-                    },
-                    legend: {
-                        position: 'bottom'
-                    }
-                }
-            }],
-        };
+        // var options = {
+        //     series: [40, 87, 87, 30],
+        //     colors: ['#0A51CE', '#25A194', '#FF7A2C', '#009F5E'],
+        //     labels: ['Health', 'Business', 'Lifestyle', 'Entertainment'],
+        //     legend: {
+        //         show: false
+        //     },
+        //     chart: {
+        //         type: 'donut',
+        //         height: 270,
+        //         sparkline: {
+        //             enabled: true // Remove whitespace
+        //         },
+        //         margin: {
+        //             top: 0,
+        //             right: 0,
+        //             bottom: 0,
+        //             left: 0
+        //         },
+        //         padding: {
+        //             top: 0,
+        //             right: 0,
+        //             bottom: 0,
+        //             left: 0
+        //         }
+        //     },
+        //     stroke: {
+        //         width: 2,
+        //     },
+        //     dataLabels: {
+        //         enabled: false
+        //     },
+        //     responsive: [{
+        //         breakpoint: 480,
+        //         options: {
+        //             chart: {
+        //                 width: 200
+        //             },
+        //             legend: {
+        //                 position: 'bottom'
+        //             }
+        //         }
+        //     }],
+        // };
 
-        var chart = new ApexCharts(document.querySelector("#newAdmissions"), options);
-        chart.render();
+        // var chart = new ApexCharts(document.querySelector("#newAdmissions"), options);
+        // chart.render();
         // ================================ New Admissions Chart End ================================ 
 
         // ================================ Animated Radial Progress Bar Start ================================ 
@@ -751,87 +751,87 @@
         // ================================ Animated Radial Progress Bar End ================================
 
         // ============================= Calendar Js Start =================================
-        let display = document.querySelector(".display");
-        let days = document.querySelector(".days");
-        let previous = document.querySelector(".left");
-        let next = document.querySelector(".right");
+        // let display = document.querySelector(".display");
+        // let days = document.querySelector(".days");
+        // let previous = document.querySelector(".left");
+        // let next = document.querySelector(".right");
 
-        let date = new Date();
+        // let date = new Date();
 
-        let year = date.getFullYear();
-        let month = date.getMonth();
+        // let year = date.getFullYear();
+        // let month = date.getMonth();
 
-        function displayCalendar() {
-            const firstDay = new Date(year, month, 1);
+        // function displayCalendar() {
+        //     const firstDay = new Date(year, month, 1);
 
-            const lastDay = new Date(year, month + 1, 0);
+        //     const lastDay = new Date(year, month + 1, 0);
 
-            const firstDayIndex = firstDay.getDay(); //4
+        //     const firstDayIndex = firstDay.getDay(); //4
 
-            const numberOfDays = lastDay.getDate(); //31
+        //     const numberOfDays = lastDay.getDate(); //31
 
-            let formattedDate = date.toLocaleString("en-US", {
-                month: "long",
-                year: "numeric"
-            });
+        //     let formattedDate = date.toLocaleString("en-US", {
+        //         month: "long",
+        //         year: "numeric"
+        //     });
 
-            display.innerHTML = `${formattedDate}`;
+        //     // display.innerHTML = `${formattedDate}`;
 
-            for (let x = 1; x <= firstDayIndex; x++) {
-                const div = document.createElement("div");
-                div.innerHTML += "";
+        //     for (let x = 1; x <= firstDayIndex; x++) {
+        //         const div = document.createElement("div");
+        //         div.innerHTML += "";
 
-                days.appendChild(div);
-            }
+        //         days.appendChild(div);
+        //     }
 
-            for (let i = 1; i <= numberOfDays; i++) {
-                let div = document.createElement("div");
-                let currentDate = new Date(year, month, i);
+        //     for (let i = 1; i <= numberOfDays; i++) {
+        //         let div = document.createElement("div");
+        //         let currentDate = new Date(year, month, i);
 
-                div.dataset.date = currentDate.toDateString();
+        //         div.dataset.date = currentDate.toDateString();
 
-                div.innerHTML += i;
-                days.appendChild(div);
-                if (
-                    currentDate.getFullYear() === new Date().getFullYear() &&
-                    currentDate.getMonth() === new Date().getMonth() &&
-                    currentDate.getDate() === new Date().getDate()
-                ) {
-                    div.classList.add("current-date");
-                }
-            }
-        }
+        //         div.innerHTML += i;
+        //         days.appendChild(div);
+        //         if (
+        //             currentDate.getFullYear() === new Date().getFullYear() &&
+        //             currentDate.getMonth() === new Date().getMonth() &&
+        //             currentDate.getDate() === new Date().getDate()
+        //         ) {
+        //             div.classList.add("current-date");
+        //         }
+        //     }
+        // }
 
-        // Call the function to display the calendar
-        displayCalendar();
+        // // Call the function to display the calendar
+        // displayCalendar();
 
-        previous.addEventListener("click", () => {
-            days.innerHTML = "";
+        // previous.addEventListener("click", () => {
+        //     days.innerHTML = "";
 
-            if (month < 0) {
-                month = 11;
-                year = year - 1;
-            }
-            month = month - 1;
-            date.setMonth(month);
-            displayCalendar();
-        });
+        //     if (month < 0) {
+        //         month = 11;
+        //         year = year - 1;
+        //     }
+        //     month = month - 1;
+        //     date.setMonth(month);
+        //     displayCalendar();
+        // });
 
-        next.addEventListener("click", () => {
-            days.innerHTML = "";
+        // next.addEventListener("click", () => {
+        //     days.innerHTML = "";
 
-            if (month > 11) {
-                month = 0;
-                year = year + 1;
-            }
+        //     if (month > 11) {
+        //         month = 0;
+        //         year = year + 1;
+        //     }
 
-            month = month + 1;
-            date.setMonth(month);
+        //     month = month + 1;
+        //     date.setMonth(month);
 
-            displayCalendar();
-        });
+        //     displayCalendar();
+        // });
         // ============================= Calendar Js End =================================
-    </script>
+    </script> --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
 

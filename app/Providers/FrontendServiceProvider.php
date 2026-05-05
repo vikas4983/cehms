@@ -24,22 +24,22 @@ class FrontendServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $setting = Cache::remember('web_setting', 60, function () {
+        $setting = Cache::remember('web_setting', 120, function () {
             return SiteSetting::first();
         });
-        $headers = Cache::remember('headers', 60, function () {
+        $headers = Cache::remember('headers', 160, function () {
             return Menu::header()->where('status', 1)->get();
         });
-        $footers = Cache::remember('footers', 60, function () {
+        $footers = Cache::remember('footers', 160, function () {
             return Menu::footer()->where('status', 1)->get();
         });
-        $banners = Cache::remember('banners', 60, function () {
+        $banners = Cache::remember('banners', 160, function () {
             return Banner::activeBanner()->get();
         });
-        $books = Cache::remember('books', 60, function () {
+        $books = Cache::remember('books', 160, function () {
             return Book::active()->get();
         });
-        $testimonials = Cache::remember('testimonials', 60, function () {
+        $testimonials = Cache::remember('testimonials', 160, function () {
             return Testimonial::activeTetimonials()->get();
         });
        
